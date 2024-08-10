@@ -37,4 +37,6 @@ public class Pet
     public ICollection<Requisite> Requisites { get; private set; }
     
     public DateTime CreationDate { get; private set; }
+    
+    public ICollection<PetPhoto> PetPhotos { get; private set; }
 }
