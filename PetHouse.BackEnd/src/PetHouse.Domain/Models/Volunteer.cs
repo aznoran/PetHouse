@@ -8,7 +8,7 @@ public class Volunteer
     
     public string Description { get; private set; }
     
-    public short YearsOfExperience { get; private set; }
+    public int YearsOfExperience { get; private set; }
     
     public int CountOfPetsFoundHome { get; private set; }
     
