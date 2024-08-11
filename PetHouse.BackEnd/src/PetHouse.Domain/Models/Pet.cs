@@ -5,11 +5,9 @@ namespace PetHouse.Domain;
 public class Pet
 {
     public Guid Id { get; private set; }
-    
     public string Name { get; private set; }
     
     public string Specie { get; private set; }
-    
     public string Description { get; private set; }
     
     public string Breed { get; private set; }
@@ -39,4 +37,6 @@ public class Pet
     public DateTime CreationDate { get; private set; }
     
     public ICollection<PetPhoto> PetPhotos { get; private set; }
+    
+    
 }
