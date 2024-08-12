@@ -2,7 +2,7 @@
 
 namespace PetHouse.Domain;
 
-public class Pet
+public class Pet : Entity
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }

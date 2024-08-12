@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain;
 
-public class Volunteer
+public class Volunteer : Entity
 {
     public Guid Id { get; private set; }
     
