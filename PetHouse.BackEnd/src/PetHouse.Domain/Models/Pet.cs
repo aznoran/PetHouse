@@ -4,7 +4,6 @@ namespace PetHouse.Domain;
 
 public class Pet : Entity
 {
-    public Guid Id { get; private set; }
     public string Name { get; private set; }
     
     public string Specie { get; private set; }
