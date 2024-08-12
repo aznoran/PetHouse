@@ -1,0 +1,20 @@
+﻿services:
+  postgres:
+    container_name: PetHouseDockerContainer
+    image: postgres
+    environment:
+      POSTGRES_DB: PetHouseDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
