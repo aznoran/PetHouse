@@ -16,7 +16,7 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
         builder.Property(v => v.Id)
             .HasConversion(
                 id => id.Value,
-                value => BaseId<VolunteerId>.Create(value)
+                value => VolunteerId.Create(value)
             );
         
         builder.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH);
