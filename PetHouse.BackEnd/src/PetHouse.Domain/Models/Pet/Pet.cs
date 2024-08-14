@@ -1,8 +1,9 @@
 ﻿using PetHouse.Domain.Enums;
+using PetHouse.Domain.ValueObjects;
 
 namespace PetHouse.Domain;
 
-public class Pet : Entity
+public class Pet : Entity<PetId>
 {
     public string Name { get; private set; }
     
@@ -31,11 +32,11 @@ public class Pet : Entity
     
     public PetStatus PetStatus { get; private set; }
     
-    public ICollection<Requisite> Requisites { get; private set; }
+    public RequisiteInfo Requisites { get; private set; }
     
     public DateTime CreationDate { get; private set; }
     
-    public ICollection<PetPhoto> PetPhotos { get; private set; }
+    public PetPhotoInfo PetPhotos { get; private set; }
     
     
 }
