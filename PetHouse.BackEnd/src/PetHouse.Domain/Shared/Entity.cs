@@ -1,21 +1,24 @@
 ﻿namespace PetHouse.Domain;
 
-public class Entity
+public abstract class Entity<Tid> where Tid : notnull
 {
-    public Guid Id { get; } = Guid.Empty;
+    
+    public Tid Id { get; private set; }
 
     protected Entity()
     {
     }
 
-    protected Entity(Guid id)
+    protected Entity(Tid id)
     {
         Id = id;
     }
 
+    
+
     public override bool Equals(object? obj)
     {
-        if (obj is not Entity other)
+        if (obj is not Entity<Tid> other)
             return false;
 
         if (ReferenceEquals(this, other) == false)
@@ -24,7 +27,7 @@ public class Entity
         if (GetType() != other.GetType())
             return false;
 
-        return Id == other.Id;
+        return EqualityComparer<Tid>.Equals(this,obj);
     }
 
     public override int GetHashCode()
@@ -32,18 +35,18 @@ public class Entity
         return (GetType().ToString() + Id).GetHashCode();
     }
     
-    public static bool operator == (Entity? first, Entity? second)
+    public static bool operator == (Entity<Tid>? first, Entity<Tid>? second)
     {
-        if (ReferenceEquals(first, null) && ReferenceEquals(second, null))
+        if (first is null && second is null)
             return true;
 
-        if (ReferenceEquals(first, null) || ReferenceEquals(second, null))
+        if (first is null || second is null)
             return false;
 
         return first.Equals(second);
     }
     
-    public static bool operator != (Entity? first, Entity? second)
+    public static bool operator != (Entity<Tid>? first, Entity<Tid>? second)
     {
         return !(first == second);
     }
