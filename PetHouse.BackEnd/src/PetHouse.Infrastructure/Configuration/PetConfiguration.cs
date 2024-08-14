@@ -13,6 +13,12 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
         
         builder.HasKey(p => p.Id);
 
+        builder.Property(p => p.Id)
+            .HasConversion(
+            id => id.Value,
+            value => BaseId<PetId>.Create(value)
+                );
+
         
         builder.Property(p => p.Name).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH);
         builder.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH);
@@ -21,17 +27,17 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property(p => p.PetStatus).IsRequired();
         builder.Property(p => p.CreationDate).IsRequired();
 
-        builder.OwnsMany(p => p.Requisites, r =>
+        builder.OwnsOne(p => p.Requisites, r =>
         {
-            r.Property(rt => rt.Description).IsRequired();
-            r.Property(rt => rt.Name).IsRequired();
+            r.ToJson();
+            r.OwnsMany(ri => ri.Requisites);
         });
         
-        builder.OwnsMany(p => p.PetPhotos, pp =>
+        builder.OwnsOne(p => p.PetPhotos, pp =>
         {
-            pp.HasKey(ppt => ppt.Id);
-            pp.Property(ppt => ppt.Path).IsRequired();
-            pp.Property(ppt => ppt.IsMain).IsRequired();
+            pp.ToJson();
+            pp.OwnsMany(ppi => ppi.PetPhotos);
         });
+        
     }
 }

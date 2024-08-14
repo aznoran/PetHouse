@@ -1,6 +1,8 @@
-﻿namespace PetHouse.Domain;
+﻿using PetHouse.Domain.ValueObjects;
 
-public class Volunteer : Entity
+namespace PetHouse.Domain;
+
+public class Volunteer : Entity<VolunteerId>
 {
     
     public string FullName { get; private set; }
@@ -17,9 +19,9 @@ public class Volunteer : Entity
     
     public string PhoneNumber { get; private set; }
     
-    public ICollection<SocialNetwork> SocialNetworks { get; private set; }
+    public SocialNetworkInfo SocialNetworks { get; private set; }
     
-    public ICollection<Requisite> Requisites { get; private set; }
+    public RequisiteInfo Requisites { get; private set; }
     
     public ICollection<Pet> Pets { get; private set; }
     

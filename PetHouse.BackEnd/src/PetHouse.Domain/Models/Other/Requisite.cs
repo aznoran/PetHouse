@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain;
 
-public class Requisite : Entity
+public class Requisite 
 {
     public string Name { get; private set; }
     
