@@ -9,10 +9,7 @@ namespace PetHouse.Infrastructure;
 
 public class PetHouseDbContext(IConfiguration configuration) : DbContext()
 {
-    
-    
     ILoggerFactory loggerFactory = new LoggerFactory();
-
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

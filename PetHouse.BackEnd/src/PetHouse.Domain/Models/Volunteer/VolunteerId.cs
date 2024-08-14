@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain;
 
-public class VolunteerId : BaseId<Guid>
+public record VolunteerId : BaseId<Guid>
 {
     public VolunteerId(Guid id) : base(id)
     {

@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain;
 
-public abstract class BaseId<Tid> where Tid: notnull
+public abstract record BaseId<Tid> where Tid: notnull
 {
     protected BaseId(Guid value)
     {
