@@ -38,6 +38,11 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
             pp.ToJson();
             pp.OwnsMany(ppi => ppi.PetPhotos);
         });
-        
+
+        builder.OwnsOne(p => p.PetIdentifier, pi =>
+        {
+            pi.Property(pit => pit.SpeciesId).IsRequired().HasColumnName("species_id");
+            pi.Property(pit => pit.BreedId).IsRequired().HasColumnName("breed_id");
+        });
     }
 }
