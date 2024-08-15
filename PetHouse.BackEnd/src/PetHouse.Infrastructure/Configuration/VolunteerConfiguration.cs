@@ -13,6 +13,12 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
         
         builder.HasKey(v => v.Id);
         
+        builder.Property(v => v.Id)
+            .HasConversion(
+                id => id.Value,
+                value => VolunteerId.Create(value)
+            );
+        
         builder.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH);
         builder.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH);
         builder.Property(p => p.YearsOfExperience).IsRequired();
@@ -24,16 +30,17 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
         builder.HasMany(v => v.Pets)
             .WithOne();
 
-        builder.OwnsMany(v => v.Requisites, r =>
+        builder.OwnsOne(v => v.Requisites, r =>
         {
-            r.Property(rt => rt.Description).IsRequired();
-            r.Property(rt => rt.Name).IsRequired();
+            r.ToJson();
+            r.OwnsMany(ri => ri.Requisites);
         });
-
-        builder.OwnsMany(v => v.SocialNetworks, sn =>
+        
+        builder.OwnsOne(v => v.SocialNetworks, sn =>
         {
-            sn.Property(snt => snt.Name).IsRequired();
-            sn.Property(snt => snt.Reference).IsRequired();
+            sn.ToJson();
+            sn.OwnsMany(sni => sni.SocialNetworks);
         });
+        
     }
 }

@@ -8,10 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<PetHouseDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PetHouseDbContext"));
-});
+builder.Services.AddScoped<PetHouseDbContext>(provider => new PetHouseDbContext(builder.Configuration));
 
 var app = builder.Build();
 

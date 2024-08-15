@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain;
 
-public class SocialNetwork : Entity
+public class SocialNetwork
 {
     public string Reference { get; private set; }
     
