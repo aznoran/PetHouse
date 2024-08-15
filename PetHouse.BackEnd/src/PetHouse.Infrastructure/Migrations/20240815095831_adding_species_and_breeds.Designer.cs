@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PetHouse.Infrastructure;
@@ -11,9 +12,11 @@ using PetHouse.Infrastructure;
 namespace PetHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(PetHouseDbContext))]
-    partial class PetHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815095831_adding_species_and_breeds")]
+    partial class adding_species_and_breeds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,11 +30,6 @@ namespace PetHouse.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("pk_species");
@@ -175,11 +173,6 @@ namespace PetHouse.Infrastructure.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("name");
-
                             b1.HasKey("SpeciesId", "Id")
                                 .HasName("pk_breed");
 
@@ -255,11 +248,11 @@ namespace PetHouse.Infrastructure.Migrations
 
                             b1.Property<Guid>("BreedId")
                                 .HasColumnType("uuid")
-                                .HasColumnName("breed_id");
+                                .HasColumnName("pet_identifier_breed_id");
 
                             b1.Property<Guid>("SpeciesId")
                                 .HasColumnType("uuid")
-                                .HasColumnName("species_id");
+                                .HasColumnName("pet_identifier_species_id");
 
                             b1.HasKey("PetId");
 

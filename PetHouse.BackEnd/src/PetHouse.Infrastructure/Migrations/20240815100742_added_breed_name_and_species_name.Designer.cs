@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PetHouse.Infrastructure;
@@ -11,9 +12,11 @@ using PetHouse.Infrastructure;
 namespace PetHouse.Infrastructure.Migrations
 {
     [DbContext(typeof(PetHouseDbContext))]
-    partial class PetHouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815100742_added_breed_name_and_species_name")]
+    partial class added_breed_name_and_species_name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
