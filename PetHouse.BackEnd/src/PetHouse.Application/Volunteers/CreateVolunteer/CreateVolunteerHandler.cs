@@ -3,10 +3,8 @@ using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.ValueObjects;
 
 namespace PetHouse.Application.Volunteers.CreateVolunteer;
-
 public class CreateVolunteerHandler
 {
-    
     private readonly IVolunteersRepository _repository;
 
     public CreateVolunteerHandler(IVolunteersRepository repository)
@@ -27,13 +25,20 @@ public class CreateVolunteerHandler
             );
 
         SocialNetworkInfo socialNetworkInfo = new SocialNetworkInfo(request.SocialNetworksDto.Select(
-            sn => SocialNetwork.Create(sn.Reference, sn.Name)).ToList());
+            sn => SocialNetwork.Create(
+                sn.Link, 
+                sn.Name)).ToList());
 
         RequisiteInfo requisiteInfo = new RequisiteInfo(request.RequisiteDto.Select(
-            r => Requisite.Create(r.Name, r.Description)).ToList());
+            r => Requisite.Create(
+                r.Name, 
+                r.Description)).ToList());
         
-        
-        Volunteer volunteer = Volunteer.Create(VolunteerId.NewId, volunteerProfile, socialNetworkInfo, requisiteInfo, null);
+        Volunteer volunteer = Volunteer.Create(
+            VolunteerId.NewId, 
+            volunteerProfile, 
+            socialNetworkInfo,
+            requisiteInfo);
 
         return await _repository.Create(volunteer, cancellationToken);
     }

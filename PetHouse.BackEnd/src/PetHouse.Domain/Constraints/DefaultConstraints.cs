@@ -6,5 +6,5 @@ public class DefaultConstraints
 
     public const int MAX_NAME_LENGTH = 40;
 
-    public const int MAX_REFERENCE_LENGTH = 100;
+    public const int MAX_LINK_LENGTH = 100;
 }

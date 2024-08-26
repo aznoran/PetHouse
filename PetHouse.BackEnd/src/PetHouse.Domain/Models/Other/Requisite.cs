@@ -17,7 +17,9 @@ public class Requisite
     public string Name { get; }
     public string Description { get; }
 
-    public static Requisite Create(string name, string description)
+    public static Requisite Create(
+        string name,
+        string description)
     {
         if (name.Length > DefaultConstraints.MAX_NAME_LENGTH)
         {

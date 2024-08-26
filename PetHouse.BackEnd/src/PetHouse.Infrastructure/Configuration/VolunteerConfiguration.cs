@@ -49,7 +49,7 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
             sn.ToJson("social_networks");
             sn.OwnsMany(sni => sni.SocialNetworks, snt =>
             {
-                snt.Property(t => t.Reference).HasMaxLength(DefaultConstraints.MAX_REFERENCE_LENGTH).HasJsonPropertyName("reference");
+                snt.Property(t => t.Link).HasMaxLength(DefaultConstraints.MAX_LINK_LENGTH).HasJsonPropertyName("reference");
                 snt.Property(t => t.Name).HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasJsonPropertyName("name");
             });
         });

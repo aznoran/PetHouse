@@ -9,29 +9,33 @@ public record SocialNetwork
     {
         
     }
-    private SocialNetwork(string reference, string name)
+    private SocialNetwork(string link, string name)
     {
-        Reference = reference;
+        Link = link;
         Name = name;
     }
 
-    public string Reference { get; }
+    public string Link { get; }
 
 
     public string Name { get; }
 
-    public static SocialNetwork Create(string reference, string description)
+    public static SocialNetwork Create(
+        string link, 
+        string name)
     {
-        if (reference.Length > DefaultConstraints.MAX_REFERENCE_LENGTH)
+        if (link.Length > DefaultConstraints.MAX_LINK_LENGTH)
         {
-            throw new Exception("SocialNetwork creation error : reference");
+            throw new Exception("SocialNetwork creation error : link");
         }
 
-        if (description.Length > DefaultConstraints.MAX_DESCRIPTION_LENGTH)
+        if (name.Length > DefaultConstraints.MAX_NAME_LENGTH)
         {
-            throw new Exception("SocialNetwork creation error : description");
+            throw new Exception("SocialNetwork creation error : name");
         }
 
-        return new SocialNetwork(reference, description);
+        return new SocialNetwork(
+            link, 
+            name);
     }
 }

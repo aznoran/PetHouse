@@ -8,9 +8,9 @@ public record RequisiteInfo
     {
         
     }
-    public RequisiteInfo(ICollection<Requisite> requisites)
+    public RequisiteInfo(IEnumerable<Requisite> requisites)
     {
         Requisites = requisites.ToList();
     }
-    public ICollection<Requisite> Requisites { get; }
+    public IReadOnlyList<Requisite> Requisites { get; }
 }

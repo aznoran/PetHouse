@@ -9,13 +9,11 @@ public sealed class Volunteer : Entity<VolunteerId>
     {
         
     }
-    private Volunteer(VolunteerId volunteerId, VolunteerProfile volunteerProfile, SocialNetworkInfo? socialNetworks, RequisiteInfo? requisites,
-        ICollection<Pet>? pets) : base(volunteerId)
+    private Volunteer(VolunteerId volunteerId, VolunteerProfile volunteerProfile, SocialNetworkInfo? socialNetworks, RequisiteInfo? requisites) : base(volunteerId)
     {
         VolunteerProfile = volunteerProfile;
         SocialNetworks = socialNetworks;
         Requisites = requisites;
-        Pets = pets;
     }
 
     public VolunteerProfile VolunteerProfile { get; private set; }
@@ -27,10 +25,17 @@ public sealed class Volunteer : Entity<VolunteerId>
     public ICollection<Pet>? Pets { get; private set; }
 
 
-    public static Volunteer Create(VolunteerId volunteerId,VolunteerProfile volunteerProfile, SocialNetworkInfo socialNetworks,
-        RequisiteInfo requisites, ICollection<Pet>? pets)
+    public static Volunteer Create(
+        VolunteerId volunteerId,
+        VolunteerProfile volunteerProfile,
+        SocialNetworkInfo socialNetworks,
+        RequisiteInfo requisites)
     {
-        var volunteer = new Volunteer(volunteerId,volunteerProfile, socialNetworks, requisites, pets);
+        var volunteer = new Volunteer(
+            volunteerId,
+            volunteerProfile,
+            socialNetworks, 
+            requisites);
 
         return volunteer;
     }

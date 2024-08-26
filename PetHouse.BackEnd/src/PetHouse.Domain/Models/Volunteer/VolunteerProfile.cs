@@ -5,8 +5,14 @@ namespace PetHouse.Domain.Models;
 
 public record VolunteerProfile
 {
-    private VolunteerProfile(string fullName, string description, int yearsOfExperience, int countOfPetsFoundHome,
-        int countOfPetsLookingForHome, int countOfPetsOnTreatment, string phoneNumber)
+    private VolunteerProfile(
+        string fullName,
+        string description, 
+        int yearsOfExperience, 
+        int countOfPetsFoundHome,
+        int countOfPetsLookingForHome,
+        int countOfPetsOnTreatment, 
+        string phoneNumber)
     {
         FullName = fullName;
         Description = description;
@@ -31,10 +37,16 @@ public record VolunteerProfile
 
     public string PhoneNumber { get; }
 
-    public static VolunteerProfile Create(string fullName, string description, int yearsOfExperience,
-        int countOfPetsFoundHome, int countOfPetsLookingForHome, int countOfPetsOnTreatment, string phoneNumber)
+    public static VolunteerProfile Create(
+        string fullName, 
+        string description,
+        int yearsOfExperience,
+        int countOfPetsFoundHome, 
+        int countOfPetsLookingForHome,
+        int countOfPetsOnTreatment, 
+        string phoneNumber)
     {
-        if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > DefaultConstraints.MAX_REFERENCE_LENGTH)
+        if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > DefaultConstraints.MAX_LINK_LENGTH)
         {
             throw new Exception("VolunteerProfile creation error : fullName");
         }
@@ -69,7 +81,13 @@ public record VolunteerProfile
             throw new Exception("VolunteerProfile creation error : phoneNumber");
         }
 
-        return new VolunteerProfile(fullName, description, yearsOfExperience,
-            countOfPetsFoundHome, countOfPetsLookingForHome, countOfPetsOnTreatment, phoneNumber);
+        return new VolunteerProfile(
+            fullName, 
+            description, 
+            yearsOfExperience,
+            countOfPetsFoundHome, 
+            countOfPetsLookingForHome,
+            countOfPetsOnTreatment,
+            phoneNumber);
     }
 }
