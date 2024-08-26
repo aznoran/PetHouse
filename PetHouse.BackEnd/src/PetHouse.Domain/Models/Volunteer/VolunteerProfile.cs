@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using CSharpFunctionalExtensions;
 using PetHouse.Domain.Constraints;
+using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.Models;
 
@@ -37,7 +39,7 @@ public record VolunteerProfile
 
     public string PhoneNumber { get; }
 
-    public static VolunteerProfile Create(
+    public static Result<VolunteerProfile, Error> Create(
         string fullName, 
         string description,
         int yearsOfExperience,
@@ -48,37 +50,37 @@ public record VolunteerProfile
     {
         if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > DefaultConstraints.MAX_LINK_LENGTH)
         {
-            throw new Exception("VolunteerProfile creation error : fullName");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(fullName)));
         }
 
         if (string.IsNullOrWhiteSpace(description) || description.Length > DefaultConstraints.MAX_DESCRIPTION_LENGTH)
         {
-            throw new Exception("VolunteerProfile creation error : description");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(description)));
         }
 
         if (int.IsNegative(yearsOfExperience) || yearsOfExperience > 50)
         {
-            throw new Exception("VolunteerProfile creation error : yearsOfExperience");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(yearsOfExperience)));
         }
 
         if (int.IsNegative(countOfPetsFoundHome))
         {
-            throw new Exception("VolunteerProfile creation error : countOfPetsFoundHome");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsFoundHome)));
         }
 
         if (int.IsNegative(countOfPetsLookingForHome))
         {
-            throw new Exception("VolunteerProfile creation error : countOfPetsLookingForHome");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsLookingForHome)));
         }
 
         if (int.IsNegative(countOfPetsOnTreatment))
         {
-            throw new Exception("VolunteerProfile creation error : countOfPetsOnTreatment");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsOnTreatment)));
         }
 
         if (!Regex.IsMatch(phoneNumber, "(^8|7|\\+7)((\\d{10})|(\\s\\(\\d{3}\\)\\s\\d{3}\\s\\d{2}\\s\\d{2}))"))
         {
-            throw new Exception("VolunteerProfile creation error : phoneNumber");
+            return Result.Failure<VolunteerProfile, Error>(Errors.General.WrongPhoneNumber(phoneNumber));
         }
 
         return new VolunteerProfile(

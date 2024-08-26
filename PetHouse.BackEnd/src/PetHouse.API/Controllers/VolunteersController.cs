@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetHouse.API.Extensions;
 using PetHouse.Application.Volunteers.CreateVolunteer;
 
 namespace PetHouse.API.Controllers;
@@ -12,7 +13,11 @@ public class VolunteersController : ControllerBase
         [FromBody] CreateVolunteerRequest createVolunteerDto,
         CancellationToken cancellationToken = default)
     {
-        Guid res = await createVolunteerHandler.Handle(createVolunteerDto, cancellationToken);
-        return Ok(res);
+        var res = await createVolunteerHandler.Handle(createVolunteerDto, cancellationToken);
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+        return Ok(res.Value);
     }
 }

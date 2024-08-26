@@ -1,9 +1,10 @@
-﻿using PetHouse.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
 namespace PetHouse.Domain.Models;
 
-public sealed class Volunteer : Entity<VolunteerId>
+public sealed class Volunteer : Shared.Entity<VolunteerId>
 {
     public Volunteer()
     {
@@ -25,7 +26,7 @@ public sealed class Volunteer : Entity<VolunteerId>
     public ICollection<Pet>? Pets { get; private set; }
 
 
-    public static Volunteer Create(
+    public static Result<Volunteer, Error> Create(
         VolunteerId volunteerId,
         VolunteerProfile volunteerProfile,
         SocialNetworkInfo socialNetworks,
