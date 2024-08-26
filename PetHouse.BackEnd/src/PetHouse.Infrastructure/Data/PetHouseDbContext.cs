@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetHouse.Domain.Models;
+using PetHouse.Domain.Models;
 
 
 namespace PetHouse.Infrastructure;
@@ -13,6 +14,8 @@ public class PetHouseDbContext(IConfiguration configuration) : DbContext()
     
     ILoggerFactory loggerFactory = new LoggerFactory();
     
+    public DbSet<Volunteer> Volunteers { get; set; }
+
     public DbSet<Species> Species { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

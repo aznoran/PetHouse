@@ -1,7 +1,10 @@
-﻿namespace PetHouse.Domain.Models;
+﻿using PetHouse.Domain.Shared;
 
-public class Species : Entity<SpeciesId>
+namespace PetHouse.Domain.Models;
+
+public sealed class Species : Entity<SpeciesId>
 {
     public string Name { get; private set; }
+    
     public ICollection<Breed> Breeds { get; private set; }
 }

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using PetHouse.Application.Volunteers;
+using PetHouse.Application.Volunteers.CreateVolunteer;
 using PetHouse.Infrastructure;
+using PetHouse.Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+builder.Services.AddScoped<CreateVolunteerHandler>();
 
 builder.Services.AddScoped<PetHouseDbContext>(provider => new PetHouseDbContext(builder.Configuration));
 
@@ -19,5 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();

@@ -1,8 +1,41 @@
-﻿namespace PetHouse.Domain;
+﻿using PetHouse.Domain.Constraints;
 
-public class SocialNetwork
+
+namespace PetHouse.Domain.Models.Other;
+
+public record SocialNetwork
 {
-    public string Reference { get; private set; }
-    
-    public string Name { get; private set; }
+    public SocialNetwork()
+    {
+        
+    }
+    private SocialNetwork(string link, string name)
+    {
+        Link = link;
+        Name = name;
+    }
+
+    public string Link { get; }
+
+
+    public string Name { get; }
+
+    public static SocialNetwork Create(
+        string link, 
+        string name)
+    {
+        if (link.Length > DefaultConstraints.MAX_LINK_LENGTH)
+        {
+            throw new Exception("SocialNetwork creation error : link");
+        }
+
+        if (name.Length > DefaultConstraints.MAX_NAME_LENGTH)
+        {
+            throw new Exception("SocialNetwork creation error : name");
+        }
+
+        return new SocialNetwork(
+            link, 
+            name);
+    }
 }

@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain;
+﻿namespace PetHouse.Domain.Shared;
 
 public abstract class Entity<Tid> where Tid : notnull
 {

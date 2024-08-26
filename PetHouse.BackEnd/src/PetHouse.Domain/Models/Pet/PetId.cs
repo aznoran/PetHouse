@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain;
+﻿namespace PetHouse.Domain.Models;
 
 public record PetId 
 {

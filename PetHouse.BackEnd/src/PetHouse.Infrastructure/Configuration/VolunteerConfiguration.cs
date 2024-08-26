@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Domain;
 using PetHouse.Domain.Constraints;
+using PetHouse.Domain.Models;
 
 namespace PetHouse.Infrastructure.Configuration;
 
@@ -19,27 +20,38 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
                 value => VolunteerId.Create(value)
             );
         
-        builder.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH);
-        builder.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH);
-        builder.Property(p => p.YearsOfExperience).IsRequired();
-        builder.Property(p => p.CountOfPetsFoundHome).IsRequired();
-        builder.Property(p => p.CountOfPetsLookingForHome).IsRequired();
-        builder.Property(p => p.CountOfPetsOnTreatment).IsRequired();
-        builder.Property(p => p.PhoneNumber).IsRequired();
+        builder.ComplexProperty(v => v.VolunteerProfile, vp =>
+        {
+            vp.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasColumnName("full_name");
+            vp.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH).HasColumnName("description");
+            vp.Property(p => p.YearsOfExperience).IsRequired().HasColumnName("years_of_experience");
+            vp.Property(p => p.CountOfPetsFoundHome).IsRequired().HasColumnName("count_of_pets_found_home");
+            vp.Property(p => p.CountOfPetsLookingForHome).IsRequired().HasColumnName("count_of_pets_looking_for_home");
+            vp.Property(p => p.CountOfPetsOnTreatment).IsRequired().HasColumnName("count_of_pets_on_treatment");
+            vp.Property(p => p.PhoneNumber).IsRequired().HasColumnName("phone_number");
+        });
 
         builder.HasMany(v => v.Pets)
             .WithOne();
 
         builder.OwnsOne(v => v.Requisites, r =>
         {
-            r.ToJson();
-            r.OwnsMany(ri => ri.Requisites);
+            r.ToJson("requisites");
+            r.OwnsMany(ri => ri.Requisites, rt =>
+            {
+                rt.Property(t => t.Description).HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH).HasJsonPropertyName("description");
+                rt.Property(t => t.Name).HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasJsonPropertyName("name");
+            });
         });
         
         builder.OwnsOne(v => v.SocialNetworks, sn =>
         {
-            sn.ToJson();
-            sn.OwnsMany(sni => sni.SocialNetworks);
+            sn.ToJson("social_networks");
+            sn.OwnsMany(sni => sni.SocialNetworks, snt =>
+            {
+                snt.Property(t => t.Link).HasMaxLength(DefaultConstraints.MAX_LINK_LENGTH).HasJsonPropertyName("reference");
+                snt.Property(t => t.Name).HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasJsonPropertyName("name");
+            });
         });
         
     }

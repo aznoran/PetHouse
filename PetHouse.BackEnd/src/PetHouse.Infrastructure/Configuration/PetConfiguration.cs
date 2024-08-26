@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Domain;
 using PetHouse.Domain.Constraints;
+using PetHouse.Domain.Models;
 
 namespace PetHouse.Infrastructure.Configuration;
 
