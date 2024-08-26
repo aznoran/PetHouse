@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain;
+﻿namespace PetHouse.Domain.Models;
 
 public record VolunteerId
 {
@@ -15,4 +15,9 @@ public record VolunteerId
     public static VolunteerId NewEmptyId => new(Guid.Empty);
 
     public static VolunteerId Create(Guid id) => new(id);
+    
+    public static implicit operator Guid(VolunteerId id)
+    {
+        return id.Value;
+    }
 }

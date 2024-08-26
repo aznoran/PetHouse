@@ -1,6 +1,6 @@
-﻿namespace PetHouse.Domain;
+﻿namespace PetHouse.Domain.Models;
 
-public class PetPhoto 
+public record PetPhoto 
 {
     
     public string Path { get; private set; }

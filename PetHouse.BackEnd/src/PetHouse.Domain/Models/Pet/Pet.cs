@@ -1,7 +1,8 @@
 ﻿using PetHouse.Domain.Enums;
+using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
-namespace PetHouse.Domain;
+namespace PetHouse.Domain.Models;
 
 public class Pet : Entity<PetId>
 {
