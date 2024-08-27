@@ -20,9 +20,6 @@ public class CreateVolunteerHandler
             request.VolunteerProfileDto.FullName,
             request.VolunteerProfileDto.Description,
             request.VolunteerProfileDto.YearsOfExperience,
-            request.VolunteerProfileDto.CountOfPetsFoundHome,
-            request.VolunteerProfileDto.CountOfPetsLookingForHome,
-            request.VolunteerProfileDto.CountOfPetsOnTreatment,
             request.VolunteerProfileDto.PhoneNumber
             );
         if (volunteerProfile.IsFailure)

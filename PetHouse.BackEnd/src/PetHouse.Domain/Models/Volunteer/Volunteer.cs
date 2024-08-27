@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Enums;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
@@ -19,6 +20,18 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 
     public VolunteerProfile VolunteerProfile { get; private set; }
 
+    public int CountOfPetsFoundHome()
+    {
+        return this.Pets.Count(p => p.PetStatus == PetStatus.FoundHome);
+    }
+    public int CountOfPetsLookingForHome()
+    {
+        return this.Pets.Count(p => p.PetStatus == PetStatus.LookingForHome);
+    }
+    public int CountOfPetsOnTreatment()
+    {
+        return this.Pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
+    }
     public SocialNetworkInfo? SocialNetworks { get; private set; }
 
     public RequisiteInfo? Requisites { get; private set; }
