@@ -1,4 +1,6 @@
-﻿using PetHouse.Domain.Models.Other;
+﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Models.Other;
+using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.ValueObjects;
 

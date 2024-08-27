@@ -1,4 +1,6 @@
-﻿using PetHouse.Domain.Constraints;
+﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Constraints;
+using PetHouse.Domain.Shared;
 
 
 namespace PetHouse.Domain.Models.Other;
@@ -20,18 +22,18 @@ public record SocialNetwork
 
     public string Name { get; }
 
-    public static SocialNetwork Create(
+    public static Result<SocialNetwork, Error> Create(
         string link, 
         string name)
     {
         if (link.Length > DefaultConstraints.MAX_LINK_LENGTH)
         {
-            throw new Exception("SocialNetwork creation error : link");
+            return Result.Failure<SocialNetwork, Error>(Errors.General.ValueIsRequired(nameof(link)));
         }
 
         if (name.Length > DefaultConstraints.MAX_NAME_LENGTH)
         {
-            throw new Exception("SocialNetwork creation error : name");
+            return Result.Failure<SocialNetwork, Error>(Errors.General.ValueIsRequired(nameof(name)));
         }
 
         return new SocialNetwork(

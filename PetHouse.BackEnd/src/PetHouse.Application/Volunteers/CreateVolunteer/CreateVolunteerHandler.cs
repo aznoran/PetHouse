@@ -1,5 +1,7 @@
-﻿using PetHouse.Domain.Models;
+﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Other;
+using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
 namespace PetHouse.Application.Volunteers.CreateVolunteer;
@@ -12,9 +14,9 @@ public class CreateVolunteerHandler
         _repository = repository;
     }
     
-    public async Task<Guid> Handle(CreateVolunteerRequest request, CancellationToken cancellationToken)
+    public async Task<Result<Guid, Error>> Handle(CreateVolunteerRequest request, CancellationToken cancellationToken)
     {
-        VolunteerProfile volunteerProfile = VolunteerProfile.Create(
+        var volunteerProfile = VolunteerProfile.Create(
             request.VolunteerProfileDto.FullName,
             request.VolunteerProfileDto.Description,
             request.VolunteerProfileDto.YearsOfExperience,
@@ -23,22 +25,41 @@ public class CreateVolunteerHandler
             request.VolunteerProfileDto.CountOfPetsOnTreatment,
             request.VolunteerProfileDto.PhoneNumber
             );
+        if (volunteerProfile.IsFailure)
+        {
+            return Result.Failure<Guid, Error>(volunteerProfile.Error);
+        }
+        
+        //Валидация социальных сетей, как я увидел в чате - в дальнейшем я ее изменю на автовалидацию,
+        //а поэтому на данный момент я решил не дублировать ее для реквезитов и просто вернуть те,
+        //которые являются верными без возвращения ошибок
+        var socialNetworkResults = request.SocialNetworksDto
+            .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
+            .ToList();
+        var failedNetworks = socialNetworkResults
+            .Where(result => result.IsFailure)
+            .Select(r => r.Error)
+            .ToList();
+        if (failedNetworks.Count > 0)
+        {
+            return Result.Failure<Guid, Error>(failedNetworks.FirstOrDefault()!);
+        }
 
-        SocialNetworkInfo socialNetworkInfo = new SocialNetworkInfo(request.SocialNetworksDto.Select(
-            sn => SocialNetwork.Create(
-                sn.Link, 
-                sn.Name)).ToList());
-
+        var socialNetworkInfo = new SocialNetworkInfo(socialNetworkResults.Select(sn => sn.Value));
+        
         RequisiteInfo requisiteInfo = new RequisiteInfo(request.RequisiteDto.Select(
             r => Requisite.Create(
                 r.Name, 
-                r.Description)).ToList());
+                r.Description))
+            .Where(r => r.IsFailure == false)
+            .Select(r => r.Value)
+            .ToList());
         
         Volunteer volunteer = Volunteer.Create(
             VolunteerId.NewId, 
-            volunteerProfile, 
+            volunteerProfile.Value, 
             socialNetworkInfo,
-            requisiteInfo);
+            requisiteInfo).Value;
 
         return await _repository.Create(volunteer, cancellationToken);
     }
