@@ -4,7 +4,6 @@ using PetHouse.Domain.Models;
 
 namespace PetHouse.Infrastructure.Repositories;
 
-
 public class VolunteersRepository : IVolunteersRepository
 {
     private readonly PetHouseDbContext _dbContext;

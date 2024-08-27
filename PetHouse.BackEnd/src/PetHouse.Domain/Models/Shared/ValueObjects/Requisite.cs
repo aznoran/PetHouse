@@ -8,8 +8,8 @@ public class Requisite
 {
     public Requisite()
     {
-        
     }
+
     private Requisite(string name, string description)
     {
         Name = name;

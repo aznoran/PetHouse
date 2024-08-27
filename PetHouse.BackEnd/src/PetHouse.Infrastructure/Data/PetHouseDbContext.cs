@@ -9,7 +9,6 @@ namespace PetHouse.Infrastructure;
 
 public class PetHouseDbContext(IConfiguration configuration) : DbContext()
 {
-    
     private const string DATABASE = "PetHouseDbContext";
     
     ILoggerFactory loggerFactory = new LoggerFactory();
@@ -28,7 +27,7 @@ public class PetHouseDbContext(IConfiguration configuration) : DbContext()
         optionsBuilder.UseLoggerFactory(loggerFactory).EnableSensitiveDataLogging().LogTo(Console.WriteLine);
             
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
-        //EFCore.NamingConventions
+
         optionsBuilder.UseSnakeCaseNamingConvention();
     }
 }

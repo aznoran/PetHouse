@@ -9,8 +9,8 @@ public record SocialNetwork
 {
     public SocialNetwork()
     {
-        
     }
+
     private SocialNetwork(string link, string name)
     {
         Link = link;
@@ -23,7 +23,7 @@ public record SocialNetwork
     public string Name { get; }
 
     public static Result<SocialNetwork, Error> Create(
-        string link, 
+        string link,
         string name)
     {
         if (link.Length > DefaultConstraints.MAX_LINK_LENGTH)
@@ -37,7 +37,7 @@ public record SocialNetwork
         }
 
         return new SocialNetwork(
-            link, 
+            link,
             name);
     }
 }
