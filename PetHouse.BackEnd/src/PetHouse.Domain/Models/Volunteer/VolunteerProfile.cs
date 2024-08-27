@@ -11,17 +11,11 @@ public record VolunteerProfile
         string fullName,
         string description, 
         int yearsOfExperience, 
-        int countOfPetsFoundHome,
-        int countOfPetsLookingForHome,
-        int countOfPetsOnTreatment, 
         string phoneNumber)
     {
         FullName = fullName;
         Description = description;
         YearsOfExperience = yearsOfExperience;
-        CountOfPetsFoundHome = countOfPetsFoundHome;
-        CountOfPetsLookingForHome = countOfPetsLookingForHome;
-        CountOfPetsOnTreatment = countOfPetsOnTreatment;
         PhoneNumber = phoneNumber;
     }
 
@@ -31,21 +25,12 @@ public record VolunteerProfile
 
     public int YearsOfExperience { get; }
 
-    public int CountOfPetsFoundHome { get; }
-
-    public int CountOfPetsLookingForHome { get; }
-
-    public int CountOfPetsOnTreatment { get; }
-
     public string PhoneNumber { get; }
 
     public static Result<VolunteerProfile, Error> Create(
         string fullName, 
         string description,
-        int yearsOfExperience,
-        int countOfPetsFoundHome, 
-        int countOfPetsLookingForHome,
-        int countOfPetsOnTreatment, 
+        int yearsOfExperience, 
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > DefaultConstraints.MAX_LINK_LENGTH)
@@ -63,21 +48,6 @@ public record VolunteerProfile
             return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(yearsOfExperience)));
         }
 
-        if (int.IsNegative(countOfPetsFoundHome))
-        {
-            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsFoundHome)));
-        }
-
-        if (int.IsNegative(countOfPetsLookingForHome))
-        {
-            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsLookingForHome)));
-        }
-
-        if (int.IsNegative(countOfPetsOnTreatment))
-        {
-            return Result.Failure<VolunteerProfile, Error>(Errors.General.ValueIsInvalid(nameof(countOfPetsOnTreatment)));
-        }
-
         if (!Regex.IsMatch(phoneNumber, "(^8|7|\\+7)((\\d{10})|(\\s\\(\\d{3}\\)\\s\\d{3}\\s\\d{2}\\s\\d{2}))"))
         {
             return Result.Failure<VolunteerProfile, Error>(Errors.General.WrongPhoneNumber(phoneNumber));
@@ -87,9 +57,6 @@ public record VolunteerProfile
             fullName, 
             description, 
             yearsOfExperience,
-            countOfPetsFoundHome, 
-            countOfPetsLookingForHome,
-            countOfPetsOnTreatment,
             phoneNumber);
     }
 }

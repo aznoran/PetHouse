@@ -25,9 +25,6 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
             vp.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasColumnName("full_name");
             vp.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH).HasColumnName("description");
             vp.Property(p => p.YearsOfExperience).IsRequired().HasColumnName("years_of_experience");
-            vp.Property(p => p.CountOfPetsFoundHome).IsRequired().HasColumnName("count_of_pets_found_home");
-            vp.Property(p => p.CountOfPetsLookingForHome).IsRequired().HasColumnName("count_of_pets_looking_for_home");
-            vp.Property(p => p.CountOfPetsOnTreatment).IsRequired().HasColumnName("count_of_pets_on_treatment");
             vp.Property(p => p.PhoneNumber).IsRequired().HasColumnName("phone_number");
         });
 
