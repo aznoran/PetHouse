@@ -5,7 +5,7 @@ namespace PetHouse.Application;
 
 public static class Inject
 {
-    public static IServiceCollection AddApplications(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<ICreateVolunteerHandler,CreateVolunteerHandler>();
 
