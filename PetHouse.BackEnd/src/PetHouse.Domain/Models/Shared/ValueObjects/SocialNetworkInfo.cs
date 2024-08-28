@@ -8,12 +8,12 @@ public record SocialNetworkInfo
 {
     public SocialNetworkInfo()
     {
-        
     }
+
     public SocialNetworkInfo(IEnumerable<SocialNetwork> socialNetworks)
     {
         SocialNetworks = socialNetworks.ToList();
     }
+
     public IReadOnlyList<SocialNetwork> SocialNetworks { get; }
-    
 }

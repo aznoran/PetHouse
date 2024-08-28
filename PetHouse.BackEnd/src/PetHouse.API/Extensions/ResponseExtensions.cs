@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetHouse.API.Response;
 using PetHouse.Domain.Shared;
 
 namespace PetHouse.API.Extensions;
@@ -15,8 +16,10 @@ public static class ResponseExtensions
             ErrorType.Failure => StatusCodes.Status500InternalServerError,
             _ => StatusCodes.Status500InternalServerError
         };
-        
-        return new ObjectResult(error)
+
+        var envelope = Envelope.Error(error);
+
+        return new ObjectResult(envelope)
         {
             StatusCode = statusCode
         };

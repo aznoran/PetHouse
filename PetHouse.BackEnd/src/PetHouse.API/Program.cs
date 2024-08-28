@@ -1,20 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.CreateVolunteer;
+using PetHouse.API;
+using PetHouse.Application;
 using PetHouse.Infrastructure;
-using PetHouse.Infrastructure.Repositories;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(builder.Configuration));
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
-builder.Services.AddScoped<IVolunteersRepository, VolunteersRepository>();
-builder.Services.AddScoped<CreateVolunteerHandler>();
-
-builder.Services.AddScoped<PetHouseDbContext>(provider => new PetHouseDbContext(builder.Configuration));
+builder.Services
+    .AddApiServices()
+    .AddInfrastructure()
+    .AddApplication();
 
 var app = builder.Build();
 

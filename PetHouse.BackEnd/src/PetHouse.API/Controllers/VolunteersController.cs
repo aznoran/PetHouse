@@ -9,7 +9,8 @@ namespace PetHouse.API.Controllers;
 public class VolunteersController : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<Guid>> Create([FromServices] CreateVolunteerHandler createVolunteerHandler,
+    public async Task<ActionResult<Guid>> Create(
+        [FromServices] ICreateVolunteerHandler createVolunteerHandler,
         [FromBody] CreateVolunteerRequest createVolunteerDto,
         CancellationToken cancellationToken = default)
     {
@@ -18,6 +19,7 @@ public class VolunteersController : ControllerBase
         {
             return res.Error.ToResponse();
         }
-        return Ok(res.Value);
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 }

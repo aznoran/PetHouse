@@ -9,8 +9,8 @@ public record VolunteerProfile
 {
     private VolunteerProfile(
         string fullName,
-        string description, 
-        int yearsOfExperience, 
+        string description,
+        int yearsOfExperience,
         string phoneNumber)
     {
         FullName = fullName;
@@ -28,9 +28,9 @@ public record VolunteerProfile
     public string PhoneNumber { get; }
 
     public static Result<VolunteerProfile, Error> Create(
-        string fullName, 
+        string fullName,
         string description,
-        int yearsOfExperience, 
+        int yearsOfExperience,
         string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > DefaultConstraints.MAX_LINK_LENGTH)
@@ -54,8 +54,8 @@ public record VolunteerProfile
         }
 
         return new VolunteerProfile(
-            fullName, 
-            description, 
+            fullName,
+            description,
             yearsOfExperience,
             phoneNumber);
     }

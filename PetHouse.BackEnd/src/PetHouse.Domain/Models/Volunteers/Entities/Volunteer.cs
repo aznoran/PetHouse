@@ -9,9 +9,10 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 {
     public Volunteer()
     {
-        
     }
-    private Volunteer(VolunteerId volunteerId, VolunteerProfile volunteerProfile, SocialNetworkInfo? socialNetworks, RequisiteInfo? requisites) : base(volunteerId)
+
+    private Volunteer(VolunteerId volunteerId, VolunteerProfile volunteerProfile, SocialNetworkInfo? socialNetworks,
+        RequisiteInfo? requisites) : base(volunteerId)
     {
         VolunteerProfile = volunteerProfile;
         SocialNetworks = socialNetworks;
@@ -22,21 +23,25 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 
     public int CountOfPetsFoundHome()
     {
-        return this.Pets.Count(p => p.PetStatus == PetStatus.FoundHome);
+        return _pets.Count(p => p.PetStatus == PetStatus.FoundHome);
     }
+
     public int CountOfPetsLookingForHome()
     {
-        return this.Pets.Count(p => p.PetStatus == PetStatus.LookingForHome);
+        return _pets.Count(p => p.PetStatus == PetStatus.LookingForHome);
     }
+
     public int CountOfPetsOnTreatment()
     {
-        return this.Pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
+        return _pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
     }
+
     public SocialNetworkInfo? SocialNetworks { get; private set; }
 
     public RequisiteInfo? Requisites { get; private set; }
 
-    public ICollection<Pet>? Pets { get; private set; }
+    private List<Pet> _pets = [];
+    public ICollection<Pet>? Pets => _pets;
 
 
     public static Result<Volunteer, Error> Create(
@@ -48,7 +53,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
         var volunteer = new Volunteer(
             volunteerId,
             volunteerProfile,
-            socialNetworks, 
+            socialNetworks,
             requisites);
 
         return volunteer;
