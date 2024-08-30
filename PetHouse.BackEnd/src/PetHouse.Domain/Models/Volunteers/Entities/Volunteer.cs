@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.Enums;
+using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
@@ -11,16 +12,29 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
     {
     }
 
-    private Volunteer(VolunteerId volunteerId, VolunteerProfile volunteerProfile, SocialNetworkInfo? socialNetworks,
+    private Volunteer(VolunteerId volunteerId,
+        FullName fullName, 
+        Description description,
+        YearsOfExperience yearsOfExperience,
+        PhoneNumber phoneNumber,
+        SocialNetworkInfo? socialNetworks,
         RequisiteInfo? requisites) : base(volunteerId)
     {
-        VolunteerProfile = volunteerProfile;
+        FullName = fullName;
+        Description = description;
+        YearsOfExperience = yearsOfExperience;
+        PhoneNumber = phoneNumber;
         SocialNetworks = socialNetworks;
         Requisites = requisites;
     }
 
-    public VolunteerProfile VolunteerProfile { get; private set; }
+    public FullName FullName { get; private set; }
+    
+    public Description Description { get; private set; }
 
+    public YearsOfExperience YearsOfExperience { get; private set; }
+    
+    public PhoneNumber PhoneNumber { get; private set; }
     public int CountOfPetsFoundHome()
     {
         return _pets.Count(p => p.PetStatus == PetStatus.FoundHome);
@@ -46,13 +60,19 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 
     public static Result<Volunteer, Error> Create(
         VolunteerId volunteerId,
-        VolunteerProfile volunteerProfile,
+        FullName fullName, 
+        Description description,
+        YearsOfExperience yearsOfExperience,
+        PhoneNumber phoneNumber,
         SocialNetworkInfo socialNetworks,
         RequisiteInfo requisites)
     {
         var volunteer = new Volunteer(
             volunteerId,
-            volunteerProfile,
+            fullName,
+            description,
+            yearsOfExperience,
+            phoneNumber,
             socialNetworks,
             requisites);
 

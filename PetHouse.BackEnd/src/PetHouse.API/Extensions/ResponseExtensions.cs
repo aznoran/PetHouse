@@ -8,7 +8,7 @@ public static class ResponseExtensions
 {
     public static ActionResult ToResponse(this Error error)
     {
-        var statusCode = error.ErrorType switch
+        var statusCode = error.Type switch
         {
             ErrorType.Validation => StatusCodes.Status400BadRequest,
             ErrorType.NotFound => StatusCodes.Status404NotFound,
@@ -17,7 +17,9 @@ public static class ResponseExtensions
             _ => StatusCodes.Status500InternalServerError
         };
 
-        var envelope = Envelope.Error(error);
+        ResponseError responseError = new ResponseError(error.Code, error.Message, null);
+        
+        var envelope = Envelope.Error([responseError]);
 
         return new ObjectResult(envelope)
         {

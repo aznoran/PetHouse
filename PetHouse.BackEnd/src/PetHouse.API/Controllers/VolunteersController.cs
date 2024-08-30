@@ -15,11 +15,7 @@ public class VolunteersController : ControllerBase
         CancellationToken cancellationToken = default)
     {
         var res = await createVolunteerHandler.Handle(createVolunteerDto, cancellationToken);
-        if (res.IsFailure)
-        {
-            return res.Error.ToResponse();
-        }
-
+        
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 }

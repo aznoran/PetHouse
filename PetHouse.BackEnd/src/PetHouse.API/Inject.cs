@@ -1,4 +1,7 @@
-﻿namespace PetHouse.API;
+﻿using PetHouse.API.Validation;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+
+namespace PetHouse.API;
 
 public static class Inject
 {
@@ -7,7 +10,11 @@ public static class Inject
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen();
         serviceCollection.AddControllers();
-
+        serviceCollection.AddFluentValidationAutoValidation(configuration =>
+        {
+            configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
+        });
+        
         return serviceCollection;
     }
 }
