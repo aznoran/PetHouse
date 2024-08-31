@@ -19,13 +19,35 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
                 id => id.Value,
                 value => VolunteerId.Create(value)
             );
-        
-        builder.ComplexProperty(v => v.VolunteerProfile, vp =>
+
+        builder.ComplexProperty(v => v.FullName, vb =>
         {
-            vp.Property(p => p.FullName).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasColumnName("full_name");
-            vp.Property(p => p.Description).IsRequired().HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH).HasColumnName("description");
-            vp.Property(p => p.YearsOfExperience).IsRequired().HasColumnName("years_of_experience");
-            vp.Property(p => p.PhoneNumber).IsRequired().HasColumnName("phone_number");
+            vb.Property(vp => vp.Name).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH)
+                .HasColumnName("name");
+            vb.Property(vp => vp.Surname).IsRequired().HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH)
+                .HasColumnName("surname");
+        });
+        
+        builder.ComplexProperty(v => v.Description, vb =>
+        {
+            vb.Property(vp => vp.Value)
+                .IsRequired()
+                .HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH)
+                .HasColumnName("description");
+        });
+        
+        builder.ComplexProperty(v => v.YearsOfExperience, vb =>
+        {
+            vb.Property(vp => vp.Value)
+                .IsRequired()
+                .HasColumnName("years_of_experience");
+        });
+        
+        builder.ComplexProperty(v => v.PhoneNumber, vb =>
+        {
+            vb.Property(vp => vp.Value)
+                .IsRequired()
+                .HasColumnName("phone_number");
         });
 
         builder.HasMany(v => v.Pets)

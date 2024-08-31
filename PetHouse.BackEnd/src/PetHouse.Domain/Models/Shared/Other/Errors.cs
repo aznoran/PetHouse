@@ -25,7 +25,7 @@ public class Errors
         public static Error WrongPhoneNumber(string? phoneNumber = null)
         {
             var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
-            return Error.Validation("length.is.invalid", $"Phone number {label} is invalid.");
+            return Error.Validation("phone.is.invalid", $"Phone number {label} is invalid.");
         }
     }
 }

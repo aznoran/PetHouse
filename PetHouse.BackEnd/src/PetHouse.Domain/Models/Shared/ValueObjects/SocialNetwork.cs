@@ -26,12 +26,12 @@ public record SocialNetwork
         string link,
         string name)
     {
-        if (link.Length > DefaultConstraints.MAX_LINK_LENGTH)
+        if (link.Length > DefaultConstraints.MAX_LINK_LENGTH || string.IsNullOrWhiteSpace(link))
         {
             return Result.Failure<SocialNetwork, Error>(Errors.General.ValueIsRequired(nameof(link)));
         }
 
-        if (name.Length > DefaultConstraints.MAX_NAME_LENGTH)
+        if (name.Length > DefaultConstraints.MAX_NAME_LENGTH || string.IsNullOrWhiteSpace(name))
         {
             return Result.Failure<SocialNetwork, Error>(Errors.General.ValueIsRequired(nameof(name)));
         }
