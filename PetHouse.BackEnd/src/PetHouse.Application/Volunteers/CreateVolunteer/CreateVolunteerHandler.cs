@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Microsoft.Extensions.Logging;
 using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
@@ -10,10 +11,11 @@ namespace PetHouse.Application.Volunteers.CreateVolunteer;
 public class CreateVolunteerHandler : ICreateVolunteerHandler
 {
     private readonly IVolunteersRepository _repository;
-
-    public CreateVolunteerHandler(IVolunteersRepository repository)
+    private readonly ILogger<CreateVolunteerHandler> _logger;
+    public CreateVolunteerHandler(IVolunteersRepository repository, ILogger<CreateVolunteerHandler> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task<Result<Guid, Error>> Handle(CreateVolunteerRequest request, CancellationToken cancellationToken)
@@ -25,6 +27,11 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
         var yearsOfExperience = YearsOfExperience.Create(request.YearsOfExperience).Value;
 
         var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
+        
+        if (await _repository.GetByPhoneNumber(phoneNumber) != null)
+        {
+            return Errors.Volunteer.AlreadyExists(phoneNumber.Value);
+        }
 
         var socialNetworks = new SocialNetworkInfo(request.SocialNetworksDto
             .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
@@ -45,6 +52,8 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
             socialNetworks,
             requisites).Value;
 
+        _logger.LogInformation("Created Volunteer {FullName} with id {VolunteerId}", fullName, volunteer.Id);
+        
         return await _repository.Create(volunteer, cancellationToken);
     }
 }
