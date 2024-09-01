@@ -1,4 +1,5 @@
 using PetHouse.API;
+using PetHouse.API.Extensions;
 using PetHouse.Application;
 using PetHouse.Infrastructure;
 
@@ -18,6 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionLogMiddleware();
 
 app.UseHttpsRedirection();
 
