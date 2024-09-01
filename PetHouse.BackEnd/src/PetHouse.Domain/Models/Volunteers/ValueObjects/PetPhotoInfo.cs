@@ -4,5 +4,14 @@ namespace PetHouse.Domain.ValueObjects;
 
 public record PetPhotoInfo
 {
-    public ICollection<PetPhoto> PetPhotos { get; }
+    public PetPhotoInfo()
+    {
+    }
+
+    public PetPhotoInfo(IEnumerable<PetPhoto> petPhotos)
+    {
+        PetPhotos = petPhotos.ToList();
+    }
+
+    public IReadOnlyList<PetPhoto> PetPhotos { get; }
 }
