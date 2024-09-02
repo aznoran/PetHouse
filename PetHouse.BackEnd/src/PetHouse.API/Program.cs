@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PetHouse.API;
+using PetHouse.API.Extensions;
 using PetHouse.Application;
 using PetHouse.Infrastructure;
 using Serilog;
@@ -35,6 +36,8 @@ if (app.Environment.IsDevelopment())
     
     await dbContext.Database.MigrateAsync();
 }
+
+app.UseExceptionLogMiddleware();
 
 app.UseSerilogRequestLogging();
 
