@@ -26,10 +26,11 @@ public class Errors
 
     public static class Volunteer
     {
-        public static Error AlreadyExists(string? phoneNumber = null)
+        public static Error AlreadyExists(string? label = null, string? fieldname = null)
         {
-            var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
-            return Error.Validation("already.exists", $"Volunteer with phone number {label} already exists.");
+            var labelt = label == null ? "[label?]" : $"'{label}'";
+            var fieldnamet = fieldname == null ? "[fieldname?]" : $"'{fieldname}'";
+            return Error.Validation("already.exists", $"Volunteer with {fieldnamet} {labelt} already exists.");
         }
         public static Error WrongPhoneNumber(string? phoneNumber = null)
         {

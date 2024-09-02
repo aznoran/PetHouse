@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Response;
 using PetHouse.Domain.Shared;
 
@@ -24,6 +25,26 @@ public static class ResponseExtensions
         return new ObjectResult(envelope)
         {
             StatusCode = statusCode
+        };
+    }
+    
+    public static ActionResult ToValidationErrorResponse(this ValidationResult result)
+    {
+        if (result.IsValid)
+            throw new InvalidOperationException("Result must be invalid");
+
+
+        var validationErrors = result.Errors;
+        var responseErrors = from error in validationErrors
+            let errorMessage = error.ErrorMessage
+            let errorConvert = Error.Deserialize(errorMessage)
+            select new ResponseError(errorConvert.Code, errorConvert.Message, error.PropertyName);
+
+        var envelope = Envelope.Error(responseErrors);
+
+        return new ObjectResult(envelope)
+        {
+            StatusCode = StatusCodes.Status400BadRequest
         };
     }
 }
