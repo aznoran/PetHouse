@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PetHouse.API;
 using PetHouse.Application;
 using PetHouse.Infrastructure;
@@ -28,15 +27,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    await using var scope = app.Services.CreateAsyncScope();
-
-    var dbContext = scope.ServiceProvider.GetRequiredService<PetHouseDbContext>();
-    
-    await dbContext.Database.MigrateAsync();
 }
 
 app.UseSerilogRequestLogging();
+
+app.UseExceptionLogMiddleware();
 
 app.UseHttpsRedirection();
 
