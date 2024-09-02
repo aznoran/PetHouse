@@ -11,6 +11,15 @@
     ports:
       - "5434:5432"
     restart: always
+  seq:
+    container_name: PetHouseLogs
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    restart: always
 
 volumes:
   postgres:

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetHouse.Application.Volunteers;
 using PetHouse.Domain.Models;
+using PetHouse.Domain.Models.Volunteers.ValueObjects;
 
 namespace PetHouse.Infrastructure.Repositories;
 
@@ -20,5 +21,11 @@ public class VolunteersRepository : IVolunteersRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return volunteer.Id;
+    }
+    
+    public async Task<Volunteer> GetByPhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+    {
+        return (await _dbContext.Volunteers
+            .SingleOrDefaultAsync(v => v.PhoneNumber == phoneNumber,cancellationToken))!;
     }
 }

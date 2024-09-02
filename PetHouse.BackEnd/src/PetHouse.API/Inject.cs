@@ -1,5 +1,6 @@
 ﻿using PetHouse.API.Validation;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using Serilog;
 
 namespace PetHouse.API;
 
@@ -14,6 +15,7 @@ public static class Inject
         {
             configuration.OverrideDefaultResultFactoryWith<CustomResultFactory>();
         });
+        serviceCollection.AddSerilog();
         
         return serviceCollection;
     }
