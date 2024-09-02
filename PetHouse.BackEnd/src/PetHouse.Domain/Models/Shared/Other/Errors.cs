@@ -28,4 +28,14 @@ public class Errors
             return Error.Validation("phone.is.invalid", $"Phone number {label} is invalid.");
         }
     }
+
+    public static class Volunteer
+    {
+        public static Error AlreadyExists(string? phoneNumber = null)
+        {
+            var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
+            return Error.Validation("already.exists", $"Volunteer with phone number {label} already exists.");
+        }
+    }
+
 }
