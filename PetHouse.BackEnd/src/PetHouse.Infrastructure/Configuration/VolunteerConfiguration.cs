@@ -28,6 +28,13 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
                 .HasColumnName("surname");
         });
         
+        builder.ComplexProperty(v => v.Email, vb =>
+        {
+            vb.Property(vp => vp.Value)
+                .IsRequired()
+                .HasColumnName("email");
+        });
+        
         builder.ComplexProperty(v => v.Description, vb =>
         {
             vb.Property(vp => vp.Value)

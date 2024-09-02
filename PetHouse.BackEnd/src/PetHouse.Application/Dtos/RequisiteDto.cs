@@ -1,3 +1,3 @@
-﻿namespace PetHouse.Application.Volunteers.CreateVolunteer;
+﻿namespace PetHouse.Application.Dto;
 
 public record RequisiteDto(string Name, string Description);

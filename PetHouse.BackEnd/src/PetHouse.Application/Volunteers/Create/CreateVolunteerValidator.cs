@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
-using FluentValidation.AspNetCore;
 using PetHouse.Application.Validation;
-using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.CreateVolunteer;
+namespace PetHouse.Application.Volunteers.Create;
 
 public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerRequest>
 {
@@ -13,6 +11,8 @@ public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerRequest
     {
         RuleFor(v => v.FullNameDto).MustBeValueObject(x => FullName.Create(x.Name, x.Surname));
 
+        RuleFor(v => v.Email).MustBeValueObject(Email.Create);
+        
         RuleFor(v => v.Description).MustBeValueObject(Description.Create);
 
         RuleFor(v => v.YearsOfExperience).MustBeValueObject(YearsOfExperience.Create);

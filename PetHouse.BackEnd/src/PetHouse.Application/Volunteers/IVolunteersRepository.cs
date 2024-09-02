@@ -7,5 +7,5 @@ public interface IVolunteersRepository
 {
     Task<Guid> Create(Volunteer volunteer, CancellationToken cancellationToken = default);
 
-    Task<Volunteer> GetByPhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default);
+    Task<Volunteer> GetByEmail(Email email, CancellationToken cancellationToken = default);
 }

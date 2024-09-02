@@ -21,12 +21,7 @@ public class Errors
             var label = name == null ? " " : $" '{name}' ";
             return Error.Validation("length.is.invalid", $"invalid{label}length.");
         }
-
-        public static Error WrongPhoneNumber(string? phoneNumber = null)
-        {
-            var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
-            return Error.Validation("phone.is.invalid", $"Phone number {label} is invalid.");
-        }
+        
     }
 
     public static class Volunteer
@@ -35,6 +30,16 @@ public class Errors
         {
             var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
             return Error.Validation("already.exists", $"Volunteer with phone number {label} already exists.");
+        }
+        public static Error WrongPhoneNumber(string? phoneNumber = null)
+        {
+            var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
+            return Error.Validation("phone.is.invalid", $"Phone number {label} is invalid.");
+        }
+        public static Error WrongEmail(string? email = null)
+        {
+            var label = email == null ? " " : $" '{email}' ";
+            return Error.Validation("email.is.invalid", $"Email {label} is invalid.");
         }
     }
 

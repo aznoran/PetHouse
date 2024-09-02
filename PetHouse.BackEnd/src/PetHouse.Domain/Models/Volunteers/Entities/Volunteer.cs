@@ -14,6 +14,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 
     private Volunteer(VolunteerId volunteerId,
         FullName fullName, 
+        Email email,
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
@@ -21,6 +22,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
         RequisiteInfo? requisites) : base(volunteerId)
     {
         FullName = fullName;
+        Email = email;
         Description = description;
         YearsOfExperience = yearsOfExperience;
         PhoneNumber = phoneNumber;
@@ -29,6 +31,8 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
     }
 
     public FullName FullName { get; private set; }
+    
+    public Email Email { get; private set; }
     
     public Description Description { get; private set; }
 
@@ -61,6 +65,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
     public static Result<Volunteer, Error> Create(
         VolunteerId volunteerId,
         FullName fullName, 
+        Email email,
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
@@ -70,6 +75,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
         var volunteer = new Volunteer(
             volunteerId,
             fullName,
+            email,
             description,
             yearsOfExperience,
             phoneNumber,

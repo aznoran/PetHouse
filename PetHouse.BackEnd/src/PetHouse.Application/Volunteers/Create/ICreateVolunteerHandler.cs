@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.Shared;
 
-namespace PetHouse.Application.Volunteers.CreateVolunteer;
+namespace PetHouse.Application.Volunteers.Create;
 
 public interface ICreateVolunteerHandler
 {
