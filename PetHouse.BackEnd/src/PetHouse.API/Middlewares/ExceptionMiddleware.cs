@@ -5,10 +5,12 @@ namespace PetHouse.API.Middlewares;
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionMiddleware> _logger;
 
-    public ExceptionMiddleware(RequestDelegate next)
+    public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -25,8 +27,7 @@ public class ExceptionMiddleware
             ResponseError responseError = new ResponseError("server.internal", e.Message, null);
             var envelope = Envelope.Error([responseError]);
 
-            //здесь должно быть логирование, которое я прикручу после того как будет одобрен прошлый
-            //pull request - в котором оно как раз и реализовано. TODO: logging with serilog
+            _logger.LogError(e, "Server error :{ResponseError}",responseError.ErrorMessage);
             
             await context.Response.WriteAsJsonAsync(envelope);
         }
