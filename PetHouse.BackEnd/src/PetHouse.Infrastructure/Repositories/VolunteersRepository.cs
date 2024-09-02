@@ -23,9 +23,9 @@ public class VolunteersRepository : IVolunteersRepository
         return volunteer.Id;
     }
     
-    public async Task<Volunteer> GetByPhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
+    public async Task<Volunteer> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
         return (await _dbContext.Volunteers
-            .SingleOrDefaultAsync(v => v.PhoneNumber == phoneNumber,cancellationToken))!;
+            .SingleOrDefaultAsync(v => v.Email == email,cancellationToken))!;
     }
 }

@@ -6,7 +6,7 @@ using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.CreateVolunteer;
+namespace PetHouse.Application.Volunteers.Create;
 
 public class CreateVolunteerHandler : ICreateVolunteerHandler
 {
@@ -26,13 +26,15 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
 
         var yearsOfExperience = YearsOfExperience.Create(request.YearsOfExperience).Value;
 
+        var email = Email.Create(request.Email).Value;
+        
+        if (await _repository.GetByEmail(email) != null)
+        {
+            return Errors.Volunteer.AlreadyExists(email.Value);
+        }
+        //Т.к. телефон и почта уникальны для каждого волонтера, то проверку на телефон делать не обязательно
         var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
         
-        if (await _repository.GetByPhoneNumber(phoneNumber) != null)
-        {
-            return Errors.Volunteer.AlreadyExists(phoneNumber.Value);
-        }
-
         var socialNetworks = new SocialNetworkInfo(request.SocialNetworksDto
             .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
             .ToList().Select(sn => sn.Value));
@@ -46,6 +48,7 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
         Volunteer volunteer = Volunteer.Create(
             VolunteerId.NewId,
             fullName,
+            email,
             description,
             yearsOfExperience,
             phoneNumber,

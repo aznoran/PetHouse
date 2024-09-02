@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Extensions;
 using PetHouse.API.Response;
-using PetHouse.Application.Volunteers.CreateVolunteer;
+using PetHouse.Application.Volunteers.Create;
 
 namespace PetHouse.API.Controllers;
 
