@@ -25,10 +25,7 @@ public class VolunteersRepository : IVolunteersRepository
     
     public async Task<Volunteer> GetByPhoneNumber(PhoneNumber phoneNumber, CancellationToken cancellationToken = default)
     {
-        var volunteerTemp = await _dbContext.Volunteers
-            .Where(v => v.PhoneNumber.Value == phoneNumber.Value)
-            .SingleOrDefaultAsync(cancellationToken);
-
-        return volunteerTemp;
+        return (await _dbContext.Volunteers
+            .SingleOrDefaultAsync(v => v.PhoneNumber == phoneNumber,cancellationToken))!;
     }
 }
