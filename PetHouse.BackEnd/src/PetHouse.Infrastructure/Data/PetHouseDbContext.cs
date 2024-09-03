@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetHouse.Domain.Models;
 using PetHouse.Domain.Models;
+using PetHouse.Infrastructure.Interceptors;
 
 
 namespace PetHouse.Infrastructure;
@@ -29,5 +30,7 @@ public class PetHouseDbContext(IConfiguration configuration) : DbContext()
         optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
 
         optionsBuilder.UseSnakeCaseNamingConvention();
+
+        //optionsBuilder.AddInterceptors(new SoftDeleteInterceptor());
     }
 }

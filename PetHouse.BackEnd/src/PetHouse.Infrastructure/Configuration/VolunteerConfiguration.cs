@@ -58,7 +58,8 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
         });
 
         builder.HasMany(v => v.Pets)
-            .WithOne();
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.OwnsOne(v => v.Requisites, r =>
         {
@@ -79,6 +80,9 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
                 snt.Property(t => t.Name).HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasJsonPropertyName("name");
             });
         });
-        
+
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }

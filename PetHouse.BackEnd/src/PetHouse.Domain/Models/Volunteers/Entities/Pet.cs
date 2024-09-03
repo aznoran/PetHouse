@@ -4,8 +4,9 @@ using PetHouse.Domain.ValueObjects;
 
 namespace PetHouse.Domain.Models;
 
-public sealed class Pet : Entity<PetId>
+public sealed class Pet : Entity<PetId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
     public string Name { get; private set; }
 
     public PetIdentifier PetIdentifier { get; private set; }
@@ -36,4 +37,13 @@ public sealed class Pet : Entity<PetId>
     public DateTime CreationDate { get; private set; }
 
     public PetPhotoInfo PetPhotos { get; private set; }
+    public void Delete()
+    {
+        _isDeleted = true;
+    }
+
+    public void Restore()
+    {
+        _isDeleted = false;
+    }
 }

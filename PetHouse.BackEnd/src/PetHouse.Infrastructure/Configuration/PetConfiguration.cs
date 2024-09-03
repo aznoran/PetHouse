@@ -51,5 +51,9 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("species_id");
             pi.Property(pit => pit.BreedId).IsRequired().HasColumnName("breed_id");
         });
+        
+        builder.Property<bool>("_isDeleted")
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .HasColumnName("is_deleted");
     }
 }
