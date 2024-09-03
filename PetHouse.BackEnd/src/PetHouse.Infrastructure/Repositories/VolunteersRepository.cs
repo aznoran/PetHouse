@@ -69,4 +69,24 @@ public class VolunteersRepository : IVolunteersRepository
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+    
+    public async Task<Result<Volunteer, Error>> GetById(Guid id, CancellationToken cancellationToken = default)
+    {
+        var res = await _dbContext.Volunteers
+            .FirstOrDefaultAsync(v => v.Id == VolunteerId.Create(id),cancellationToken);
+
+        if (res is null)
+        {
+            return Errors.General.NotFound();
+        }
+
+        return res;
+    }
+    
+    public async Task Save(Volunteer volunteer,CancellationToken cancellationToken = default)
+    {
+        _dbContext.Attach(volunteer);
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

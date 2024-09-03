@@ -9,7 +9,7 @@ public static class Inject
     public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
-
+        
         return serviceCollection;
     }
 }

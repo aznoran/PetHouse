@@ -27,14 +27,13 @@ public static class ResponseExtensions
             StatusCode = statusCode
         };
     }
-    
     public static ActionResult ToValidationErrorResponse(this ValidationResult result)
     {
         if (result.IsValid)
             throw new InvalidOperationException("Result must be invalid");
 
-
         var validationErrors = result.Errors;
+      
         var responseErrors = from error in validationErrors
             let errorMessage = error.ErrorMessage
             let errorConvert = Error.Deserialize(errorMessage)

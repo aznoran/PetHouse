@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetHouse.Domain.Models;
-using PetHouse.Domain.Models;
-
 
 namespace PetHouse.Infrastructure;
 
