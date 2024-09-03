@@ -31,14 +31,6 @@ public class VolunteersRepository : IVolunteersRepository
             .SingleOrDefaultAsync(v => v.Email == email,cancellationToken))!;
     }
     
-    /*public async Task<Guid> Delete(Volunteer volunteer, CancellationToken cancellationToken = default)
-    {
-        _dbContext.Volunteers.Remove(volunteer);
-        
-        await _dbContext.SaveChangesAsync(cancellationToken);
-        
-        return volunteer.Id;
-    }*/
     public async Task<Result<Volunteer, Error>> GetById(Guid id, CancellationToken cancellationToken = default)
     {
         var res = await _dbContext.Volunteers
