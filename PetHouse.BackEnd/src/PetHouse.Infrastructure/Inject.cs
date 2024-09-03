@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PetHouse.Application.Volunteers;
-using PetHouse.Infrastructure.Interceptors;
 using PetHouse.Infrastructure.Repositories;
 
 namespace PetHouse.Infrastructure;

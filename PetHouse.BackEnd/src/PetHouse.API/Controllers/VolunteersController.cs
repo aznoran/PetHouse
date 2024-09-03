@@ -30,7 +30,7 @@ public class VolunteersController : ApplicationController
     }
     
     [HttpDelete("{id:guid}")]
-    public async Task<ActionResult<Guid>> Create(
+    public async Task<ActionResult<Guid>> Delete(
         [FromServices] IDeleteVolunteerHandler deleteVolunteerHandler,
         [FromServices] IValidator<DeleteVolunteerRequest> validator,
         [FromRoute] Guid id,
