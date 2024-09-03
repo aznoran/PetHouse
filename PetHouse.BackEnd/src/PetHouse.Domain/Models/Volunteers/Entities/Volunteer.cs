@@ -104,6 +104,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         {
             pet.Restore();
         }
+    }
 
     public void UpdateMainInfo(
         FullName fullName,
