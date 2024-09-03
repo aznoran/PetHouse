@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.Constraints;
 using PetHouse.Domain.Enums;
+using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
@@ -103,5 +104,30 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         {
             pet.Restore();
         }
+
+    public void UpdateMainInfo(
+        FullName fullName,
+        Email email,
+        Description description,
+        YearsOfExperience yearsOfExperience,
+        PhoneNumber phoneNumber)
+    {
+        FullName = fullName;
+        Email = email;
+        Description = description;
+        YearsOfExperience = yearsOfExperience;
+        PhoneNumber = phoneNumber;
+    }
+    
+    public void UpdateRequisites(
+        RequisiteInfo requisites)
+    {
+        Requisites = requisites;
+    }
+    
+    public void UpdateSocialNetworks(
+        SocialNetworkInfo socialNetworks)
+    {
+        SocialNetworks = socialNetworks;
     }
 }

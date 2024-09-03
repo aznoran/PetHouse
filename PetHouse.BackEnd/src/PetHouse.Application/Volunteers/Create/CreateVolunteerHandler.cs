@@ -27,14 +27,23 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
         var yearsOfExperience = YearsOfExperience.Create(request.YearsOfExperience).Value;
 
         var email = Email.Create(request.Email).Value;
+
+        var emailRes = await _repository.GetByEmail(email);
         
-        if (await _repository.GetByEmail(email) != null)
+        if (emailRes.IsSuccess)
         {
-            return Errors.Volunteer.AlreadyExists(email.Value);
+            return Errors.Volunteer.AlreadyExists(email.Value, nameof(email));
         }
-        //Т.к. телефон и почта уникальны для каждого волонтера, то проверку на телефон делать не обязательно
-        var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
         
+        var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
+
+        var phoneNumberRes = await _repository.GetByPhoneNumber(phoneNumber);
+        
+        if (phoneNumberRes.IsSuccess)
+        {
+            return Errors.Volunteer.AlreadyExists(phoneNumber.Value, nameof(phoneNumber));
+        }
+       
         var socialNetworks = new SocialNetworkInfo(request.SocialNetworksDto
             .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
             .ToList().Select(sn => sn.Value));
