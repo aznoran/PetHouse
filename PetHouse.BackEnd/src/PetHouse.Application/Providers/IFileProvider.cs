@@ -9,6 +9,7 @@ public interface IFileProvider
     Task<UnitResult<Error>> Upload(
         Stream stream,
         string bucketName,
+        Guid fileName,
         CancellationToken ct);
 
     Task<UnitResult<Error>> Delete(

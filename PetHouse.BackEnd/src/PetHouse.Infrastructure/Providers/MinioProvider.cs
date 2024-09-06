@@ -18,7 +18,7 @@ public class MinioProvider : IFileProvider
         _logger = logger;
     }
 
-    public async Task<UnitResult<Error>> Upload(Stream stream, string bucketName, CancellationToken ct)
+    public async Task<UnitResult<Error>> Upload(Stream stream, string bucketName, Guid fileName, CancellationToken ct)
     {
         try
         {
@@ -26,19 +26,17 @@ public class MinioProvider : IFileProvider
             {
                 await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName), ct);
             }
-
-            var path = Guid.NewGuid();
             
             var putObjectArgs = new PutObjectArgs()
                 .WithBucket(bucketName)
-                .WithObject(path.ToString())
+                .WithObject(fileName.ToString())
                 .WithStreamData(stream)
                 .WithObjectSize(stream.Length)
                 .WithContentType("image/jpg");
 
             await _minioClient.PutObjectAsync(putObjectArgs, ct);
 
-            _logger.LogInformation("Uploaded {FileName} successfully", path.ToString());
+            _logger.LogInformation("Uploaded {FileName} successfully", fileName.ToString());
         }
         catch (Exception ex)
         {
@@ -90,7 +88,7 @@ public class MinioProvider : IFileProvider
                 .WithObject(fileName)
                 .WithExpiry(1000);
 
-            presignedUrl = await _minioClient.PresignedGetObjectAsync(args).ConfigureAwait(false);
+            presignedUrl = await _minioClient.PresignedGetObjectAsync(args);
 
             _logger.LogInformation("Get {FileName} successfully with url: {Url}", fileName, presignedUrl);
         }
@@ -116,7 +114,7 @@ public class MinioProvider : IFileProvider
 
             var listArgs = new ListObjectsArgs()
                 .WithBucket(bucketName);
-            await foreach (var item in _minioClient.ListObjectsEnumAsync(listArgs, ct).ConfigureAwait(false))
+            await foreach (var item in _minioClient.ListObjectsEnumAsync(listArgs, ct))
             {
                 var args = new PresignedGetObjectArgs()
                     .WithBucket(bucketName)
