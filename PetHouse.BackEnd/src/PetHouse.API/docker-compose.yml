@@ -20,7 +20,19 @@
       - "5341:5341"
       - "8081:80"
     restart: always
+  minio:
+    container_name: minio
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server --console-address ":9001" /data
+    restart: always
 
 volumes:
   postgres:
+  minio_data:
+    driver: local
 
