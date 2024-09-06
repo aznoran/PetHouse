@@ -33,7 +33,8 @@ public class MinioProvider : IFileProvider
                 .WithBucket(bucketName)
                 .WithObject(path.ToString())
                 .WithStreamData(stream)
-                .WithObjectSize(stream.Length);
+                .WithObjectSize(stream.Length)
+                .WithContentType("image/jpg");
 
             await _minioClient.PutObjectAsync(putObjectArgs, ct);
 
@@ -84,16 +85,10 @@ public class MinioProvider : IFileProvider
                 return Errors.File.BucketNotFound(bucketName);
             }
 
-            var reqParams = new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                { "response-content-type", "application/json" }
-            };
-
             var args = new PresignedGetObjectArgs()
                 .WithBucket(bucketName)
                 .WithObject(fileName)
-                .WithExpiry(1000)
-                .WithHeaders(reqParams);
+                .WithExpiry(1000);
 
             presignedUrl = await _minioClient.PresignedGetObjectAsync(args).ConfigureAwait(false);
 
@@ -123,16 +118,10 @@ public class MinioProvider : IFileProvider
                 .WithBucket(bucketName);
             await foreach (var item in _minioClient.ListObjectsEnumAsync(listArgs, ct).ConfigureAwait(false))
             {
-                var reqParams = new Dictionary<string, string>(StringComparer.Ordinal)
-                {
-                    { "response-content-type", "application/json" }
-                };
-
                 var args = new PresignedGetObjectArgs()
                     .WithBucket(bucketName)
                     .WithObject(item.Key)
-                    .WithExpiry(1000)
-                    .WithHeaders(reqParams);
+                    .WithExpiry(1000);
 
                 var presignedUrl = await _minioClient.PresignedGetObjectAsync(args);
 
