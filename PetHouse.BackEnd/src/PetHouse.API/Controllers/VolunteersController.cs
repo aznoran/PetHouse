@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Extensions;
 using PetHouse.Application.Dto;
 using PetHouse.Application.Volunteers.AddPet;
+using PetHouse.Application.Volunteers.AddPetPhoto;
 using PetHouse.Application.Volunteers.Create;
 using PetHouse.Application.Volunteers.Delete;
 using PetHouse.Application.Volunteers.UpdateMainInfo;
@@ -27,10 +28,10 @@ public class VolunteersController : ApplicationController
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
-    
+
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> Delete(
         [FromServices] IDeleteVolunteerHandler deleteVolunteerHandler,
@@ -46,17 +47,17 @@ public class VolunteersController : ApplicationController
         {
             return validationResult.ToValidationErrorResponse();
         }
-        
+
         var res = await deleteVolunteerHandler.Handle(request, cancellationToken);
 
         if (res.IsFailure)
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
-    
+
     [HttpPut("{id:guid}/main-info")]
     public async Task<ActionResult<Guid>> UpdateMainInfo(
         [FromServices] IUpdateVolunteerMainInfoHandler updateVolunteerMainInfoHandler,
@@ -66,22 +67,22 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken = default)
     {
         var request = new UpdateVolunteerMainInfoRequest(id, updateVolunteerMainInfoDto);
-        
+
         var validateResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (validateResult.IsValid == false)
             return validateResult.ToValidationErrorResponse();
-        
+
         var res = await updateVolunteerMainInfoHandler.Handle(request, cancellationToken);
 
         if (res.IsFailure)
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.Value) { StatusCode = 204 };
     }
-    
+
     [HttpPatch("{id:guid}/requisites")]
     public async Task<ActionResult<Guid>> UpdateRequisites(
         [FromServices] IUpdateVolunteerRequisitesHandler updateVolunteerRequisitesHandler,
@@ -96,17 +97,17 @@ public class VolunteersController : ApplicationController
 
         if (validateResult.IsValid == false)
             return validateResult.ToValidationErrorResponse();
-        
+
         var res = await updateVolunteerRequisitesHandler.Handle(request, cancellationToken);
 
         if (res.IsFailure)
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.Value) { StatusCode = 204 };
     }
-    
+
     [HttpPatch("{id:guid}/social-networks")]
     public async Task<ActionResult<Guid>> UpdateSocialNetworks(
         [FromServices] IUpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
@@ -116,22 +117,22 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken = default)
     {
         var request = new UpdateVolunteerSocialNetworksRequest(id, updateVolunteerSocialNetworksDto.SocialNetworksDtos);
-            
+
         var validateResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (validateResult.IsValid == false)
             return validateResult.ToValidationErrorResponse();
-        
+
         var res = await updateVolunteerSocialNetworksHandler.Handle(request, cancellationToken);
 
         if (res.IsFailure)
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.Value) { StatusCode = 204 };
     }
-    
+
     [HttpPost("{id:guid}/pet")]
     public async Task<ActionResult<Guid>> AddPet(
         [FromServices] IAddPetHandler addPetHandler,
@@ -141,12 +142,12 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken = default)
     {
         var request = new AddPetRequest(id, addPetDto);
-            
+
         var validateResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (validateResult.IsValid == false)
             return validateResult.ToValidationErrorResponse();
-        
+
         var res = await addPetHandler.Handle(request, cancellationToken);
 
         if (res.IsFailure)
@@ -155,5 +156,32 @@ public class VolunteersController : ApplicationController
         }
 
         return Ok();
+    }
+
+    [HttpPost("{volunteerId:guid}/petphoto/{petId:guid}")]
+    public async Task<ActionResult<Guid>> AddPet(
+        [FromServices] IAddPetPhotoHandler addPetPhotoHandler,
+        [FromServices] IValidator<AddPetPhotoRequest> validator,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromQuery] bool isMain,
+        IEnumerable<IFormFile> photos,
+        CancellationToken cancellationToken = default)
+    {
+        var request = new AddPetPhotoRequest(volunteerId, petId, photos, isMain);
+
+        var validateResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (validateResult.IsValid == false)
+            return validateResult.ToValidationErrorResponse();
+
+        var res = await addPetPhotoHandler.Handle(request, cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 }

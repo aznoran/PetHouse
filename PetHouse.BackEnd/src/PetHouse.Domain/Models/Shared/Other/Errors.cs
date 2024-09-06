@@ -50,6 +50,11 @@ public static class Errors
             var label = fileName == null ? " files " : $" '{fileName}' ";
             return Error.Failure("file.get.error", $"{label}getting occured error.");
         }
+        public static Error WrongSize(string? fileName = null)
+        {
+            var label = fileName == null ? " files " : $" '{fileName}' ";
+            return Error.Failure("file.size.error", $"{label}wrong size error.");
+        }
     }
 
     public static class Volunteer

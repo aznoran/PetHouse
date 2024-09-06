@@ -15,6 +15,7 @@ public class AddPetHandler : IAddPetHandler
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetHandler> _logger;
+
     public AddPetHandler(IVolunteersRepository repository, ILogger<AddPetHandler> logger)
     {
         _repository = repository;
@@ -23,17 +24,15 @@ public class AddPetHandler : IAddPetHandler
 
     public async Task<UnitResult<Error>> Handle(AddPetRequest requestInput, CancellationToken cancellationToken)
     {
-        
-        
         var volunteer = await _repository.GetById(requestInput.VolunteerId, cancellationToken);
 
         if (volunteer.IsFailure)
         {
             return Errors.General.NotFound();
         }
-        
+
         var request = requestInput.AddPetDto;
-        
+
         var name = Name.Create(request.Name).Value;
 
         var petIdentifier = PetIdentifier
@@ -57,12 +56,12 @@ public class AddPetHandler : IAddPetHandler
 
         var requisites = new RequisiteInfo(request.RequisiteDtos
             .Select(r => Requisite
-                .Create(r.Name,r.Description).Value));
+                .Create(r.Name, r.Description).Value));
 
         var petStatus = request.PetStatus;
 
         var creationDate = DateTime.UtcNow.AddHours(3);
-        
+
         volunteer.Value.AddPet(name,
             petIdentifier,
             description,
@@ -73,9 +72,9 @@ public class AddPetHandler : IAddPetHandler
             petStatus,
             creationDate);
 
-        await _repository.Save(volunteer.Value,cancellationToken);
-        
-        _logger.LogInformation("Added {Pet} to {Volunteer} successfully", name ,volunteer.Value);
+        await _repository.Save(volunteer.Value, cancellationToken);
+
+        _logger.LogInformation("Added {Pet} to {Volunteer} successfully", name, volunteer.Value);
 
         return UnitResult.Success<Error>();
     }
