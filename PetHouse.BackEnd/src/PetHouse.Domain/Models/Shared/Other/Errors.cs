@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.Domain.Shared;
 
-public class Errors
+public static class Errors
 {
     public static class General
     {
@@ -54,11 +54,11 @@ public class Errors
 
     public static class Volunteer
     {
-        public static Error AlreadyExists(string? label = null, string? fieldname = null)
+        public static Error AlreadyExists(string? label = null, string? fieldName = null)
         {
-            var labelt = label == null ? "[label?]" : $"'{label}'";
-            var fieldnamet = fieldname == null ? "[fieldname?]" : $"'{fieldname}'";
-            return Error.Validation("already.exists", $"Volunteer with {fieldnamet} {labelt} already exists.");
+            var labelT = label == null ? "[label?]" : $"'{label}'";
+            var fieldNameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
+            return Error.Validation("already.exists", $"Volunteer with {fieldNameT} {labelT} already exists.");
         }
 
         public static Error WrongPhoneNumber(string? phoneNumber = null)

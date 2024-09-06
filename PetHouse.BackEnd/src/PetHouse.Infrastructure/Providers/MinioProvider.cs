@@ -26,7 +26,7 @@ public class MinioProvider : IFileProvider
             {
                 await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName), ct);
             }
-            
+
             var putObjectArgs = new PutObjectArgs()
                 .WithBucket(bucketName)
                 .WithObject(fileName.ToString())
@@ -43,7 +43,7 @@ public class MinioProvider : IFileProvider
             _logger.LogError(ex, "Exception in MinioProvider.Upload occured");
             return Errors.File.FailedToUpload();
         }
-        
+
         return UnitResult.Success<Error>();
     }
 
@@ -66,7 +66,7 @@ public class MinioProvider : IFileProvider
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,"Exception in MinioProvider.Delete occured");
+            _logger.LogError(ex, "Exception in MinioProvider.Delete occured");
             return Errors.File.FailedToDelete(fileName);
         }
 
@@ -130,7 +130,7 @@ public class MinioProvider : IFileProvider
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex,"Exception in MinioProvider.GetAll occured");
+            _logger.LogError(ex, "Exception in MinioProvider.GetAll occured");
             return Errors.File.FailedToGet();
         }
 

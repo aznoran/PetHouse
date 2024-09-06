@@ -28,7 +28,7 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
 
         var email = Email.Create(request.Email).Value;
 
-        var emailRes = await _repository.GetByEmail(email);
+        var emailRes = await _repository.GetByEmail(email, cancellationToken);
         
         if (emailRes.IsSuccess)
         {
@@ -37,7 +37,7 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
         
         var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
 
-        var phoneNumberRes = await _repository.GetByPhoneNumber(phoneNumber);
+        var phoneNumberRes = await _repository.GetByPhoneNumber(phoneNumber, cancellationToken);
         
         if (phoneNumberRes.IsSuccess)
         {

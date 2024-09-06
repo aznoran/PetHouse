@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Extensions;
-using PetHouse.API.Response;
-using PetHouse.Application.Dto;
 using PetHouse.Application.Volunteers.Create;
 using PetHouse.Application.Volunteers.Delete;
-using SharpGrip.FluentValidation.AutoValidation.Shared.Extensions;
 using PetHouse.Application.Volunteers.UpdateMainInfo;
 using PetHouse.Application.Volunteers.UpdateRequisites;
 using PetHouse.Application.Volunteers.UpdateSocialNetworks;
@@ -26,7 +23,6 @@ public class VolunteersController : ApplicationController
 
         if (res.IsFailure)
         {
-            ResponseError temp = new ResponseError(res.Error.Code, res.Error.Message, null);
             return res.Error.ToResponse();
         }
         
@@ -53,7 +49,6 @@ public class VolunteersController : ApplicationController
 
         if (res.IsFailure)
         {
-            ResponseError temp = new ResponseError(res.Error.Code, res.Error.Message, null);
             return res.Error.ToResponse();
         }
         
@@ -79,7 +74,6 @@ public class VolunteersController : ApplicationController
 
         if (res.IsFailure)
         {
-            ResponseError temp = new ResponseError(res.Error.Code, res.Error.Message, null);
             return res.Error.ToResponse();
         }
         
@@ -105,7 +99,6 @@ public class VolunteersController : ApplicationController
 
         if (res.IsFailure)
         {
-            ResponseError temp = new ResponseError(res.Error.Code, res.Error.Message, null);
             return res.Error.ToResponse();
         }
         
@@ -131,7 +124,6 @@ public class VolunteersController : ApplicationController
 
         if (res.IsFailure)
         {
-            ResponseError temp = new ResponseError(res.Error.Code, res.Error.Message, null);
             return res.Error.ToResponse();
         }
         
