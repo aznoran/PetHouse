@@ -14,7 +14,6 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     public Volunteer()
     {
     }
-
     private Volunteer(VolunteerId volunteerId,
         FullName fullName, 
         Email email,
@@ -62,7 +61,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     public RequisiteInfo? Requisites { get; private set; }
 
     private List<Pet> _pets = [];
-    public ICollection<Pet>? Pets => _pets;
+    public IReadOnlyList<Pet>? Pets => _pets;
 
 
     public static Result<Volunteer, Error> Create(
@@ -130,5 +129,39 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         SocialNetworkInfo socialNetworks)
     {
         SocialNetworks = socialNetworks;
+    }
+
+    public void AddPet(Name name,
+        PetIdentifier petIdentifier,
+        Description description,
+        PetInfo petInfo,
+        Address address,
+        PhoneNumber phoneNumber,
+        RequisiteInfo requisites,
+        PetStatus petStatus,
+        DateTime creationDate)
+    {
+        var pet = new Pet(
+            PetId.NewId,
+            name,
+            petIdentifier,
+            description,
+            petInfo,
+            address,
+            phoneNumber,
+            requisites,
+            petStatus,
+            creationDate);
+        
+        _pets.Add(pet);
+    }
+    
+    public void AddPetPhoto(PetId petId, PetPhotoInfo petPhotoInfo)
+    {
+        if (Pets == null) return;
+        
+        var pet = Pets.FirstOrDefault(p => p.Id == petId);
+
+        pet?.AddPhotos(petPhotoInfo);
     }
 }

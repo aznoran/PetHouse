@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Extensions;
+using PetHouse.Application.Dto;
+using PetHouse.Application.Volunteers.AddPet;
 using PetHouse.Application.Volunteers.Create;
 using PetHouse.Application.Volunteers.Delete;
 using PetHouse.Application.Volunteers.UpdateMainInfo;
@@ -128,5 +130,30 @@ public class VolunteersController : ApplicationController
         }
         
         return new ObjectResult(res.Value) { StatusCode = 204 };
+    }
+    
+    [HttpPost("{id:guid}/pet")]
+    public async Task<ActionResult<Guid>> AddPet(
+        [FromServices] IAddPetHandler addPetHandler,
+        [FromServices] IValidator<AddPetRequest> validator,
+        [FromRoute] Guid id,
+        [FromBody] AddPetDto addPetDto,
+        CancellationToken cancellationToken = default)
+    {
+        var request = new AddPetRequest(id, addPetDto);
+            
+        var validateResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (validateResult.IsValid == false)
+            return validateResult.ToValidationErrorResponse();
+        
+        var res = await addPetHandler.Handle(request, cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return Ok();
     }
 }
