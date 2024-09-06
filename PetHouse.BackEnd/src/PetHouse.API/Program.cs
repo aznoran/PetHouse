@@ -20,7 +20,7 @@ builder.Services.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(builder
 
 builder.Services
     .AddApiServices()
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
 var app = builder.Build();

@@ -13,7 +13,7 @@ public class Errors
         public static Error NotFound(Guid? id = null)
         {
             var forId = id == null ? "" : $" for id '{id}'";
-            return Error.Validation("record.not.found", $"record not found{forId}.");
+            return Error.NotFound("record.not.found", $"record not found{forId}.");
         }
 
         public static Error ValueIsRequired(string? name = null)
@@ -21,7 +21,35 @@ public class Errors
             var label = name == null ? " " : $" '{name}' ";
             return Error.Validation("length.is.invalid", $"invalid{label}length.");
         }
-        
+    }
+
+    public static class File
+    {
+        public static Error FailedToUpload(string? fileName = null)
+        {
+            var label = fileName == null ? " " : $" '{fileName}' ";
+            return Error.Failure("file.upload.error", $"File{label}uploading occured error.");
+        }
+        public static Error FileNotFound(string? fileName = null)
+        {
+            var label = fileName == null ? " " : $" '{fileName}' ";
+            return Error.NotFound("file.not.found", $"File{label}not found.");
+        }
+        public static Error BucketNotFound(string? fileName = null)
+        {
+            var label = fileName == null ? " " : $" '{fileName}' ";
+            return Error.NotFound("bucket.not.found", $"Bucket{label}not found.");
+        }
+        public static Error FailedToDelete(string? fileName = null)
+        {
+            var label = fileName == null ? " " : $" '{fileName}' ";
+            return Error.Failure("file.delete.error", $"File{label}deleting occured error.");
+        }
+        public static Error FailedToGet(string? fileName = null)
+        {
+            var label = fileName == null ? " files " : $" '{fileName}' ";
+            return Error.Failure("file.get.error", $"{label}getting occured error.");
+        }
     }
 
     public static class Volunteer
@@ -32,16 +60,17 @@ public class Errors
             var fieldnamet = fieldname == null ? "[fieldname?]" : $"'{fieldname}'";
             return Error.Validation("already.exists", $"Volunteer with {fieldnamet} {labelt} already exists.");
         }
+
         public static Error WrongPhoneNumber(string? phoneNumber = null)
         {
             var label = phoneNumber == null ? " " : $" '{phoneNumber}' ";
             return Error.Validation("phone.is.invalid", $"Phone number {label} is invalid.");
         }
+
         public static Error WrongEmail(string? email = null)
         {
             var label = email == null ? " " : $" '{email}' ";
             return Error.Validation("email.is.invalid", $"Email {label} is invalid.");
         }
     }
-
 }
