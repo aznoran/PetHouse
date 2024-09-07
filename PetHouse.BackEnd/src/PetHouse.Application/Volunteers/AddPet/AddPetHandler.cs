@@ -25,7 +25,7 @@ public class AddPetHandler : IAddPetHandler
     public async Task<UnitResult<Error>> Handle(AddPetRequest requestInput, CancellationToken cancellationToken)
     {
         var volunteer = await _repository.GetById(requestInput.VolunteerId, cancellationToken);
-
+        
         if (volunteer.IsFailure)
         {
             return Errors.General.NotFound();

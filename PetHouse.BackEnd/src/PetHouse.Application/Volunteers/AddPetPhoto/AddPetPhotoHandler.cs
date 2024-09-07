@@ -54,7 +54,7 @@ public class AddPetPhotoHandler : IAddPetPhotoHandler
             stream.Close();
         }
         
-        volunteer.Value.AddPetPhoto(PetId.Create(request.PetId),
+        var addPetPhotoRes = volunteer.Value.AddPetPhoto(PetId.Create(request.PetId),
             new PetPhotoInfo(
                 photoLinks.Select(x=>
                     PetPhoto.Create(
@@ -63,6 +63,9 @@ public class AddPetPhotoHandler : IAddPetPhotoHandler
                     ).ToList()
                 )
             );
+
+        if (addPetPhotoRes.IsFailure)
+            return addPetPhotoRes.Error;
 
         await _repository.Save(volunteer.Value, cancellationToken);
 

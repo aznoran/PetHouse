@@ -4,8 +4,12 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.Models;
 
-public record PetPhoto
+public class PetPhoto
 {
+    public PetPhoto()
+    {
+        
+    }
     private PetPhoto(string path, bool isMain)
     {
         Path = path;

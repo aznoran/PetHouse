@@ -24,7 +24,7 @@ public class MinioProvider : IFileProvider
         {
             if (await _minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName), ct) == false)
             {
-                await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(bucketName), ct);
+                return Errors.File.BucketNotFound(bucketName);
             }
 
             var putObjectArgs = new PutObjectArgs()
@@ -56,6 +56,13 @@ public class MinioProvider : IFileProvider
                 return Errors.File.BucketNotFound(bucketName);
             }
 
+            var obj = await _minioClient.StatObjectAsync(new StatObjectArgs().WithBucket(bucketName).WithObject(fileName), ct);
+
+            if (obj is null)
+            {
+                return Errors.File.FileNotFound(fileName);
+            }
+            
             var removeObjectArgs = new RemoveObjectArgs()
                 .WithBucket(bucketName)
                 .WithObject(fileName);

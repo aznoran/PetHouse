@@ -1,7 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Constraints;
 using PetHouse.Domain.Enums;
-using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
@@ -11,11 +9,13 @@ namespace PetHouse.Domain.Models;
 public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 {
     private bool _isDeleted = false;
+
     public Volunteer()
     {
     }
+
     private Volunteer(VolunteerId volunteerId,
-        FullName fullName, 
+        FullName fullName,
         Email email,
         Description description,
         YearsOfExperience yearsOfExperience,
@@ -33,14 +33,15 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
     }
 
     public FullName FullName { get; private set; }
-    
+
     public Email Email { get; private set; }
-    
+
     public Description Description { get; private set; }
 
     public YearsOfExperience YearsOfExperience { get; private set; }
-    
+
     public PhoneNumber PhoneNumber { get; private set; }
+
     public int CountOfPetsFoundHome()
     {
         return _pets.Count(p => p.PetStatus == PetStatus.FoundHome);
@@ -66,7 +67,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
 
     public static Result<Volunteer, Error> Create(
         VolunteerId volunteerId,
-        FullName fullName, 
+        FullName fullName,
         Email email,
         Description description,
         YearsOfExperience yearsOfExperience,
@@ -118,13 +119,13 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
         YearsOfExperience = yearsOfExperience;
         PhoneNumber = phoneNumber;
     }
-    
+
     public void UpdateRequisites(
         RequisiteInfo requisites)
     {
         Requisites = requisites;
     }
-    
+
     public void UpdateSocialNetworks(
         SocialNetworkInfo socialNetworks)
     {
@@ -152,16 +153,22 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>, ISoftDeletable
             requisites,
             petStatus,
             creationDate);
-        
+
         _pets.Add(pet);
     }
-    
-    public void AddPetPhoto(PetId petId, PetPhotoInfo petPhotoInfo)
+
+    public UnitResult<Error> AddPetPhoto(PetId petId, PetPhotoInfo petPhotoInfo)
     {
-        if (Pets == null) return;
-        
+        if (Pets == null)
+            return Errors.General.NotFound();
+
         var pet = Pets.FirstOrDefault(p => p.Id == petId);
 
-        pet?.AddPhotos(petPhotoInfo);
+        if (pet is null)
+            return Errors.General.NotFound(petId.Value);
+
+        pet.ChangePhotos(petPhotoInfo);
+
+        return UnitResult.Success<Error>();
     }
 }

@@ -9,16 +9,19 @@ namespace PetHouse.Domain.Models;
 public sealed class Pet : Shared.Entity<PetId>, ISoftDeletable
 {
     //EF CORE
-    public Pet() { }
+    public Pet()
+    {
+    }
+
     public Pet(PetId petId,
         Name name,
         PetIdentifier petIdentifier,
         Description description,
-        PetInfo petInfo, 
+        PetInfo petInfo,
         Address address,
         PhoneNumber phoneNumber,
         RequisiteInfo requisites,
-        PetStatus petStatus, 
+        PetStatus petStatus,
         DateTime creationDate) : base(petId)
     {
         Name = name;
@@ -58,8 +61,25 @@ public sealed class Pet : Shared.Entity<PetId>, ISoftDeletable
         _isDeleted = false;
     }
 
-    public void AddPhotos(PetPhotoInfo petPhotoInfo)
+    public UnitResult<Error> ChangePhotos(PetPhotoInfo petPhotoInfo)
     {
-        PetPhotos = petPhotoInfo;
+        var petPhotos = this.PetPhotos;
+        if (petPhotos != null && petPhotoInfo.PetPhotos.Count(p => p.IsMain) +
+            petPhotos.PetPhotos.Count(p => p.IsMain)
+            > 1)
+        {
+            return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
+        }
+
+        if (petPhotos != null)
+        {
+            PetPhotos = new PetPhotoInfo(petPhotos.PetPhotos.Concat(petPhotoInfo.PetPhotos));
+        }
+        else
+        {
+            PetPhotos = petPhotoInfo;
+        }
+        
+        return UnitResult.Success<Error>();
     }
 }
