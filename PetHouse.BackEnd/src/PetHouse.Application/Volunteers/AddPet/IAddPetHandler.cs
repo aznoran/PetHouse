@@ -5,5 +5,5 @@ namespace PetHouse.Application.Volunteers.AddPet;
 
 public interface IAddPetHandler
 {
-    Task<UnitResult<Error>> Handle(AddPetRequest request, CancellationToken cancellationToken);
+    Task<UnitResult<ErrorList>> Handle(AddPetCommand command, CancellationToken cancellationToken);
 }

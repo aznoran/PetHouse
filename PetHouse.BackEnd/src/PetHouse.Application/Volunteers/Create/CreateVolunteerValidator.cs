@@ -5,7 +5,7 @@ using PetHouse.Domain.Models.Volunteers.ValueObjects;
 
 namespace PetHouse.Application.Volunteers.Create;
 
-public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerRequest>
+public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerCommand>
 {
     public CreateVolunteerValidator()
     {

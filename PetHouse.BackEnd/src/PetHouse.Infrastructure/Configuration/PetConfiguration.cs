@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Domain;
 using PetHouse.Domain.Constraints;
 using PetHouse.Domain.Models;
+using PetHouse.Domain.Models.Shared.ValueObjects;
 
 namespace PetHouse.Infrastructure.Configuration;
 
@@ -61,6 +62,7 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
         {
             pi.Property(pp => pp.City).HasColumnName("city");
             pi.Property(pp => pp.Street).HasColumnName("street");
+            pi.Property(pp => pp.Country).HasColumnName("country");
         });
         
         builder.ComplexProperty(p => p.PhoneNumber, pi =>
@@ -78,12 +80,17 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
             });
         });
         
-        builder.OwnsOne(p => p.PetPhotos, pp =>
+        builder.OwnsOne(p => p.PetPhotosInfo, pp =>
         {
             pp.ToJson("pet_photos");
             pp.OwnsMany(ppi => ppi.PetPhotos, pt =>
             {
-                pt.Property(petp => petp.Path);
+                
+                pt.Property(petp => petp.Path)
+                    .HasConversion(
+                        p => p.Path,
+                        value => FilePath.Create(value).Value);
+                
                 pt.Property(petp => petp.IsMain);
             });
         });

@@ -16,6 +16,8 @@ public static class Inject
     {
         serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
+        serviceCollection.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(configuration));
+        
         serviceCollection.Configure<MinioOptions>(
             configuration.GetSection(MinioOptions.MINIO));
 
@@ -30,7 +32,8 @@ public static class Inject
         });
 
         serviceCollection.AddScoped<IFileProvider, MinioProvider>();
-        
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+
         return serviceCollection;
     }
 }

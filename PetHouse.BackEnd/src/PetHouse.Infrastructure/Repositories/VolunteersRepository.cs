@@ -21,8 +21,6 @@ public class VolunteersRepository : IVolunteersRepository
     {
         await _dbContext.Volunteers.AddAsync(volunteer, cancellationToken);
 
-        await _dbContext.SaveChangesAsync(cancellationToken);
-
         return volunteer.Id;
     }
 
@@ -30,7 +28,6 @@ public class VolunteersRepository : IVolunteersRepository
     {
         var res = await _dbContext.Volunteers
             .Include(v => v.Pets)!
-            .ThenInclude(p => p.PetPhotos)
             .FirstOrDefaultAsync(v => v.Id == VolunteerId.Create(id), cancellationToken);
 
         if (res is null)
@@ -70,13 +67,15 @@ public class VolunteersRepository : IVolunteersRepository
 
     public async Task Save(Volunteer volunteer, CancellationToken cancellationToken = default)
     {
-        _dbContext.Attach(volunteer);
+        _dbContext.Volunteers.Attach(volunteer);
 
         var a = _dbContext.ChangeTracker.Entries<PetPhotoInfo>();
         
         var b = _dbContext.ChangeTracker.Entries<PetPhoto>();
         
         var c = _dbContext.ChangeTracker.Entries<Volunteer>();
+        
+        var d = _dbContext.ChangeTracker.Entries();
         
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

@@ -6,7 +6,7 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Application.Volunteers.AddPet;
 
-public class AddPetValidator : AbstractValidator<AddPetRequest>
+public class AddPetValidator : AbstractValidator<AddPetCommand>
 {
     public AddPetValidator()
     {
@@ -32,7 +32,8 @@ public class AddPetValidator : AbstractValidator<AddPetRequest>
         RuleFor(p => p).MustBeValueObject(x =>
             Address.Create(
                 x.AddPetDto.City,
-                x.AddPetDto.Street));
+                x.AddPetDto.Street,
+                x.AddPetDto.Country));
 
         RuleFor(p => p.AddPetDto.PhoneNumber).MustBeValueObject(PhoneNumber.Create);
 

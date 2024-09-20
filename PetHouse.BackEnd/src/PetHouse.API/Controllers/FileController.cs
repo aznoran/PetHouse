@@ -11,7 +11,7 @@ namespace PetHouse.API.Controllers;
 [Route("[controller]")]
 public class FileController : ApplicationController
 {
-    [HttpPost]
+    /*[HttpPost]
     public async Task<IActionResult> Upload(
         IFormFile file,
         [FromServices] FileUploadHandler handler,
@@ -30,7 +30,7 @@ public class FileController : ApplicationController
         }
 
         return Ok();
-    }
+    }*/
     
     [HttpDelete]
     [Route("{fileName:guid}")]

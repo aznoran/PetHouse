@@ -1,4 +1,5 @@
 ﻿using PetHouse.API.Response;
+using PetHouse.Domain.Shared;
 
 namespace PetHouse.API.Middlewares;
 
@@ -24,10 +25,10 @@ public class ExceptionMiddleware
             context.Response.StatusCode = 500;
             context.Response.ContentType = "application/json";
 
-            ResponseError responseError = new ResponseError("server.internal", e.Message, null);
-            var envelope = Envelope.Error([responseError]);
+            var error = Error.Failure("server.internal", e.Message);
+            var envelope = Envelope.Error(error);
 
-            _logger.LogError(e, "Server error :{ResponseError}",responseError.ErrorMessage);
+            _logger.LogError(e, "Server error :{ResponseError}",error.Message);
             
             await context.Response.WriteAsJsonAsync(envelope);
         }

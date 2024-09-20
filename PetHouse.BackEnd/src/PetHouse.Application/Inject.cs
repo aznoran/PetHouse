@@ -24,7 +24,7 @@ public static class Inject
         serviceCollection.AddScoped<IUpdateVolunteerRequisitesHandler,UpdateVolunteerRequisitesHandler>();
         serviceCollection.AddScoped<IUpdateVolunteerSocialNetworksHandler,UpdateVolunteerSocialNetworksHandler>();
         serviceCollection.AddScoped<IAddPetHandler,AddPetHandler>();
-        serviceCollection.AddScoped<IAddPetPhotoHandler,AddPetPhotoHandler>();
+        serviceCollection.AddScoped<IAddPetPhotosHandler,AddPetPhotosHandler>();
         
         #region TestingFileProvider
         serviceCollection.AddScoped<FileUploadHandler>();

@@ -5,7 +5,7 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Application.Volunteers.UpdateRequisites;
 
-public class UpdateVolunteerRequisitesValidator : AbstractValidator<UpdateVolunteerRequisitesRequest>
+public class UpdateVolunteerRequisitesValidator : AbstractValidator<UpdateVolunteerRequisitesCommand>
 {
     public UpdateVolunteerRequisitesValidator()
     {
