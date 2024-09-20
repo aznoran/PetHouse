@@ -5,7 +5,7 @@ namespace PetHouse.Application.Volunteers.UpdateRequisites;
 
 public interface IUpdateVolunteerRequisitesHandler
 {
-    Task<Result<Guid, Error>> Handle(
-        UpdateVolunteerRequisitesRequest request,
+    Task<Result<Guid, ErrorList>> Handle(
+        UpdateVolunteerRequisitesCommand command,
         CancellationToken cancellationToken);
 }

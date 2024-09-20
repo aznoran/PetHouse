@@ -1,10 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Extensions;
 using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
+using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.Create;
 
@@ -12,43 +15,60 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<CreateVolunteerHandler> _logger;
-    public CreateVolunteerHandler(IVolunteersRepository repository, ILogger<CreateVolunteerHandler> logger)
+    private readonly IValidator<CreateVolunteerCommand> _validator;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateVolunteerHandler(IVolunteersRepository repository,
+        ILogger<CreateVolunteerHandler> logger,
+        IValidator<CreateVolunteerCommand> validator,
+        IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;
-    }
+        _validator = validator;
+        _unitOfWork = unitOfWork;
+    }   
 
-    public async Task<Result<Guid, Error>> Handle(CreateVolunteerRequest request, CancellationToken cancellationToken)
+    public async Task<Result<Guid, ErrorList>> Handle(CreateVolunteerCommand command, CancellationToken cancellationToken)
     {
-        var fullName = FullName.Create(request.FullNameDto.Name, request.FullNameDto.Surname).Value;
+        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
-        var description = Description.Create(request.Description).Value;
+        if (validationResult.IsValid == false)
+        {
+            return validationResult.ToList();
+        }
 
-        var yearsOfExperience = YearsOfExperience.Create(request.YearsOfExperience).Value;
+        //await _unitOfWork.BeginTransaction(cancellationToken);
+        
+        var fullName = FullName.Create(command.FullNameDto.Name, command.FullNameDto.Surname).Value;
 
-        var email = Email.Create(request.Email).Value;
+        var description = Description.Create(command.Description).Value;
+
+        var yearsOfExperience = YearsOfExperience.Create(command.YearsOfExperience).Value;
+
+        var email = Email.Create(command.Email).Value;
 
         var emailRes = await _repository.GetByEmail(email, cancellationToken);
         
         if (emailRes.IsSuccess)
         {
-            return Errors.Volunteer.AlreadyExists(email.Value, nameof(email));
+            return Errors.Volunteer.AlreadyExists(email.Value, nameof(email)).ToErrorList();
         }
         
-        var phoneNumber = PhoneNumber.Create(request.PhoneNumber).Value;
+        var phoneNumber = PhoneNumber.Create(command.PhoneNumber).Value;
 
         var phoneNumberRes = await _repository.GetByPhoneNumber(phoneNumber, cancellationToken);
         
         if (phoneNumberRes.IsSuccess)
         {
-            return Errors.Volunteer.AlreadyExists(phoneNumber.Value, nameof(phoneNumber));
+            return Errors.Volunteer.AlreadyExists(phoneNumber.Value, nameof(phoneNumber)).ToErrorList();
         }
        
-        var socialNetworks = new SocialNetworkInfo(request.SocialNetworksDto
+        var socialNetworks = new SocialNetworkInfo(command.SocialNetworksDto
             .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
             .ToList().Select(sn => sn.Value));
 
-        var requisites = new RequisiteInfo(request.RequisiteDto.Select(
+        var requisites = new RequisiteInfo(command.RequisiteDto.Select(
                 r => Requisite.Create(
                     r.Name,
                     r.Description)).Select(r => r.Value)
@@ -66,6 +86,10 @@ public class CreateVolunteerHandler : ICreateVolunteerHandler
 
         _logger.LogInformation("Created Volunteer {FullName} with id {VolunteerId}", fullName, volunteer.Id);
         
-        return await _repository.Create(volunteer, cancellationToken);
+        var res = await _repository.Create(volunteer, cancellationToken);
+
+        await _unitOfWork.SaveChanges(cancellationToken);
+
+        return res;
     }
 }

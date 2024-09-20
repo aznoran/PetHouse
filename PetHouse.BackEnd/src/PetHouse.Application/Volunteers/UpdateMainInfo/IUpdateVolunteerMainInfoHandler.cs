@@ -5,7 +5,7 @@ namespace PetHouse.Application.Volunteers.UpdateMainInfo;
 
 public interface IUpdateVolunteerMainInfoHandler
 {
-    Task<Result<Guid, Error>> Handle(
-        UpdateVolunteerMainInfoRequest request,
+    Task<Result<Guid, ErrorList>> Handle(
+        UpdateVolunteerMainInfoCommand command,
         CancellationToken cancellationToken);
 }

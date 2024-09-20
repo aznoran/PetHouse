@@ -9,41 +9,51 @@ public static class ResponseExtensions
 {
     public static ActionResult ToResponse(this Error error)
     {
-        var statusCode = error.Type switch
-        {
-            ErrorType.Validation => StatusCodes.Status400BadRequest,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.Failure => StatusCodes.Status500InternalServerError,
-            _ => StatusCodes.Status500InternalServerError
-        };
+        var statusCode = GetStatusCode(error.Type);
 
-        ResponseError responseError = new ResponseError(error.Code, error.Message, null);
-        
-        var envelope = Envelope.Error([responseError]);
+        var envelope = Envelope.Error(error);
 
         return new ObjectResult(envelope)
         {
             StatusCode = statusCode
         };
     }
-    public static ActionResult ToValidationErrorResponse(this ValidationResult result)
+    public static ActionResult ToResponse(this ErrorList errors)
     {
-        if (result.IsValid)
-            throw new InvalidOperationException("Result must be invalid");
+        if (!errors.Any())
+        {
+            return new ObjectResult(null)
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
 
-        var validationErrors = result.Errors;
-      
-        var responseErrors = from error in validationErrors
-            let errorMessage = error.ErrorMessage
-            let errorConvert = Error.Deserialize(errorMessage)
-            select new ResponseError(errorConvert.Code, errorConvert.Message, error.PropertyName);
+        var distinctErrorCodes = errors
+            .Select(e => e.Type)
+            .Distinct()
+            .ToList();
 
-        var envelope = Envelope.Error(responseErrors);
+        var statusCode = distinctErrorCodes.Count > 1
+            ? StatusCodes.Status500InternalServerError
+            : GetStatusCode(distinctErrorCodes.First());
+
+        var envelope = Envelope.Error(errors);
 
         return new ObjectResult(envelope)
         {
-            StatusCode = StatusCodes.Status400BadRequest
+            StatusCode = statusCode
+        };
+    }
+
+    private static int GetStatusCode(ErrorType errorType)
+    {
+        return errorType switch
+        {
+            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
+            ErrorType.Failure => StatusCodes.Status500InternalServerError,
+            _ => StatusCodes.Status500InternalServerError
         };
     }
 }

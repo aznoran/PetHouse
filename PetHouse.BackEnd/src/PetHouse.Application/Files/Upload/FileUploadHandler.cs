@@ -14,10 +14,10 @@ public class FileUploadHandler
         _fileProvider = fileProvider;
     }
 
-    public async Task<UnitResult<Error>> Handle(Stream stream, string bucketName, CancellationToken ct)
+    /*public async Task<UnitResult<Error>> Handle(Stream stream, string bucketName, CancellationToken ct)
     {
         var uploadRes = await _fileProvider.Upload(stream, bucketName,Guid.NewGuid(), ct);
 
         return uploadRes.IsFailure ? uploadRes.Error : UnitResult.Success<Error>();
-    }
+    }*/
 }
