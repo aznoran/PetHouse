@@ -1,7 +1,7 @@
 ﻿using PetHouse.Application.Dto;
 using PetHouse.Application.Volunteers.UpdateMainInfo;
 
-namespace PetHouse.Application.Volunteers.Create;
+namespace PetHouse.API.Controllers.Volunteers.Requests;
 
 public record UpdateVolunteerMainInfoRequest(
     FullNameDto FullNameDto,

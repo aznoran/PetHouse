@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetHouse.API.Controllers.Shared;
+using PetHouse.API.Controllers.Volunteers.Requests;
 using PetHouse.API.Extensions;
 using PetHouse.API.Processors;
 using PetHouse.Application.Dto;
@@ -10,7 +12,7 @@ using PetHouse.Application.Volunteers.UpdateMainInfo;
 using PetHouse.Application.Volunteers.UpdateRequisites;
 using PetHouse.Application.Volunteers.UpdateSocialNetworks;
 
-namespace PetHouse.API.Controllers;
+namespace PetHouse.API.Controllers.Volunteers;
 
 [ApiController]
 [Route("[controller]")]

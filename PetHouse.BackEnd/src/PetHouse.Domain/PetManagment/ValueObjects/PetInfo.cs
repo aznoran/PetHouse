@@ -4,7 +4,7 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.Models.Volunteers.ValueObjects;
 
-public class PetInfo
+public record PetInfo
 {
     private const double MAX_WEIGHT = 120; 
     private const double MAX_HEIGHT = 150; 

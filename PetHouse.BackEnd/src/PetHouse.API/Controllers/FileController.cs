@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetHouse.API.Controllers.Shared;
 using PetHouse.API.Extensions;
 using PetHouse.Application.Files.Delete;
 using PetHouse.Application.Files.Get;

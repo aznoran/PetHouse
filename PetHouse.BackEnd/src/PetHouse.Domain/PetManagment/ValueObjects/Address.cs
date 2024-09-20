@@ -4,7 +4,7 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.Models.Volunteers.ValueObjects;
 
-public class Address
+public record Address
 {
     private const int MAX_CITY_LENGTH = 15;
     private const int MAX_STREET_LENGTH = 45;

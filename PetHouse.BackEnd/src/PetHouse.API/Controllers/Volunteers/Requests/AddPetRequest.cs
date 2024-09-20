@@ -2,7 +2,7 @@
 using PetHouse.Application.Volunteers.AddPet;
 using PetHouse.Domain.Enums;
 
-namespace PetHouse.Application.Volunteers.Create;
+namespace PetHouse.API.Controllers.Volunteers.Requests;
 
 public record AddPetRequest(
     string Name,
