@@ -16,6 +16,7 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
     public Pet(PetId petId,
         Name name,
         PetIdentifier petIdentifier,
+        Position position,
         Description description,
         PetInfo petInfo,
         Address address,
@@ -26,6 +27,7 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
     {
         Name = name;
         PetIdentifier = petIdentifier;
+        Position = position;
         Description = description;
         PetInfo = petInfo;
         Address = address;
@@ -38,6 +40,7 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
     private bool _isDeleted = false;
     public Name Name { get; private set; }
 
+    public Position Position { get; private set; }
     public PetIdentifier PetIdentifier { get; private set; }
     public Description Description { get; private set; }
 
@@ -69,6 +72,35 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
         }
         
         PetPhotosInfo = petPhotoInfo;
+        
+        return UnitResult.Success<Error>();
+    }
+
+    public UnitResult<Error> Move(Position newPosition)
+    {
+        this.Position = newPosition;
+        
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> MoveForward()
+    {
+        var position = Position.Create(this.Position.Value + 1);
+
+        if (position.IsFailure) return position.Error;
+        
+        this.Position = position.Value;
+
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> MoveBack()
+    {
+        var position = Position.Create(this.Position.Value - 1);
+
+        if (position.IsFailure) return position.Error;
+        
+        this.Position = position.Value;
         
         return UnitResult.Success<Error>();
     }
