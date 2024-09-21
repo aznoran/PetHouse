@@ -132,7 +132,7 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         SocialNetworks = socialNetworks;
     }
 
-    public void AddPet(Name name,
+    public UnitResult<Error> AddPet(Name name,
         PetIdentifier petIdentifier,
         Description description,
         PetInfo petInfo,
@@ -142,10 +142,15 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         PetStatus petStatus,
         DateTime creationDate)
     {
+        var positionRes = Position.Create(_pets.Count+1);
+
+        if (positionRes.IsFailure) return positionRes.Error;
+        
         var pet = new Pet(
             PetId.NewId,
             name,
             petIdentifier,
+            positionRes.Value,
             description,
             petInfo,
             address,
@@ -155,6 +160,70 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
             creationDate);
 
         _pets.Add(pet);
+
+        return UnitResult.Success<Error>();
+    }
+
+    public UnitResult<Error> MovePet(PetId petId, Position newPosition)
+    {
+        var pet = _pets.Find(p => p.Id == petId);
+
+        if (pet is null) return Errors.General.NotFound(petId.Value);
+        
+        var currentPos = pet.Position;
+
+        if (currentPos == newPosition) return UnitResult.Success<Error>();
+        
+        if (currentPos.Value > newPosition.Value)
+        {
+            var petsToMove = _pets.Where(p =>
+                p.Position.Value < currentPos.Value &&
+                p.Position.Value >= newPosition.Value);
+
+            foreach (var petToMove in petsToMove)
+            {
+                var moveRes = petToMove.MoveForward();
+
+                if (moveRes.IsFailure) return moveRes.Error;
+            }
+        }
+        else if (currentPos.Value < newPosition.Value)
+        {
+            var petsToMove = _pets.Where(p =>
+                p.Position.Value > currentPos.Value &&
+                p.Position.Value <= newPosition.Value);
+
+            foreach (var petToMove in petsToMove)
+            {
+                var moveRes = petToMove.MoveBack();
+                
+                if (moveRes.IsFailure) return moveRes.Error;
+            }
+        }
+        
+        var petMoveRes = pet.Move(newPosition);
+        
+        if (petMoveRes.IsFailure) return petMoveRes.Error;
+
+        return UnitResult.Success<Error>();
+    }
+
+    public UnitResult<Error> MovePetToFirstPosition(PetId petId)
+    {
+        var moveRes = MovePet(petId, Position.Create(1).Value);
+
+        if (moveRes.IsFailure) return moveRes.Error;
+
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> MovePetToLastPosition(PetId petId)
+    {
+        var moveRes = MovePet(petId, Position.Create(_pets.Count).Value);
+
+        if (moveRes.IsFailure) return moveRes.Error;
+
+        return UnitResult.Success<Error>();
     }
 
     public UnitResult<Error> AddPetPhotos(PetId petId, PetPhotoInfo petPhotoInfo)
