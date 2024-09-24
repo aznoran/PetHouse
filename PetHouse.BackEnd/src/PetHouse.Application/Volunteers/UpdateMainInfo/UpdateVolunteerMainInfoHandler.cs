@@ -38,8 +38,6 @@ public class UpdateVolunteerMainInfoHandler : IUpdateVolunteerMainInfoHandler
             validationRes.ToList();
         }
 
-        //await _unitOfWork.BeginTransaction(cancellationToken);
-
         var volunteerResult = await _repository.GetById(command.Id, cancellationToken);
 
         if (volunteerResult.IsFailure)
