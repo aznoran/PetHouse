@@ -36,8 +36,6 @@ public class DeleteVolunteerHandler : IDeleteVolunteerHandler
         {
             return validationRes.ToList();
         }
-
-       // await _unitOfWork.BeginTransaction(cancellationToken);
         
         var volunteer = await _repository.GetById(command.Id, cancellationToken);
 

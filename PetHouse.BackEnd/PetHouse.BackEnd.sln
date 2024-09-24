@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{325F5276
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetHouse.Domain.UnitTests", "tests\PetHouse.Domain.UnitTests\PetHouse.Domain.UnitTests.csproj", "{3A294CA2-C8F9-4A62-8DBC-CB2899CEC679}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetHouse.Application.UnitTests", "tests\PetHouse.Application.UnitTests\PetHouse.Application.UnitTests.csproj", "{68AC7384-18FB-4B94-81C9-8FA7325894D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,8 +45,13 @@ Global
 		{3A294CA2-C8F9-4A62-8DBC-CB2899CEC679}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A294CA2-C8F9-4A62-8DBC-CB2899CEC679}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A294CA2-C8F9-4A62-8DBC-CB2899CEC679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AC7384-18FB-4B94-81C9-8FA7325894D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AC7384-18FB-4B94-81C9-8FA7325894D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AC7384-18FB-4B94-81C9-8FA7325894D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AC7384-18FB-4B94-81C9-8FA7325894D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3A294CA2-C8F9-4A62-8DBC-CB2899CEC679} = {325F5276-65E9-478F-9CA1-E8C22CE3BF9F}
+		{68AC7384-18FB-4B94-81C9-8FA7325894D1} = {325F5276-65E9-478F-9CA1-E8C22CE3BF9F}
 	EndGlobalSection
 EndGlobal

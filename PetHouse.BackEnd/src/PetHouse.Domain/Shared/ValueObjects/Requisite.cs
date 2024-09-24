@@ -4,7 +4,7 @@ using PetHouse.Domain.Shared;
 
 namespace PetHouse.Domain.Models.Other;
 
-public class Requisite
+public record Requisite
 {
     public Requisite()
     {
@@ -34,5 +34,5 @@ public class Requisite
         }
 
         return new Requisite(name, description);
-    }
+    }   
 }
