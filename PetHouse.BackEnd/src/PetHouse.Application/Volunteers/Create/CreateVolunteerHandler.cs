@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Other;
@@ -11,7 +12,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.Create;
 
-public class CreateVolunteerHandler : ICreateVolunteerHandler
+public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Guid>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<CreateVolunteerHandler> _logger;

@@ -21,6 +21,13 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
             value => PetId.Create(value)
                 );
 
+        builder.ComplexProperty(p => p.Position, pi =>
+        {
+            pi.Property(pp => pp.Value)
+                .IsRequired()
+                .HasColumnName("position");
+        });
+        
         builder.ComplexProperty(p => p.Name, pi =>
         {
             pi.Property(pp => pp.Value).IsRequired()
@@ -88,7 +95,7 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
                 
                 pt.Property(petp => petp.Path)
                     .HasConversion(
-                        p => p.Path,
+                        p => p.Value,
                         value => FilePath.Create(value).Value);
                 
                 pt.Property(petp => petp.IsMain);

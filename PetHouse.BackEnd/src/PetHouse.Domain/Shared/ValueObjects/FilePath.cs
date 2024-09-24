@@ -5,18 +5,18 @@ namespace PetHouse.Domain.Models.Shared.ValueObjects;
 
 public record FilePath
 {
-    private FilePath(string path)
+    private FilePath(string value)
     {
-        Path = path;
+        Value = value;
     }
 
-    public string Path { get; }
+    public string Value { get; }
 
-    public static Result<FilePath, Error> Create(Guid path, string extension)
+    public static Result<FilePath, Error> Create(Guid value, string extension)
     {
         // валидация на доступные расширения файлов
 
-        var fullPath = path + extension;
+        var fullPath = value + extension;
 
         return new FilePath(fullPath);
     }

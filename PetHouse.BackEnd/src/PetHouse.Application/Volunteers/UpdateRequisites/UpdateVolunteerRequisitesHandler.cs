@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
@@ -10,7 +11,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.UpdateRequisites;
 
-public class UpdateVolunteerRequisitesHandler : IUpdateVolunteerRequisitesHandler
+public class UpdateVolunteerRequisitesHandler : ICommandHandler<UpdateVolunteerRequisitesCommand, Guid>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<UpdateVolunteerRequisitesHandler> _logger;

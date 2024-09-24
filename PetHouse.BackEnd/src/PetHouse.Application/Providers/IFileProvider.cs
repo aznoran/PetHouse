@@ -7,15 +7,9 @@ namespace PetHouse.Application.Providers;
 
 public interface IFileProvider
 {
-    /*Task<UnitResult<Error>> Upload(
-        Stream stream,
-        string bucketName,
-        Guid fileName,
-        CancellationToken ct);*/
-
-    Task<Result<IReadOnlyList<FilePath>,Error>> UploadFiles(
+    
+    Task<Result<IReadOnlyList<FileInfo>,Error>> UploadFiles(
         IEnumerable<FileData> files, 
-        string bucketName,
         CancellationToken ct);
 
     Task<UnitResult<Error>> Delete(

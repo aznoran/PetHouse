@@ -1,5 +1,6 @@
-﻿using PetHouse.Application.Dto;
+﻿using PetHouse.Application.Abstraction;
+using PetHouse.Application.Dto;
 
 namespace PetHouse.Application.Volunteers.UpdateRequisites;
 
-public record UpdateVolunteerRequisitesCommand(Guid Id, IEnumerable<RequisiteDto> RequisiteDto);
+public record UpdateVolunteerRequisitesCommand(Guid Id, IEnumerable<RequisiteDto> RequisiteDto) : ICommand;

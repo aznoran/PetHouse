@@ -1,11 +1,12 @@
-﻿using PetHouse.Application.Dto;
+﻿using PetHouse.Application.Abstraction;
+using PetHouse.Application.Dto;
 using PetHouse.Domain.Enums;
 
 namespace PetHouse.Application.Volunteers.AddPet;
 
 public record AddPetCommand(
     Guid VolunteerId,
-    AddPetDto AddPetDto);
+    AddPetDto AddPetDto) : ICommand;
     
 public record AddPetDto(
     string Name,

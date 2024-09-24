@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Application.Volunteers.Create;
 using PetHouse.Domain;
@@ -14,7 +15,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.AddPet;
 
-public class AddPetHandler : IAddPetHandler
+public class AddPetHandler : ICommandHandler<AddPetCommand>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetHandler> _logger;

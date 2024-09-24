@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Models.Other;
 using PetHouse.Domain.Shared;
@@ -9,7 +10,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.UpdateSocialNetworks;
 
-public class UpdateVolunteerSocialNetworksHandler : IUpdateVolunteerSocialNetworksHandler
+public class UpdateVolunteerSocialNetworksHandler : ICommandHandler<UpdateVolunteerSocialNetworksCommand, Guid>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<UpdateVolunteerSocialNetworksHandler> _logger;

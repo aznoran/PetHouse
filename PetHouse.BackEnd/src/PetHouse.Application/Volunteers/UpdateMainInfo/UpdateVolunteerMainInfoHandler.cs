@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Models.Volunteers.ValueObjects;
 using PetHouse.Domain.Shared;
@@ -8,7 +9,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.UpdateMainInfo;
 
-public class UpdateVolunteerMainInfoHandler : IUpdateVolunteerMainInfoHandler
+public class UpdateVolunteerMainInfoHandler : ICommandHandler<UpdateVolunteerMainInfoCommand, Guid>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<UpdateVolunteerMainInfoHandler> _logger;
