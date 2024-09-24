@@ -6,6 +6,7 @@ using PetHouse.Application.Dto;
 using PetHouse.Application.Providers;
 using PetHouse.Domain.Models.Shared.ValueObjects;
 using PetHouse.Domain.Shared;
+using FileInfo = PetHouse.Application.Providers.FileInfo;
 
 namespace PetHouse.Infrastructure.Providers;
 
@@ -51,8 +52,7 @@ public class MinioProvider : IFileProvider
         return UnitResult.Success<Error>();
     }*/
 
-    public async Task<Result<IReadOnlyList<FilePath>, Error>> UploadFiles(IEnumerable<FileData> files,
-        string bucketName, CancellationToken ct)
+    public async Task<Result<IReadOnlyList<FileInfo>, Error>> UploadFiles(IEnumerable<FileData> files, CancellationToken ct)
     {
         var semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
         var filesList = files.ToList();
@@ -71,7 +71,7 @@ public class MinioProvider : IFileProvider
 
             var results = pathsResult.Select(p => p.Value).ToList();
 
-            _logger.LogInformation("Uploaded files: {files}", results.Select(f => f.Path));
+            _logger.LogInformation("Uploaded files: {files}", results.Select(f => f.Path.Value));
 
             return results;
         }
@@ -180,7 +180,7 @@ public class MinioProvider : IFileProvider
         return presignedUrls;
     }
 
-    private async Task<Result<FilePath, Error>> PutObject(
+    private async Task<Result<FileInfo, Error>> PutObject(
         FileData fileData,
         SemaphoreSlim semaphoreSlim,
         CancellationToken cancellationToken)
@@ -188,26 +188,26 @@ public class MinioProvider : IFileProvider
         await semaphoreSlim.WaitAsync(cancellationToken);
 
         var putObjectArgs = new PutObjectArgs()
-            .WithBucket(fileData.BucketName)
+            .WithBucket(fileData.FileInfo.BucketName)
             .WithStreamData(fileData.Content)
             .WithObjectSize(fileData.Content.Length)
-            .WithObject(fileData.FilePath.Path);
+            .WithObject(fileData.FileInfo.Path.Value);
 
         try
         {
             await _minioClient
                 .PutObjectAsync(putObjectArgs, cancellationToken);
 
-            return fileData.FilePath;
+            return fileData.FileInfo;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex,
                 "Fail to upload file in minio with path {path} in bucket {bucket}",
-                fileData.FilePath.Path,
-                fileData.BucketName);
+                fileData.FileInfo.Path.Value,
+                fileData.FileInfo.BucketName);
 
-            return Errors.File.FailedToUpload(fileData.FilePath.Path);
+            return Errors.File.FailedToUpload(fileData.FileInfo.Path.Value);
         }
         finally
         {
@@ -219,7 +219,7 @@ public class MinioProvider : IFileProvider
         IEnumerable<FileData> filesData,
         CancellationToken cancellationToken)
     {
-        HashSet<string> bucketNames = [..filesData.Select(file => file.BucketName)];
+        HashSet<string> bucketNames = [..filesData.Select(file => file.FileInfo.BucketName)];
 
         foreach (var bucketName in bucketNames)
         {

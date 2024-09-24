@@ -1,4 +1,5 @@
-﻿using PetHouse.Application.Dto;
+﻿using PetHouse.Application.Abstraction;
+using PetHouse.Application.Dto;
 
 namespace PetHouse.Application.Volunteers.Create;
 
@@ -9,4 +10,4 @@ public record CreateVolunteerCommand(
     int YearsOfExperience, 
     string PhoneNumber,
     IEnumerable<SocialNetworksDto> SocialNetworksDto,
-    IEnumerable<RequisiteDto> RequisiteDto);
+    IEnumerable<RequisiteDto> RequisiteDto) : ICommand;

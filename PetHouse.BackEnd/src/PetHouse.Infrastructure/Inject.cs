@@ -1,10 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
+using PetHouse.Application.Messaging;
 using PetHouse.Application.Volunteers;
+using PetHouse.Infrastructure.BackgroundServices;
+using PetHouse.Infrastructure.Files;
+using PetHouse.Infrastructure.Messaging;
 using PetHouse.Infrastructure.Options;
 using PetHouse.Infrastructure.Providers;
 using PetHouse.Infrastructure.Repositories;
+using FileInfo = PetHouse.Application.Providers.FileInfo;
 using IFileProvider = PetHouse.Application.Providers.IFileProvider;
 
 namespace PetHouse.Infrastructure;
@@ -14,10 +19,19 @@ public static class Inject
     public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
-        serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
+        serviceCollection.AddMinioServices(configuration)
+            .AddProviders()
+            .AddServices()
+            .AddDataBaseLogic(configuration)
+            .AddHostedServices()
+            .AddMessaging();
 
-        serviceCollection.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(configuration));
-        
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddMinioServices(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
         serviceCollection.Configure<MinioOptions>(
             configuration.GetSection(MinioOptions.MINIO));
 
@@ -31,8 +45,44 @@ public static class Inject
                 .WithSSL(minioOptions.IsSsl);
         });
 
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddProviders(this IServiceCollection serviceCollection)
+    {
         serviceCollection.AddScoped<IFileProvider, MinioProvider>();
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
+    {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddScoped<IFilesCleanerService, FilesCleanerService>();
+        
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddDataBaseLogic(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+        serviceCollection.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(configuration));
+        serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddHostedServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddHostedService<MinioFileCleanerHostedService>();
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddMessaging(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<IMessageQueue<IEnumerable<FileInfo>>,
+            InMemoryMessageQueue<IEnumerable<FileInfo>>>();
 
         return serviceCollection;
     }

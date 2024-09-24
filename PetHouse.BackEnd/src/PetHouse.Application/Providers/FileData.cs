@@ -2,4 +2,6 @@
 
 namespace PetHouse.Application.Providers;
 
-public record FileData(Stream Content, FilePath FilePath, string BucketName);
+public record FileData(Stream Content, FileInfo FileInfo);
+
+public record FileInfo(FilePath Path, string BucketName);

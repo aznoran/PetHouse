@@ -1,40 +1,45 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
+using PetHouse.Application.Messaging;
 using PetHouse.Application.Providers;
 using PetHouse.Domain.Models;
 using PetHouse.Domain.Models.Shared.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.ValueObjects;
 using PetHouse.Infrastructure;
+using FileInfo = PetHouse.Application.Providers.FileInfo;
 
 namespace PetHouse.Application.Volunteers.AddPetPhoto;
 
-public class AddPetPhotosHandler : IAddPetPhotosHandler
+public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
 {
     private const string BUCKET_NAME = "photos";
 
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetPhotosHandler> _logger;
+    private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
     private readonly IFileProvider _minio;
     private readonly IValidator<AddPetPhotosCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
 
     public AddPetPhotosHandler(IVolunteersRepository repository,
         ILogger<AddPetPhotosHandler> logger,
+        IMessageQueue<IEnumerable<FileInfo>> messageQueue,
         IFileProvider minio,
         IValidator<AddPetPhotosCommand> validator,
         IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;
+        _messageQueue = messageQueue;
         _minio = minio;
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
 
-    //TODO: перенести валидаторы
     public async Task<Result<Guid, ErrorList>> Handle(AddPetPhotosCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
@@ -43,8 +48,6 @@ public class AddPetPhotosHandler : IAddPetPhotosHandler
         {
             return validationResult.ToList();
         }
-
-        //await _unitOfWork.BeginTransaction(cancellationToken);
 
         var volunteer = await _repository.GetById(command.VolunteerId, cancellationToken);
 
@@ -63,22 +66,26 @@ public class AddPetPhotosHandler : IAddPetPhotosHandler
             if (filePath.IsFailure)
                 return filePath.Error.ToErrorList();
 
-            var fileData = new FileData(file.Content, filePath.Value, BUCKET_NAME);
+            var fileData = new FileData(file.Content, new FileInfo(filePath.Value, BUCKET_NAME));
 
             data.Add(fileData);
         }
 
-        var uploadFilesRes = await _minio.UploadFiles(data, BUCKET_NAME, cancellationToken);
+        var uploadFilesRes = await _minio.UploadFiles(data, cancellationToken);
 
         if (uploadFilesRes.IsFailure)
+        {
+            await _messageQueue.WriteAsync(data.Select(f => f.FileInfo), cancellationToken);
+
             return uploadFilesRes.Error.ToErrorList();
-        ;
+        }
+
 
         var addPetPhotoRes = volunteer.Value.AddPetPhotos(PetId.Create(command.PetId),
             new PetPhotoInfo(
                 uploadFilesRes.Value.Select(x =>
                     PetPhoto.Create(
-                        x,
+                        x.Path,
                         command.IsMain).Value
                 ).ToList()
             )

@@ -1,3 +1,5 @@
-﻿namespace PetHouse.Application.Volunteers.Delete;
+﻿using PetHouse.Application.Abstraction;
 
-public record DeleteVolunteerCommand(Guid Id);
+namespace PetHouse.Application.Volunteers.Delete;
+
+public record DeleteVolunteerCommand(Guid Id) : ICommand;

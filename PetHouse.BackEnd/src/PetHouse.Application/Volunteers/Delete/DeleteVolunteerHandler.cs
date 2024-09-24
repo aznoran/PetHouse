@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Application.Volunteers.Create;
 using PetHouse.Domain.Shared;
@@ -8,7 +9,7 @@ using PetHouse.Infrastructure;
 
 namespace PetHouse.Application.Volunteers.Delete;
 
-public class DeleteVolunteerHandler : IDeleteVolunteerHandler
+public class DeleteVolunteerHandler : ICommandHandler<DeleteVolunteerCommand, Guid>
 {
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<DeleteVolunteerHandler> _logger;

@@ -20,7 +20,7 @@ public class VolunteersController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
-        [FromServices] ICreateVolunteerHandler createVolunteerHandler,
+        [FromServices] CreateVolunteerHandler createVolunteerHandler,
         [FromBody] CreateVolunteerRequest createVolunteerRequest,
         CancellationToken cancellationToken = default)
     {
@@ -36,7 +36,7 @@ public class VolunteersController : ApplicationController
 
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> Delete(
-        [FromServices] IDeleteVolunteerHandler deleteVolunteerHandler,
+        [FromServices] DeleteVolunteerHandler deleteVolunteerHandler,
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -54,7 +54,7 @@ public class VolunteersController : ApplicationController
 
     [HttpPut("{id:guid}/main-info")]
     public async Task<ActionResult<Guid>> UpdateMainInfo(
-        [FromServices] IUpdateVolunteerMainInfoHandler updateVolunteerMainInfoHandler,
+        [FromServices] UpdateVolunteerMainInfoHandler updateVolunteerMainInfoHandler,
         [FromRoute] Guid id,
         [FromBody] UpdateVolunteerMainInfoRequest updateVolunteerMainInfoRequest,
         CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ public class VolunteersController : ApplicationController
 
     [HttpPatch("{id:guid}/requisites")]
     public async Task<ActionResult<Guid>> UpdateRequisites(
-        [FromServices] IUpdateVolunteerRequisitesHandler updateVolunteerRequisitesHandler,
+        [FromServices] UpdateVolunteerRequisitesHandler updateVolunteerRequisitesHandler,
         [FromRoute] Guid id,
         [FromBody] IEnumerable<RequisiteDto> updateVolunteerRequisitesDto,
         CancellationToken cancellationToken = default)
@@ -90,7 +90,7 @@ public class VolunteersController : ApplicationController
 
     [HttpPatch("{id:guid}/social-networks")]
     public async Task<ActionResult<Guid>> UpdateSocialNetworks(
-        [FromServices] IUpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
+        [FromServices] UpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
         [FromRoute] Guid id,
         [FromBody] IEnumerable<SocialNetworksDto> updateVolunteerSocialNetworksDto,
         CancellationToken cancellationToken = default)
@@ -109,7 +109,7 @@ public class VolunteersController : ApplicationController
 
     [HttpPost("{id:guid}/pet")]
     public async Task<ActionResult<Guid>> AddPet(
-        [FromServices] IAddPetHandler addPetHandler,
+        [FromServices] AddPetHandler addPetHandler,
         [FromRoute] Guid id,
         [FromBody] AddPetRequest addPetRequest,
         CancellationToken cancellationToken = default)
@@ -126,7 +126,7 @@ public class VolunteersController : ApplicationController
 
     [HttpPost("{volunteerId:guid}/petphotos/{petId:guid}")]
     public async Task<ActionResult<Guid>> AddPetPhotos(
-        [FromServices] IAddPetPhotosHandler addPetPhotosHandler,
+        [FromServices] AddPetPhotosHandler addPetPhotosHandler,
         [FromRoute] Guid volunteerId,
         [FromRoute] Guid petId,
         [FromForm] AddPetPhotoRequest request,
