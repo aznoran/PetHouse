@@ -1,8 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Constraints;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Models.Volunteers.ValueObjects;
+namespace PetHouse.Domain.PetManagment.ValueObjects;
 
 public record PetInfo
 {
@@ -56,7 +58,7 @@ public record PetInfo
         }
 
         if (string.IsNullOrWhiteSpace(healthInfo) ||
-            healthInfo.Length > Constraints.DefaultConstraints.MAX_DESCRIPTION_LENGTH)
+            healthInfo.Length > DefaultConstraints.MAX_DESCRIPTION_LENGTH)
         {
             return Errors.General.ValueIsInvalid("health_info");
         }

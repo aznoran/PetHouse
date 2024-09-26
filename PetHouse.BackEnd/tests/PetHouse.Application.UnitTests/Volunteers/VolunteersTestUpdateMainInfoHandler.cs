@@ -4,15 +4,15 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Dto;
+using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.UpdateMainInfo;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Other;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
+using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
-using PetHouse.Infrastructure;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 
@@ -89,8 +89,8 @@ public class VolunteersTestUpdateMainInfoHandler
             Description.Create("OldDescription").Value,
             YearsOfExperience.Create(0).Value,
             PhoneNumber.Create("89587654321").Value,
-            new SocialNetworkInfo(new[] { SocialNetwork.Create("test", "test").Value }),
-            new RequisiteInfo(new[] { Requisite.Create("test", "test").Value }));
+            new[] { SocialNetwork.Create("test", "test").Value },
+            new[] { Requisite.Create("test", "test").Value });
 
         _validatorMock.Setup(v => v.ValidateAsync(It.IsAny<UpdateVolunteerMainInfoCommand>(), cancellationToken))
             .ReturnsAsync(new ValidationResult());

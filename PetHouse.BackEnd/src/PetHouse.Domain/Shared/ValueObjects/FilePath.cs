@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Domain.Models.Shared.ValueObjects;
+namespace PetHouse.Domain.Shared.ValueObjects;
 
 public record FilePath
 {

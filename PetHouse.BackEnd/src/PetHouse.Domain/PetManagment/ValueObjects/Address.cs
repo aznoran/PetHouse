@@ -1,8 +1,8 @@
-﻿using System.Text.RegularExpressions;
-using CSharpFunctionalExtensions;
-using PetHouse.Domain.Shared;
+﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Models.Volunteers.ValueObjects;
+namespace PetHouse.Domain.PetManagment.ValueObjects;
 
 public record Address
 {

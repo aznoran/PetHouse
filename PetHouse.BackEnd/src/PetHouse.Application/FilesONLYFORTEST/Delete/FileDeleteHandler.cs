@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Application.Providers;
-using PetHouse.Application.Volunteers.Create;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Files.Delete;
+namespace PetHouse.Application.FilesONLYFORTEST.Delete;
 
 public class FileDeleteHandler
 {

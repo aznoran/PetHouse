@@ -1,12 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Enums;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
-using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
+using PetHouse.Domain.PetManagment.Entities;
+using PetHouse.Domain.PetManagment.Enums;
+using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Models;
+namespace PetHouse.Domain.PetManagment.Aggregate;
 
-public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletable
+public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDeletable
 {
     private bool _isDeleted = false;
 
@@ -20,8 +22,8 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
-        SocialNetworkInfo? socialNetworks,
-        RequisiteInfo? requisites) : base(volunteerId)
+        IReadOnlyList<SocialNetwork>? socialNetworks,
+        IReadOnlyList<Requisite>? requisites) : base(volunteerId)
     {
         FullName = fullName;
         Email = email;
@@ -34,9 +36,8 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
 
     public FullName FullName { get; private set; }
 
-    public Email Email { get; private set; }
-
     public Description Description { get; private set; }
+    public Email Email { get; private set; }
 
     public YearsOfExperience YearsOfExperience { get; private set; }
 
@@ -57,9 +58,9 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         return _pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
     }
 
-    public SocialNetworkInfo? SocialNetworks { get; private set; }
+    public IReadOnlyList<SocialNetwork> SocialNetworks { get; private set; }
 
-    public RequisiteInfo? Requisites { get; private set; }
+    public IReadOnlyList<Requisite>? Requisites { get; private set; }
 
     private List<Pet> _pets = [];
     public IReadOnlyList<Pet>? Pets => _pets;
@@ -72,8 +73,8 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
-        SocialNetworkInfo socialNetworks,
-        RequisiteInfo requisites)
+        IReadOnlyList<SocialNetwork> socialNetworks,
+        IReadOnlyList<Requisite> requisites)
     {
         var volunteer = new Volunteer(
             volunteerId,
@@ -121,13 +122,13 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
     }
 
     public void UpdateRequisites(
-        RequisiteInfo requisites)
+        IReadOnlyList<Requisite> requisites)
     {
         Requisites = requisites;
     }
 
     public void UpdateSocialNetworks(
-        SocialNetworkInfo socialNetworks)
+        IReadOnlyList<SocialNetwork> socialNetworks)
     {
         SocialNetworks = socialNetworks;
     }
@@ -138,7 +139,7 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         PetInfo petInfo,
         Address address,
         PhoneNumber phoneNumber,
-        RequisiteInfo requisites,
+        IReadOnlyList<Requisite> requisites,
         PetStatus petStatus,
         DateTime creationDate)
     {
@@ -226,7 +227,7 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         return UnitResult.Success<Error>();
     }
 
-    public UnitResult<Error> AddPetPhotos(PetId petId, PetPhotoInfo petPhotoInfo)
+    public UnitResult<Error> AddPetPhotos(PetId petId, IReadOnlyList<PetPhoto> petPhotos)
     {
         if (Pets is null)
             return Errors.General.NotFound();
@@ -236,7 +237,7 @@ public sealed class Volunteer : Domain.Shared.Entity<VolunteerId>, ISoftDeletabl
         if (pet is null)
             return Errors.General.NotFound(petId.Value);
 
-        var addPhotosRes = pet.AddPhotos(petPhotoInfo);
+        var addPhotosRes = pet.AddPhotos(petPhotos);
 
         if (addPhotosRes.IsFailure)
             return addPhotosRes.Error;

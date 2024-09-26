@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Response;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Enums;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.API.Extensions;
 

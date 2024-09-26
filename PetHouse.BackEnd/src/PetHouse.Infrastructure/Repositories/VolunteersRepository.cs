@@ -1,32 +1,35 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Application.Volunteers;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
+using PetHouse.Infrastructure.Data;
 
 namespace PetHouse.Infrastructure.Repositories;
 
 public class VolunteersRepository : IVolunteersRepository
 {
-    private readonly PetHouseDbContext _dbContext;
+    private readonly PetHouseWriteDbContext _writeDbContext;
 
-    public VolunteersRepository(PetHouseDbContext dbContext)
+    public VolunteersRepository(PetHouseWriteDbContext writeDbContext)
     {
-        _dbContext = dbContext;
+        _writeDbContext = writeDbContext;
     }
 
     public async Task<Guid> Create(Volunteer volunteer, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Volunteers.AddAsync(volunteer, cancellationToken);
+        await _writeDbContext.Volunteers.AddAsync(volunteer, cancellationToken);
 
         return volunteer.Id;
     }
 
     public async Task<Result<Volunteer, Error>> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        var res = await _dbContext.Volunteers
+        var res = await _writeDbContext.Volunteers
             .Include(v => v.Pets)!
             .FirstOrDefaultAsync(v => v.Id == VolunteerId.Create(id), cancellationToken);
 
@@ -40,7 +43,7 @@ public class VolunteersRepository : IVolunteersRepository
 
     public async Task<Result<Volunteer, Error>> GetByEmail(Email email, CancellationToken cancellationToken = default)
     {
-        var res = await _dbContext.Volunteers
+        var res = await _writeDbContext.Volunteers
             .SingleOrDefaultAsync(v => v.Email == email, cancellationToken);
 
         if (res is null)
@@ -54,7 +57,7 @@ public class VolunteersRepository : IVolunteersRepository
     public async Task<Result<Volunteer, Error>> GetByPhoneNumber(PhoneNumber phoneNumber,
         CancellationToken cancellationToken = default)
     {
-        var res = await _dbContext.Volunteers
+        var res = await _writeDbContext.Volunteers
             .SingleOrDefaultAsync(v => v.PhoneNumber == phoneNumber, cancellationToken);
 
         if (res is null)
@@ -67,16 +70,8 @@ public class VolunteersRepository : IVolunteersRepository
 
     public async Task Save(Volunteer volunteer, CancellationToken cancellationToken = default)
     {
-        _dbContext.Volunteers.Attach(volunteer);
-
-        var a = _dbContext.ChangeTracker.Entries<PetPhotoInfo>();
+        _writeDbContext.Volunteers.Attach(volunteer);
         
-        var b = _dbContext.ChangeTracker.Entries<PetPhoto>();
-        
-        var c = _dbContext.ChangeTracker.Entries<Volunteer>();
-        
-        var d = _dbContext.ChangeTracker.Entries();
-        
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _writeDbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -1,5 +1,5 @@
-﻿using PetHouse.Application.Dto;
-using PetHouse.Application.Volunteers.Create;
+﻿using PetHouse.Application.Dtos.PetManagment;
+using PetHouse.Application.Volunteers.Commands.Create;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 

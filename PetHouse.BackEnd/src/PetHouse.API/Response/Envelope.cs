@@ -1,4 +1,5 @@
 ﻿using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.API.Response;
 

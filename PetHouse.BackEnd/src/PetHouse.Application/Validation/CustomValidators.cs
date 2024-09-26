@@ -3,6 +3,7 @@ using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Routing.Template;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.Validation;
 

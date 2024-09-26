@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain.Constraints;
+﻿namespace PetHouse.Domain.Shared.Constraints;
 
 public class DefaultConstraints
 {

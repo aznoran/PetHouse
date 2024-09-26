@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain.Models;
+﻿namespace PetHouse.Domain.Shared.Id;
 
 public record PetId 
 {

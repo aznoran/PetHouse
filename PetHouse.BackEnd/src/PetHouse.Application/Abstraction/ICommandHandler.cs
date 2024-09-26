@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Application.Volunteers.AddPet;
-using PetHouse.Application.Volunteers.AddPetPhoto;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.Abstraction;
 

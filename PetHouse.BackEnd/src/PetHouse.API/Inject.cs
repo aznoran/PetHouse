@@ -4,7 +4,8 @@ namespace PetHouse.API;
 
 public static class Inject
 {
-    public static IServiceCollection AddApiServices(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddApiServices(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
     {
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen();
