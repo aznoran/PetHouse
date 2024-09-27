@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Constraints;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Constraints;
+using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Domain.Models.Volunteers.ValueObjects;
+namespace PetHouse.Domain.Shared.ValueObjects;
 
 public record Description
 {
-    public Description(string value)
+    private Description(string value)
     {
         Value = value;
     }

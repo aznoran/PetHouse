@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain.Enums;
+﻿namespace PetHouse.Domain.PetManagment.Enums;
 
 public enum PetStatus
 {

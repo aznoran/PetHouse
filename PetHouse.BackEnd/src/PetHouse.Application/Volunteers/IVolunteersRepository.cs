@@ -1,7 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.Volunteers;
 

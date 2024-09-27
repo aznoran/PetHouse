@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.Extensions.Logging;
-using PetHouse.Domain.Models.Shared.ValueObjects;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.Providers;
 

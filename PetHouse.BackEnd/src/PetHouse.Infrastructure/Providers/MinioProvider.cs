@@ -2,10 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.DataModel.Args;
-using PetHouse.Application.Dto;
 using PetHouse.Application.Providers;
-using PetHouse.Domain.Models.Shared.ValueObjects;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 using FileInfo = PetHouse.Application.Providers.FileInfo;
 
 namespace PetHouse.Infrastructure.Providers;

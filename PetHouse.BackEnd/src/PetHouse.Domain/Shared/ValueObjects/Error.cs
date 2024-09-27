@@ -1,6 +1,7 @@
 ﻿using System.Collections;
+using PetHouse.Domain.Shared.Enums;
 
-namespace PetHouse.Domain.Shared;
+namespace PetHouse.Domain.Shared.ValueObjects;
 
 public record Error
 {

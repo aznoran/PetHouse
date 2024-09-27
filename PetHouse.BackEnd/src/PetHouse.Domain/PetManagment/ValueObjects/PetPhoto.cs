@@ -1,9 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Http;
-using PetHouse.Domain.Models.Shared.ValueObjects;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Models;
+namespace PetHouse.Domain.PetManagment.ValueObjects;
 
 public record PetPhoto
 {

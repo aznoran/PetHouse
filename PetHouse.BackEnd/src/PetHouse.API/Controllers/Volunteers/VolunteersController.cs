@@ -3,14 +3,16 @@ using PetHouse.API.Controllers.Shared;
 using PetHouse.API.Controllers.Volunteers.Requests;
 using PetHouse.API.Extensions;
 using PetHouse.API.Processors;
-using PetHouse.Application.Dto;
-using PetHouse.Application.Volunteers.AddPet;
-using PetHouse.Application.Volunteers.AddPetPhoto;
-using PetHouse.Application.Volunteers.Create;
-using PetHouse.Application.Volunteers.Delete;
-using PetHouse.Application.Volunteers.UpdateMainInfo;
-using PetHouse.Application.Volunteers.UpdateRequisites;
-using PetHouse.Application.Volunteers.UpdateSocialNetworks;
+using PetHouse.Application.Dtos.PetManagment;
+using PetHouse.Application.Dtos.Shared;
+using PetHouse.Application.Volunteers.Commands.AddPet;
+using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+using PetHouse.Application.Volunteers.Commands.Create;
+using PetHouse.Application.Volunteers.Commands.Delete;
+using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
+using PetHouse.Application.Volunteers.Commands.UpdateRequisites;
+using PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
+using PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
 
 namespace PetHouse.API.Controllers.Volunteers;
 
@@ -18,6 +20,16 @@ namespace PetHouse.API.Controllers.Volunteers;
 [Route("[controller]")]
 public class VolunteersController : ApplicationController
 {
+    [HttpGet]
+    public async Task<ActionResult<Guid>> GetAll(
+        [FromServices] GetAllWithPaginationHandler getAllWithPaginationHandler,
+        [FromQuery] GetAllWithPaginationQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await getAllWithPaginationHandler.Handle(query, cancellationToken);
+
+        return new ObjectResult(res) { StatusCode = 201 };
+    }
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler createVolunteerHandler,

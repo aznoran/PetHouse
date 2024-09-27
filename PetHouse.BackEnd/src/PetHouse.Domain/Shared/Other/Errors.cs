@@ -1,4 +1,6 @@
-﻿namespace PetHouse.Domain.Shared;
+﻿using PetHouse.Domain.Shared.ValueObjects;
+
+namespace PetHouse.Domain.Shared.Other;
 
 public static class Errors
 {

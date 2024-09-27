@@ -4,14 +4,14 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Dto;
+using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.UpdateRequisites;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Other;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
-using PetHouse.Domain.ValueObjects;
-using PetHouse.Infrastructure;
+using PetHouse.Application.Volunteers.Commands.UpdateRequisites;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 
@@ -58,8 +58,8 @@ public class VolunteersTestUpdateRequisitesHandler
             Description.Create("OldDescription").Value,
             YearsOfExperience.Create(0).Value,
             PhoneNumber.Create("89587654321").Value,
-            new SocialNetworkInfo(new[] { SocialNetwork.Create("test", "test").Value }),
-            new RequisiteInfo(new[] { Requisite.Create("test", "test").Value }));
+            new[] { SocialNetwork.Create("test", "test").Value },
+            new[] { Requisite.Create("test", "test").Value });
 
         _validatorMock.Setup(v => v.ValidateAsync(command, cancellationToken))
             .ReturnsAsync(new ValidationResult());
@@ -76,10 +76,10 @@ public class VolunteersTestUpdateRequisitesHandler
 
         var expectedRequisites = command.RequisiteDto
             .Select(r => Requisite.Create(r.Name, r.Description).Value).ToList();
-        volunteer.Value.Requisites!.Requisites[0].Name.Should().Be(expectedRequisites[0].Name);
-        volunteer.Value.Requisites!.Requisites[0].Name.Should().Be(expectedRequisites[0].Name);
-        volunteer.Value.Requisites!.Requisites[1].Description.Should().Be(expectedRequisites[1].Description);
-        volunteer.Value.Requisites!.Requisites[1].Description.Should().Be(expectedRequisites[1].Description);
+        volunteer.Value.Requisites[0].Name.Should().Be(expectedRequisites[0].Name);
+        volunteer.Value.Requisites[0].Name.Should().Be(expectedRequisites[0].Name);
+        volunteer.Value.Requisites[1].Description.Should().Be(expectedRequisites[1].Description);
+        volunteer.Value.Requisites[1].Description.Should().Be(expectedRequisites[1].Description);
 
         _unitOfWorkMock.Verify(u => u.SaveChanges(cancellationToken), Times.Once);
     }

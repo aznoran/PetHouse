@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Infrastructure.Files;
+﻿namespace PetHouse.Application.Providers;
 
 public interface IFilesCleanerService
 {

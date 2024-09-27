@@ -1,11 +1,12 @@
 using CSharpFunctionalExtensions;
 using FluentAssertions;
-using PetHouse.Domain.Enums;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Other;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.Enums;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Domain.UnitTests;
 
@@ -19,11 +20,11 @@ public class VolunteerTest
         Email email = Email.Create("test@gmail.com").Value;
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
-        PhoneNumber phoneNumber = Models.Volunteers.ValueObjects.PhoneNumber.Create("89251111111").Value;
-        SocialNetworkInfo? socialNetworks = new SocialNetworkInfo(new[]
-            { SocialNetwork.Create("test", "test").Value });
-        RequisiteInfo? requisites = new RequisiteInfo(new[]
-            { Requisite.Create("test", "test").Value });
+        PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
+        var socialNetworks = new[]
+            { SocialNetwork.Create("test", "test").Value };
+        var requisites = new[]
+            { Requisite.Create("test", "test").Value };
 
         var volunteer = Volunteer.Create(VolunteerId.NewId,
             fullName,
@@ -125,11 +126,11 @@ public class VolunteerTest
         Email email = Email.Create("test@gmail.com").Value;
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
-        PhoneNumber phoneNumber = Models.Volunteers.ValueObjects.PhoneNumber.Create("89251111111").Value;
-        SocialNetworkInfo? socialNetworks = new SocialNetworkInfo(new[]
-            { SocialNetwork.Create("test", "test").Value });
-        RequisiteInfo? requisites = new RequisiteInfo(new[]
-            { Requisite.Create("test", "test").Value });
+        PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
+        var socialNetworks = new[]
+            { SocialNetwork.Create("test", "test").Value };
+        var requisites = new[]
+            { Requisite.Create("test", "test").Value };
 
         var volunteer = Volunteer.Create(VolunteerId.NewId,
             fullName,
@@ -229,11 +230,11 @@ public class VolunteerTest
         Email email = Email.Create("test@gmail.com").Value;
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
-        PhoneNumber phoneNumber = Models.Volunteers.ValueObjects.PhoneNumber.Create("89251111111").Value;
-        SocialNetworkInfo? socialNetworks = new SocialNetworkInfo(new[]
-            { SocialNetwork.Create("test", "test").Value });
-        RequisiteInfo? requisites = new RequisiteInfo(new[]
-            { Requisite.Create("test", "test").Value });
+        PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
+        var socialNetworks = new[]
+            { SocialNetwork.Create("test", "test").Value };
+        var requisites = new[]
+            { Requisite.Create("test", "test").Value };
 
         var volunteer = Volunteer.Create(VolunteerId.NewId,
             fullName,
@@ -333,11 +334,11 @@ public class VolunteerTest
         Email email = Email.Create("test@gmail.com").Value;
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
-        PhoneNumber phoneNumber = Models.Volunteers.ValueObjects.PhoneNumber.Create("89251111111").Value;
-        SocialNetworkInfo? socialNetworks = new SocialNetworkInfo(new[]
-            { SocialNetwork.Create("test", "test").Value });
-        RequisiteInfo? requisites = new RequisiteInfo(new[]
-            { Requisite.Create("test", "test").Value });
+        PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
+        var socialNetworks = new[]
+            { SocialNetwork.Create("test", "test").Value };
+        var requisites = new[]
+            { Requisite.Create("test", "test").Value };
 
         var volunteer = Volunteer.Create(VolunteerId.NewId,
             fullName,
@@ -438,11 +439,11 @@ public class VolunteerTest
         FullName fullName = FullName.Create("test", "test").Value;
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
-        PhoneNumber phoneNumber = Models.Volunteers.ValueObjects.PhoneNumber.Create("89251111111").Value;
-        SocialNetworkInfo? socialNetworks = new SocialNetworkInfo(new[]
-            { SocialNetwork.Create("test", "test").Value });
-        RequisiteInfo? requisites = new RequisiteInfo(new[]
-            { Requisite.Create("test", "test").Value });
+        PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
+        var socialNetworks = new[]
+            { SocialNetwork.Create("test", "test").Value };
+        var requisites = new[]
+            { Requisite.Create("test", "test").Value };
         
         //act
         var email = Email.Create("test");

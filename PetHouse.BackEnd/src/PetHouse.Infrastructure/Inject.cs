@@ -2,8 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using PetHouse.Application.Messaging;
+using PetHouse.Application.Providers;
 using PetHouse.Application.Volunteers;
+using PetHouse.Domain.Shared.Other;
 using PetHouse.Infrastructure.BackgroundServices;
+using PetHouse.Infrastructure.Data;
 using PetHouse.Infrastructure.Files;
 using PetHouse.Infrastructure.Messaging;
 using PetHouse.Infrastructure.Options;
@@ -22,10 +25,10 @@ public static class Inject
         serviceCollection.AddMinioServices(configuration)
             .AddProviders()
             .AddServices()
-            .AddDataBaseLogic(configuration)
+            .AddDataBaseLogic()
             .AddHostedServices()
             .AddMessaging();
-
+        
         return serviceCollection;
     }
 
@@ -63,10 +66,10 @@ public static class Inject
         return serviceCollection;
     }
 
-    private static IServiceCollection AddDataBaseLogic(this IServiceCollection serviceCollection,
-        IConfiguration configuration)
+    private static IServiceCollection AddDataBaseLogic(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<PetHouseDbContext>(_ => new PetHouseDbContext(configuration));
+        serviceCollection.AddScoped<PetHouseWriteDbContext>();
+        serviceCollection.AddScoped<IReadDbContext, PetHouseReadDbContext>();
         serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
 
         return serviceCollection;

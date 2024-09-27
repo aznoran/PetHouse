@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Constraints;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Constraints;
+using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Domain.Models.Other;
+namespace PetHouse.Domain.Shared.ValueObjects;
 
 public record Requisite
 {

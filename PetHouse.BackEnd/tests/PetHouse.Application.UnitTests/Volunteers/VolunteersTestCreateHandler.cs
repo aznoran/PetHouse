@@ -4,17 +4,14 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Dto;
+using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.AddPet;
-using PetHouse.Application.Volunteers.Create;
-using PetHouse.Domain.Enums;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Models.Other;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
+using PetHouse.Application.Volunteers.Commands.Create;
+using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
-using PetHouse.Infrastructure;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 

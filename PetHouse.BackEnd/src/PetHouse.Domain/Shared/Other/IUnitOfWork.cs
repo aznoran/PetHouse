@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace PetHouse.Infrastructure;
+namespace PetHouse.Domain.Shared.Other;
 
 public interface IUnitOfWork
 {

@@ -5,10 +5,11 @@ using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.Delete;
-using PetHouse.Domain.Models;
+using PetHouse.Application.Volunteers.Commands.Delete;
+using PetHouse.Domain.PetManagment.Aggregate;
 using PetHouse.Domain.Shared;
-using PetHouse.Infrastructure;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 

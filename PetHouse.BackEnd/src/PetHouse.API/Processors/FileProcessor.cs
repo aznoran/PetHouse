@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.Dto;
+﻿using PetHouse.Application.Dtos.Shared;
 
 namespace PetHouse.API.Processors;
 

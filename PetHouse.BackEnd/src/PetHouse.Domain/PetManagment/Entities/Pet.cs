@@ -1,12 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Enums;
-using PetHouse.Domain.Models.Volunteers.ValueObjects;
-using PetHouse.Domain.Shared;
-using PetHouse.Domain.ValueObjects;
+using PetHouse.Domain.PetManagment.Enums;
+using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.Other;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Models;
+namespace PetHouse.Domain.PetManagment.Entities;
 
-public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
+public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 {
     //EF CORE
     public Pet()
@@ -21,7 +22,7 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
         PetInfo petInfo,
         Address address,
         PhoneNumber phoneNumber,
-        RequisiteInfo requisites,
+        IReadOnlyList<Requisite> requisites,
         PetStatus petStatus,
         DateTime creationDate) : base(petId)
     {
@@ -48,9 +49,9 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
     public Address Address { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
 
-    public RequisiteInfo Requisites { get; private set; }
+    public IReadOnlyList<Requisite> Requisites { get; private set; }
 
-    public PetPhotoInfo? PetPhotosInfo { get; private set; }
+    public IReadOnlyList<PetPhoto> PetPhotos { get; private set; }
     public PetStatus PetStatus { get; private set; }
     public DateTime CreationDate { get; private set; }
 
@@ -64,14 +65,14 @@ public sealed class Pet : Domain.Shared.Entity<PetId>, ISoftDeletable
         _isDeleted = false;
     }
 
-    public UnitResult<Error> AddPhotos(PetPhotoInfo petPhotoInfo)
+    public UnitResult<Error> AddPhotos(IReadOnlyList<PetPhoto> petPhotos)
     {
-        if (petPhotoInfo.PetPhotos.Count(p => p.IsMain) > 1)
+        if (petPhotos.Count(p => p.IsMain) > 1)
         {
             return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
         }
         
-        PetPhotosInfo = petPhotoInfo;
+        PetPhotos = petPhotos;
         
         return UnitResult.Success<Error>();
     }

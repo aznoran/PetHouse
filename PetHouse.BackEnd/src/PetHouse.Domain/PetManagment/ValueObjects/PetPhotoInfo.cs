@@ -1,6 +1,4 @@
-﻿using PetHouse.Domain.Models;
-
-namespace PetHouse.Domain.ValueObjects;
+﻿namespace PetHouse.Domain.PetManagment.ValueObjects;
 
 public record PetPhotoInfo
 {

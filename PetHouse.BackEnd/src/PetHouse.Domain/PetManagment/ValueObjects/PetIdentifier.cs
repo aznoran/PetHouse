@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.Models;
-using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Id;
+using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain;
+namespace PetHouse.Domain.PetManagment.ValueObjects;
 
 public record PetIdentifier
 {

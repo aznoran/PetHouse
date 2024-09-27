@@ -1,4 +1,4 @@
-﻿namespace PetHouse.Domain.Shared;
+﻿namespace PetHouse.Domain.Shared.Enums;
 
 public enum ErrorType
 {

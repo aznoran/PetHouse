@@ -2,18 +2,10 @@
 using Scrutor;
 using Microsoft.Extensions.DependencyInjection;
 using PetHouse.Application.Abstraction;
-using PetHouse.Application.Files.Delete;
-using PetHouse.Application.Files.Get;
-using PetHouse.Application.Files.GetAll;
-using PetHouse.Application.Files.Upload;
-using PetHouse.Application.Messaging;
-using PetHouse.Application.Volunteers.AddPet;
-using PetHouse.Application.Volunteers.AddPetPhoto;
-using PetHouse.Application.Volunteers.Create;
-using PetHouse.Application.Volunteers.Delete;
-using PetHouse.Application.Volunteers.UpdateMainInfo;
-using PetHouse.Application.Volunteers.UpdateRequisites;
-using PetHouse.Application.Volunteers.UpdateSocialNetworks;
+using PetHouse.Application.FilesONLYFORTEST.Delete;
+using PetHouse.Application.FilesONLYFORTEST.Get;
+using PetHouse.Application.FilesONLYFORTEST.GetAll;
+using PetHouse.Application.FilesONLYFORTEST.Upload;
 
 namespace PetHouse.Application;
 
@@ -38,6 +30,14 @@ public static class Inject
                     classes.AssignableToAny(typeof(ICommandHandler<>), typeof(ICommandHandler<,>)))
             .AsSelfWithInterfaces()
             .WithScopedLifetime());
+        
+        serviceCollection.Scan(scan => scan.FromAssemblies(typeof(Inject).Assembly)
+            .AddClasses(
+                classes =>
+                    classes.AssignableToAny(typeof(IQueryHandler<,>)))
+            .AsSelfWithInterfaces()
+            .WithScopedLifetime());
+        
         return serviceCollection;
     }
 

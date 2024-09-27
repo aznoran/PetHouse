@@ -1,4 +1,4 @@
-﻿using PetHouse.Domain.Models.Shared.ValueObjects;
+﻿using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.Providers;
 

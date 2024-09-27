@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Providers;
 using PetHouse.Infrastructure.Files;
 
 namespace PetHouse.Infrastructure.BackgroundServices;

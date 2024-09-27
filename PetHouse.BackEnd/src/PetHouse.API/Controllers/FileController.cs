@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Controllers.Shared;
 using PetHouse.API.Extensions;
-using PetHouse.Application.Files.Delete;
-using PetHouse.Application.Files.Get;
-using PetHouse.Application.Files.GetAll;
-using PetHouse.Application.Files.Upload;
+using PetHouse.Application.FilesONLYFORTEST.Delete;
+using PetHouse.Application.FilesONLYFORTEST.Get;
+using PetHouse.Application.FilesONLYFORTEST.GetAll;
 
 namespace PetHouse.API.Controllers;
 
