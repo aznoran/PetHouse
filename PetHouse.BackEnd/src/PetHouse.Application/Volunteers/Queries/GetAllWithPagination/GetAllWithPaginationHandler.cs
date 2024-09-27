@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using Microsoft.EntityFrameworkCore;
-using PetHouse.Application.Abstraction;
+﻿using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;

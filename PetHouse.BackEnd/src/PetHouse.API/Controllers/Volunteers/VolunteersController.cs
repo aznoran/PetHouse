@@ -13,6 +13,8 @@ using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
 using PetHouse.Application.Volunteers.Commands.UpdateRequisites;
 using PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
 using PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
+using PetHouse.Application.Volunteers.Queries.GetVolunteerById;
+using PetHouse.Domain.Shared.Other;
 
 namespace PetHouse.API.Controllers.Volunteers;
 
@@ -28,6 +30,25 @@ public class VolunteersController : ApplicationController
     {
         var res = await getAllWithPaginationHandler.Handle(query, cancellationToken);
 
+        return new ObjectResult(res) { StatusCode = 201 };
+    }
+    
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<Guid>> GetVolunteer(
+        [FromServices] GetVolunteerByIdHandler getAllWithPaginationHandler,
+        [FromRoute] Guid id,
+        [FromQuery] GetVolunteerByIdQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        //чтобы нельзя было передать в квери айди через браузер, но при этом сохранить сигнатуру IQueryHandler 
+        //добавим internal поле Id у GetVolunteerByIdQuery
+        VolunteerDto res = await getAllWithPaginationHandler.Handle(query.GetQueryWithId(id), cancellationToken);
+
+        if (res is null)
+        {
+            return Errors.General.NotFound(id).ToResponse();
+        }
+        
         return new ObjectResult(res) { StatusCode = 201 };
     }
     [HttpPost]
