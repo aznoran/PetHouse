@@ -21,12 +21,12 @@ namespace PetHouse.API.Controllers.Volunteers;
 public class VolunteersController : ApplicationController
 {
     [HttpGet]
-    public async Task<ActionResult<Guid>> GetAll(
-        [FromServices] GetAllWithPaginationHandler getAllWithPaginationHandler,
-        [FromQuery] GetAllWithPaginationQuery query,
+    public async Task<ActionResult> GetAll(
+        [FromServices] GetAllVolunteerWithPaginationHandler getAllVolunteerWithPaginationHandler,
+        [FromQuery] GetAllVolunteerWithPaginationQuery query,
         CancellationToken cancellationToken = default)
     {
-        var res = await getAllWithPaginationHandler.Handle(query, cancellationToken);
+        var res = await getAllVolunteerWithPaginationHandler.Handle(query, cancellationToken);
 
         return new ObjectResult(res) { StatusCode = 201 };
     }

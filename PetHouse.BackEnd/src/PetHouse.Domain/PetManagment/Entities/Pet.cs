@@ -10,9 +10,7 @@ namespace PetHouse.Domain.PetManagment.Entities;
 public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 {
     //EF CORE
-    public Pet()
-    {
-    }
+    private Pet() { }
 
     public Pet(PetId petId,
         Name name,
@@ -51,7 +49,7 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 
     public IReadOnlyList<Requisite> Requisites { get; private set; }
 
-    public IReadOnlyList<PetPhoto> PetPhotos { get; private set; }
+    public IReadOnlyList<PetPhoto>? PetPhotos { get; private set; }
     public PetStatus PetStatus { get; private set; }
     public DateTime CreationDate { get; private set; }
 

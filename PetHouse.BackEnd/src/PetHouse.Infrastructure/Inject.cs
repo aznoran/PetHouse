@@ -71,7 +71,8 @@ public static class Inject
         serviceCollection.AddScoped<PetHouseWriteDbContext>();
         serviceCollection.AddScoped<IReadDbContext, PetHouseReadDbContext>();
         serviceCollection.AddScoped<IVolunteersRepository, VolunteersRepository>();
-
+        serviceCollection.AddScoped<ISpecieRepository, SpecieRepository>();
+        
         return serviceCollection;
     }
 

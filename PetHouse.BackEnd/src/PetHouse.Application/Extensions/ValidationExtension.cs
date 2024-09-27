@@ -6,7 +6,7 @@ namespace PetHouse.Application.Extensions;
 
 public static class ValidationExtension
 {
-    public static ErrorList ToList(this ValidationResult validationResult)
+    public static ErrorList ToErrorList(this ValidationResult validationResult)
     {
         var validationErrors = validationResult.Errors;
 

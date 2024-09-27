@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.SpeciesManagment;
 using PetHouse.Application.Volunteers;
+using PetHouse.Domain.PetManagment.Entities;
 
 namespace PetHouse.Infrastructure.Data;
 
@@ -12,8 +13,9 @@ public class PetHouseReadDbContext(IConfiguration configuration) : DbContext(), 
     readonly ILoggerFactory _loggerFactory = new LoggerFactory();
 
     public DbSet<VolunteerDto> Volunteers => Set<VolunteerDto>();
-
-    //public DbSet<SpeciesDto> Species => Set<SpeciesDto>();
+    public DbSet<PetDto> Pets => Set<PetDto>();
+    public DbSet<SpecieDto> Species => Set<SpecieDto>();
+    public DbSet<BreedDto> Breeds => Set<BreedDto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

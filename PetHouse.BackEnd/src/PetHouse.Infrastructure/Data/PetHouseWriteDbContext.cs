@@ -12,7 +12,7 @@ public class PetHouseWriteDbContext(IConfiguration configuration) : DbContext()
     
     public DbSet<Volunteer> Volunteers { get; set; }
 
-    public DbSet<Species> Species { get; set; }
+    public DbSet<Specie> Species { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

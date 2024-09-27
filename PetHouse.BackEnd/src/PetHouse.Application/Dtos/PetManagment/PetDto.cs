@@ -23,6 +23,6 @@ public class PetDto
     public string Country { get; init; }
     public string PhoneNumber { get; init; }
     public IEnumerable<RequisiteDto> Requisites { get; init; }
-    public IEnumerable<PetPhotoDto> PetPhotos { get; init; }
+    public IEnumerable<PetPhotoDto>? PetPhotos { get; init; }
     public PetStatus PetStatus { get; init; }
 }
