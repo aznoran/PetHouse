@@ -162,7 +162,7 @@ public class VolunteersController : ApplicationController
         [FromServices] AddPetPhotosHandler addPetPhotosHandler,
         [FromRoute] Guid volunteerId,
         [FromRoute] Guid petId,
-        [FromForm] AddPetPhotoRequest request,
+        [FromForm] AddPetPhotosRequest request,
         CancellationToken cancellationToken = default)
     {
         await using var fileProcessor = new FormFileProcessor();
@@ -177,5 +177,24 @@ public class VolunteersController : ApplicationController
         }
 
         return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpPatch("{volunteerId:guid}/pet-status/{petId:guid}")]
+    public async Task<ActionResult> UpdatePetStatus(
+        [FromServices] UpdatePetStatusHandler updatePetStatusHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromForm] UpdatePetStatusRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await updatePetStatusHandler
+            .Handle(request.ToCommand(volunteerId, petId), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.IsSuccess) { StatusCode = 201 };
     }
 }

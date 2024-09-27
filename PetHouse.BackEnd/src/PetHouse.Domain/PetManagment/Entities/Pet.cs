@@ -65,6 +65,10 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
         _isDeleted = false;
     }
 
+    public void UpdatePetStatus(PetStatus petStatus)
+    {
+        PetStatus = petStatus;
+    }
     public UnitResult<Error> AddPhotos(IReadOnlyList<PetPhoto> petPhotos)
     {
         if (petPhotos.Count(p => p.IsMain) > 1)
