@@ -51,7 +51,8 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 
     public IReadOnlyList<Requisite> Requisites { get; private set; }
 
-    public IReadOnlyList<PetPhoto> PetPhotos { get; private set; }
+    private List<PetPhoto> _petPhotos = [];
+    public IReadOnlyList<PetPhoto> PetPhotos => _petPhotos;
     public PetStatus PetStatus { get; private set; }
     public DateTime CreationDate { get; private set; }
 
@@ -65,14 +66,72 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
         _isDeleted = false;
     }
 
+    public UnitResult<Error> Update(Name name,
+        PetIdentifier petIdentifier,
+        Description description,
+        PetInfo petInfo,
+        Address address,
+        PhoneNumber phoneNumber,
+        IReadOnlyList<Requisite> requisites,
+        DateTime creationDate)
+    {
+        Name = name;
+        PetIdentifier = petIdentifier;
+        Description = description;
+        PetInfo = petInfo;
+        Address = address;
+        PhoneNumber = phoneNumber;
+        Requisites = requisites;
+        CreationDate = creationDate;
+
+        return UnitResult.Success<Error>();
+    }
     public UnitResult<Error> AddPhotos(IReadOnlyList<PetPhoto> petPhotos)
     {
-        if (petPhotos.Count(p => p.IsMain) > 1)
+        var enumerable = petPhotos.ToList();
+        
+        if (enumerable.Count(p => p.IsMain) > 1)
         {
             return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
         }
         
-        PetPhotos = petPhotos;
+        _petPhotos = enumerable;
+        
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> AddPhoto(PetPhoto petPhoto)
+    {
+        if (_petPhotos is null)
+        {
+            _petPhotos = new List<PetPhoto>() { petPhoto };
+        }
+        else
+        {
+            if (((petPhoto.IsMain ? 1 : 0) + _petPhotos.Count(p => p.IsMain)) > 1)
+            {
+                return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
+            }
+            
+            _petPhotos.Add(petPhoto);
+        }
+        
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> RemovePhoto(PetPhoto petPhoto)
+    {
+        if (_petPhotos is null)
+        {
+            return Errors.General.NotFound();
+        }
+        
+        var removeRes = _petPhotos.Remove(petPhoto);
+
+        if (removeRes == false)
+        {
+            return Errors.General.NotFound();
+        }
         
         return UnitResult.Success<Error>();
     }

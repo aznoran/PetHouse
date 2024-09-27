@@ -38,6 +38,7 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<Guid, ErrorList>> Handle(AddPetPhotosCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
@@ -80,12 +81,10 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
 
 
         var addPetPhotoRes = volunteer.Value.AddPetPhotos(PetId.Create(command.PetId),
-            
-                uploadFilesRes.Value.Select(x =>
-                    PetPhoto.Create(
-                        x.Path,
-                        command.IsMain).Value
-                
+            uploadFilesRes.Value.Select(x =>
+                PetPhoto.Create(
+                    x.Path,
+                    command.IsMain).Value
             ).ToList()
         );
 

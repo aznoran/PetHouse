@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
+using PetHouse.Domain.PetManagment.Entities;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Infrastructure.Data;
 
@@ -23,6 +24,7 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task SaveChanges(CancellationToken cancellationToken = default)
     {
+        var a = _writeDbContext.ChangeTracker.Entries<Pet>();
         await _writeDbContext.SaveChangesAsync(cancellationToken);
     }
 }

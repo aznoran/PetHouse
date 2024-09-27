@@ -141,7 +141,7 @@ public class VolunteersController : ApplicationController
     }
 
     [HttpPost("{id:guid}/pet")]
-    public async Task<ActionResult<Guid>> AddPet(
+    public async Task<ActionResult> AddPet(
         [FromServices] AddPetHandler addPetHandler,
         [FromRoute] Guid id,
         [FromBody] AddPetRequest addPetRequest,
@@ -156,13 +156,32 @@ public class VolunteersController : ApplicationController
 
         return Ok();
     }
+    
+    [HttpPut("{volunteerId:guid}/pet/{petId:guid}")]
+    public async Task<ActionResult> UpdateMainInfo(
+        [FromServices] UpdatePetHandler updatePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] UpdatePetRequest updatePetRequest,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await updatePetHandler
+            .Handle(updatePetRequest.ToCommand(volunteerId, petId), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.IsSuccess) { StatusCode = 204 };
+    }
 
     [HttpPost("{volunteerId:guid}/petphotos/{petId:guid}")]
     public async Task<ActionResult<Guid>> AddPetPhotos(
         [FromServices] AddPetPhotosHandler addPetPhotosHandler,
         [FromRoute] Guid volunteerId,
         [FromRoute] Guid petId,
-        [FromForm] AddPetPhotoRequest request,
+        [FromForm] AddPetPhotosRequest request,
         CancellationToken cancellationToken = default)
     {
         await using var fileProcessor = new FormFileProcessor();
@@ -170,6 +189,48 @@ public class VolunteersController : ApplicationController
         IEnumerable<UploadFileDto> uploadFilesDto = fileProcessor.Process(request.Photos);
         
         var res = await addPetPhotosHandler.Handle(request.ToCommand(volunteerId, petId, uploadFilesDto), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpPost("{volunteerId:guid}/petphoto/{petId:guid}")]
+    public async Task<ActionResult<Guid>> AddPetPhoto(
+        [FromServices] AddPetPhotoHandler addPetPhotoHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromForm] AddPetPhotoRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        await using var file = request.Photo.OpenReadStream();
+
+        var uploadFileDto = new UploadFileDto(file, request.Photo.FileName);
+        
+        var res = await addPetPhotoHandler
+            .Handle(request.ToCommand(volunteerId, petId, uploadFileDto), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpDelete("{volunteerId:guid}/petphoto/{petId:guid}")]
+    public async Task<ActionResult<Guid>> DeletePetPhoto(
+        [FromServices] DeletePetPhotoHandler deletePetPhotoHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] DeletePetPhotoRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await deletePetPhotoHandler
+            .Handle(request.ToCommand(volunteerId, petId), cancellationToken);
 
         if (res.IsFailure)
         {

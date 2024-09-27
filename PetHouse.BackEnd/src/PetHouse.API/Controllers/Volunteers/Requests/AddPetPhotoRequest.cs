@@ -4,11 +4,11 @@ using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 
 public record AddPetPhotoRequest(
-    IFormFileCollection Photos,
+    IFormFile Photo,
     bool IsMain = false)
 {
-    public AddPetPhotosCommand ToCommand(Guid volunteerId, Guid petId, IEnumerable<UploadFileDto> files)
+    public AddPetPhotoCommand ToCommand(Guid volunteerId, Guid petId, UploadFileDto file)
     {
-        return new AddPetPhotosCommand(volunteerId, petId, files, IsMain);
+        return new AddPetPhotoCommand(volunteerId, petId, file, IsMain);
     }
 }
