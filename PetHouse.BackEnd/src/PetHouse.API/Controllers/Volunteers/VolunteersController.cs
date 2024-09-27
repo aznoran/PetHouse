@@ -162,7 +162,7 @@ public class VolunteersController : ApplicationController
         [FromServices] AddPetPhotosHandler addPetPhotosHandler,
         [FromRoute] Guid volunteerId,
         [FromRoute] Guid petId,
-        [FromForm] AddPetPhotoRequest request,
+        [FromForm] AddPetPhotosRequest request,
         CancellationToken cancellationToken = default)
     {
         await using var fileProcessor = new FormFileProcessor();
