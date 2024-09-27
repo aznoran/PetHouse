@@ -1,6 +1,6 @@
-﻿using PetHouse.Infrastructure.Repositories.Commands.AddBreed;
+﻿using PetHouse.Application.SpecieManagment.Commands.AddBreed;
 
-namespace PetHouse.API.Controllers.Volunteers.Requests;
+namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 
 public record AddBreedRequest(
     string Name)

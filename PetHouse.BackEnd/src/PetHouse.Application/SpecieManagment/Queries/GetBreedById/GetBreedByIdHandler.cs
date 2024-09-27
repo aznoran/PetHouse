@@ -1,10 +1,9 @@
 ﻿using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.SpeciesManagment;
 using PetHouse.Application.Extensions;
-using PetHouse.Application.Volunteers;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Infrastructure.Repositories.Queries.GetBreedById;
+namespace PetHouse.Application.SpecieManagment.Queries.GetBreedById;
 
 public class GetBreedByIdHandler: IQueryHandler<GetBreedByIdQuery, PagedList<BreedDto>>
 {

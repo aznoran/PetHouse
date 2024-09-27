@@ -2,7 +2,7 @@
 using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+namespace PetHouse.Application.PetManagment.Commands.AddPetPhotos;
 
 public class AddPetPhotosValidator : AbstractValidator<AddPetPhotosCommand>
 {

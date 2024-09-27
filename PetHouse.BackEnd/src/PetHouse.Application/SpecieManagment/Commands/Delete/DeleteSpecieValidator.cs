@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
 using PetHouse.Application.Validation;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.SpecieManagment.Commands.Create;
+namespace PetHouse.Application.SpecieManagment.Commands.Delete;
 
 public class DeleteSpecieValidator : AbstractValidator<DeleteSpecieCommand>
 {

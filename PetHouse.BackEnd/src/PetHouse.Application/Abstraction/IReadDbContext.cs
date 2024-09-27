@@ -2,7 +2,7 @@
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.SpeciesManagment;
 
-namespace PetHouse.Application.Volunteers;
+namespace PetHouse.Application.Abstraction;
 
 public interface IReadDbContext
 {

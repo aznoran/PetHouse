@@ -2,7 +2,7 @@
 using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.Volunteers.Commands.Delete;
+namespace PetHouse.Application.PetManagment.Commands.Delete;
 
 public class DeleteVolunteerValidator : AbstractValidator<DeleteVolunteerCommand>
 {

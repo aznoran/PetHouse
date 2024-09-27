@@ -3,7 +3,7 @@ using PetHouse.Application.Validation;
 using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.Create;
+namespace PetHouse.Application.PetManagment.Commands.Create;
 
 public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerCommand>
 {

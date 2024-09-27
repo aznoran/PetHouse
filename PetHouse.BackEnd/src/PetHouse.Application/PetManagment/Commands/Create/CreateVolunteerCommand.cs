@@ -1,7 +1,7 @@
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 
-namespace PetHouse.Application.Volunteers.Commands.Create;
+namespace PetHouse.Application.PetManagment.Commands.Create;
 
 public record CreateVolunteerCommand(
     FullNameDto FullNameDto,

@@ -9,7 +9,7 @@ using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.Create;
+namespace PetHouse.Application.PetManagment.Commands.Create;
 
 public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Guid>
 {

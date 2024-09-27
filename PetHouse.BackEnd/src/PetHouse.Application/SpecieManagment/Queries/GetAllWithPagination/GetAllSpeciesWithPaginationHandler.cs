@@ -1,11 +1,9 @@
 ﻿using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.SpeciesManagment;
 using PetHouse.Application.Extensions;
-using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Infrastructure.Repositories.Queries.GetAllWithPagination;
+namespace PetHouse.Application.SpecieManagment.Queries.GetAllWithPagination;
 
 public class GetAllSpeciesWithPaginationHandler : IQueryHandler<GetAllSpeciesWithPaginationQuery, PagedList<SpecieDto>>
 {

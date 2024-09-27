@@ -11,7 +11,7 @@ using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 using FileInfo = PetHouse.Application.Providers.FileInfo;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+namespace PetHouse.Application.PetManagment.Commands.AddPetPhotos;
 
 public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
 {

@@ -1,6 +1,6 @@
 ﻿using PetHouse.Application.SpecieManagment.Commands.Create;
 
-namespace PetHouse.API.Controllers.Volunteers.Requests;
+namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 
 public record CreateSpecieRequest(
     string Name)

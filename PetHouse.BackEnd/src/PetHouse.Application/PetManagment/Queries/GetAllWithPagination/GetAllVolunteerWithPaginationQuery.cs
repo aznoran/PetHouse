@@ -1,6 +1,6 @@
 ﻿using PetHouse.Application.Abstraction;
 
-namespace PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
+namespace PetHouse.Application.PetManagment.Queries.GetAllWithPagination;
 
 public record GetAllVolunteerWithPaginationQuery(int Page, int PageSize) : IQuery
 { }

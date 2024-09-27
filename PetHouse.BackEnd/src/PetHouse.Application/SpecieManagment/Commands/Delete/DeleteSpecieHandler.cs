@@ -4,14 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
-using PetHouse.Application.SpecieManagment.Commands.Create;
-using PetHouse.Application.Volunteers;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Infrastructure.Repositories;
 
-namespace PetHouse.Application.SpecieManagment.Commands;
+namespace PetHouse.Application.SpecieManagment.Commands.Delete;
 
 public class DeleteSpecieHandler : ICommandHandler<DeleteSpecieCommand, Guid>
 {

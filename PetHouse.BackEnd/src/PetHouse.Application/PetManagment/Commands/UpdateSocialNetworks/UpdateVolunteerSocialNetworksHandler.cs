@@ -6,7 +6,7 @@ using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
+namespace PetHouse.Application.PetManagment.Commands.UpdateSocialNetworks;
 
 public class UpdateVolunteerSocialNetworksHandler : ICommandHandler<UpdateVolunteerSocialNetworksCommand, Guid>
 {

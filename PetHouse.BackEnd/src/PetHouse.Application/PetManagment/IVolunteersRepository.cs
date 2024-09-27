@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.PetManagment.Aggregate;
 using PetHouse.Domain.PetManagment.ValueObjects;
-using PetHouse.Domain.Shared;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers;
+namespace PetHouse.Application.PetManagment;
 
 public interface IVolunteersRepository
 {

@@ -1,6 +1,6 @@
 ﻿using PetHouse.Application.Abstraction;
 
-namespace PetHouse.Infrastructure.Repositories.Queries.GetBreedById;
+namespace PetHouse.Application.SpecieManagment.Queries.GetBreedById;
 
 public record GetBreedByIdQuery() : IQuery
 {

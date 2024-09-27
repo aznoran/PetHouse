@@ -1,11 +1,9 @@
-﻿using CSharpFunctionalExtensions;
-using Microsoft.EntityFrameworkCore;
-using PetHouse.Application.Abstraction;
+﻿using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
+namespace PetHouse.Application.PetManagment.Queries.GetAllWithPagination;
 
 public class GetAllVolunteerWithPaginationHandler : IQueryHandler<GetAllVolunteerWithPaginationQuery, PagedList<VolunteerDto>>
 {

@@ -16,7 +16,7 @@ public class Breed : Entity<BreedId>
     
     public Name Name { get; private set; }
     
-    public Specie Specie { get; init; }
+    public Aggregate.Specie Specie { get; init; }
 
     public static Breed Create(BreedId id, Name name)
     {

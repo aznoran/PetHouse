@@ -3,7 +3,7 @@ using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.UpdateRequisites;
+namespace PetHouse.Application.PetManagment.Commands.UpdateRequisites;
 
 public class UpdateVolunteerRequisitesValidator : AbstractValidator<UpdateVolunteerRequisitesCommand>
 {

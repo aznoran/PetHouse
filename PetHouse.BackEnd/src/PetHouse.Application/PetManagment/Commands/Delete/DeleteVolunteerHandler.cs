@@ -6,7 +6,7 @@ using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.Delete;
+namespace PetHouse.Application.PetManagment.Commands.Delete;
 
 public class DeleteVolunteerHandler : ICommandHandler<DeleteVolunteerCommand, Guid>
 {

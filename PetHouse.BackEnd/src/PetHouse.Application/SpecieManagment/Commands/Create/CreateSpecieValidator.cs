@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using PetHouse.Application.Validation;
 using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Application.SpecieManagment.Commands.Create;
 

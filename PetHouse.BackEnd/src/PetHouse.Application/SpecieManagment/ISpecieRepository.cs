@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.Specie.Aggregate;
 
-namespace PetHouse.Infrastructure.Repositories;
+namespace PetHouse.Application.SpecieManagment;
 
 public interface ISpecieRepository
 {

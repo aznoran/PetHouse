@@ -3,7 +3,7 @@ using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
+namespace PetHouse.Application.PetManagment.Commands.UpdateSocialNetworks;
 
 public class UpdateVolunteerSocialNetworksValidator : AbstractValidator<UpdateVolunteerSocialNetworksCommand>
 {

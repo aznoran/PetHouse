@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Messaging;
+using PetHouse.Application.PetManagment;
 using PetHouse.Application.Providers;
-using PetHouse.Application.Volunteers;
+using PetHouse.Application.SpecieManagment;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Infrastructure.BackgroundServices;
 using PetHouse.Infrastructure.Data;

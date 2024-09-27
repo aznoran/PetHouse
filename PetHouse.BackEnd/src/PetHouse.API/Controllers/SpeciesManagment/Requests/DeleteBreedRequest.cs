@@ -1,6 +1,6 @@
-﻿using PetHouse.Application.SpecieManagment.Commands.Create;
+﻿using PetHouse.Application.SpecieManagment.Commands.DeleteBreed;
 
-namespace PetHouse.API.Controllers.Volunteers.Requests;
+namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 
 public record DeleteBreedRequest()
 {

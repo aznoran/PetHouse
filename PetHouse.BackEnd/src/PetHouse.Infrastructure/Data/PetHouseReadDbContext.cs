@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.SpeciesManagment;
-using PetHouse.Application.Volunteers;
 using PetHouse.Domain.PetManagment.Entities;
 
 namespace PetHouse.Infrastructure.Data;

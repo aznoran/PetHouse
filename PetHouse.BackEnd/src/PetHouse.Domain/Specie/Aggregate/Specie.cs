@@ -1,10 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
+using PetHouse.Domain.Specie.Entities;
 
-namespace PetHouse.Domain.Specie.Entities;
+namespace PetHouse.Domain.Specie.Aggregate;
 
 public sealed class Specie : Shared.ValueObjects.Entity<SpeciesId>
 {

@@ -1,7 +1,7 @@
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 
-namespace PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
+namespace PetHouse.Application.PetManagment.Commands.UpdateMainInfo;
 
 public record UpdateVolunteerMainInfoCommand(
     Guid Id,

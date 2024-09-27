@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.Shared.Constraints;
 using PetHouse.Domain.Shared.Other;
-using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.PetManagment.ValueObjects;
+namespace PetHouse.Domain.Shared.ValueObjects;
 
 public record Name
 {
