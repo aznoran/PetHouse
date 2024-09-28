@@ -178,4 +178,42 @@ public class VolunteersController : ApplicationController
 
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
+    
+    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}")]
+    public async Task<ActionResult<Guid>> DeletePet(
+        [FromServices] DeletePetHandler deletePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeletePetCommand(volunteerId, petId);
+        
+        var res = await deletePetHandler.Handle(command, cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/soft")]
+    public async Task<ActionResult<Guid>> DeletePetSoft(
+        [FromServices] DeletePetSoftHandler deletePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeletePetSoftCommand(volunteerId, petId);
+        
+        var res = await deletePetHandler.Handle(command, cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
 }

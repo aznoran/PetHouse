@@ -36,6 +36,8 @@ public class AddPetValidator : AbstractValidator<AddPetCommand>
                 x.AddPetDto.Country));
 
         RuleFor(p => p.AddPetDto.PhoneNumber).MustBeValueObject(PhoneNumber.Create);
+        
+        RuleFor(p => p.AddPetDto.PetStatus).MustBeValueObject(PetStatusInfo.Create);
 
         RuleForEach(p => p.AddPetDto.RequisiteDtos)
             .MustBeValueObject(x =>

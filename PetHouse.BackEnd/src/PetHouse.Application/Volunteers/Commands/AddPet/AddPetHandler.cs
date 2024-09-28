@@ -72,7 +72,7 @@ public class AddPetHandler : ICommandHandler<AddPetCommand>
             .Select(r => Requisite
                 .Create(r.Name, r.Description).Value).ToList();
 
-        var petStatus = request.PetStatus;
+        var petStatus = PetStatusInfo.Create(request.PetStatus).Value;
 
         var creationDate = DateTime.UtcNow.AddHours(3);
 

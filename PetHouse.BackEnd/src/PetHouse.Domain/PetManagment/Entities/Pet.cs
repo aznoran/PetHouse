@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetHouse.Domain.PetManagment.Aggregate;
 using PetHouse.Domain.PetManagment.Enums;
 using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
@@ -23,7 +24,7 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
         Address address,
         PhoneNumber phoneNumber,
         IReadOnlyList<Requisite> requisites,
-        PetStatus petStatus,
+        PetStatusInfo petStatus,
         DateTime creationDate) : base(petId)
     {
         Name = name;
@@ -39,6 +40,9 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
     }
 
     private bool _isDeleted = false;
+    
+    //FOR EF CORE NAVIGATION PROPERTY
+    public Volunteer Volunteer { get; init; }
     public Name Name { get; private set; }
 
     public Position Position { get; private set; }
@@ -50,12 +54,11 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
     public PhoneNumber PhoneNumber { get; private set; }
 
     public IReadOnlyList<Requisite> Requisites { get; private set; }
-
-    public IReadOnlyList<PetPhoto> PetPhotos { get; private set; }
-    public PetStatus PetStatus { get; private set; }
+    public IReadOnlyList<PetPhoto>? PetPhotos { get; private set; }
+    public PetStatusInfo PetStatus { get; private set; }
     public DateTime CreationDate { get; private set; }
 
-    public void Delete()
+    public void DeleteSoft()
     {
         _isDeleted = true;
     }

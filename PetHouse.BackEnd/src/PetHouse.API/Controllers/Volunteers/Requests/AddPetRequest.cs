@@ -25,11 +25,6 @@ public record AddPetRequest(
 {
     public AddPetCommand ToCommand(Guid id)
     {
-        if (Enum.TryParse(PetStatus.ToString(), out PetStatus petStatus) == false)
-        {
-            throw new ArgumentException("Invalid parameter for PetStatus ENUM");
-        }
-
         return new AddPetCommand(id, new AddPetDto(
             Name,
             PetIdentifierDto,
@@ -46,6 +41,6 @@ public record AddPetRequest(
             Country,
             PhoneNumber,
             RequisiteDtos,
-            petStatus));
+            PetStatus));
     }
 }
