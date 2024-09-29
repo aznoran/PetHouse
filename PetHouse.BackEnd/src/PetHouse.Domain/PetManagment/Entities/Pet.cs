@@ -10,8 +10,14 @@ namespace PetHouse.Domain.PetManagment.Entities;
 
 public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 {
+    private bool _isDeleted = false;
+    
+    //EF CORE NAVIGATION PROPERTY
+    public Volunteer Volunteer { get; init; }
+    
     //EF CORE
-    private Pet() { }
+    // ReSharper disable once UnusedMember.Local
+    private Pet(PetId id) : base(id) { }
 
     public Pet(PetId petId,
         Name name,
@@ -36,11 +42,6 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
         PetStatus = petStatus;
         CreationDate = creationDate;
     }
-
-    private bool _isDeleted = false;
-    
-    //FOR EF CORE NAVIGATION PROPERTY
-    public Volunteer Volunteer { get; init; }
     public Name Name { get; private set; }
 
     public Position Position { get; private set; }

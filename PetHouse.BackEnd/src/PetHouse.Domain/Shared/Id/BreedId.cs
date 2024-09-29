@@ -2,7 +2,7 @@
 
 public record BreedId
 {
-    public BreedId(Guid value)
+    private BreedId(Guid value)
     {
         Value = value;
     }

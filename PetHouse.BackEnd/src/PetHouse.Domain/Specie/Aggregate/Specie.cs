@@ -9,7 +9,8 @@ namespace PetHouse.Domain.Specie.Aggregate;
 public sealed class Specie : Shared.ValueObjects.Entity<SpeciesId>
 {
     //EF CORE
-    private Specie(){}
+    // ReSharper disable once UnusedMember.Local
+    private Specie(SpeciesId id) : base(id){}
     private Specie(SpeciesId id,Name name) : base(id)
     {
         Name = name;

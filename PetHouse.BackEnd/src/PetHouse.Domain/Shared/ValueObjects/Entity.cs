@@ -4,15 +4,10 @@ public abstract class Entity<Tid> where Tid : notnull
 {
     public Tid Id { get; }
 
-    protected Entity()
-    {
-    }
-
     protected Entity(Tid id)
     {
         Id = id;
     }
-
 
     public override bool Equals(object? obj)
     {

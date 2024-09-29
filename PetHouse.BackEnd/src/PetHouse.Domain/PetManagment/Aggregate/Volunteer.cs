@@ -13,7 +13,8 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
     private bool _isDeleted = false;
 
     //EF CORE
-    private Volunteer() { }
+    // ReSharper disable once UnusedMember.Local
+    private Volunteer(VolunteerId id) : base(id){ }
 
     private Volunteer(VolunteerId volunteerId,
         FullName fullName,

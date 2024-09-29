@@ -1,22 +1,21 @@
-﻿using PetHouse.Domain.PetManagment.ValueObjects;
-using PetHouse.Domain.Shared.Id;
-using PetHouse.Domain.Shared.Other;
+﻿using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Domain.Specie.Entities;
 
 public class Breed : Entity<BreedId>
 {
+    //EF CORE NAVIGATION PROPERTY
+    public Aggregate.Specie Specie { get; init; }
     //EF CORE
-    private Breed(){}
+    // ReSharper disable once UnusedMember.Local
+    private Breed(BreedId id) : base(id){}
     private Breed(BreedId id, Name name) : base(id)
     {
         Name = name;
     }
     
     public Name Name { get; private set; }
-    
-    public Aggregate.Specie Specie { get; init; }
 
     public static Breed Create(BreedId id, Name name)
     {

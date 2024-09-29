@@ -2,7 +2,7 @@
 
 public record VolunteerId
 {
-    public VolunteerId(Guid value)
+    private VolunteerId(Guid value)
     {
         Value = value;
     }
