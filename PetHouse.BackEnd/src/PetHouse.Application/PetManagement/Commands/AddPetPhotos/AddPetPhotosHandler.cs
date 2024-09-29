@@ -20,7 +20,7 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetPhotosHandler> _logger;
     private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
-    private readonly IFileProvider _minio;
+    private readonly IFileProvider _fleprovider;
     private readonly IValidator<AddPetPhotosCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -34,10 +34,11 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
         _repository = repository;
         _logger = logger;
         _messageQueue = messageQueue;
-        _minio = minio;
+        _fleprovider = minio;
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<Guid, ErrorList>> Handle(AddPetPhotosCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
@@ -69,7 +70,7 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
             data.Add(fileData);
         }
 
-        var uploadFilesRes = await _minio.UploadFiles(data, cancellationToken);
+        var uploadFilesRes = await _fleprovider.UploadFiles(data, cancellationToken);
 
         if (uploadFilesRes.IsFailure)
         {
@@ -80,12 +81,10 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
 
 
         var addPetPhotoRes = volunteer.Value.AddPetPhotos(PetId.Create(command.PetId),
-            
-                uploadFilesRes.Value.Select(x =>
-                    PetPhoto.Create(
-                        x.Path,
-                        command.IsMain).Value
-                
+            uploadFilesRes.Value.Select(x =>
+                PetPhoto.Create(
+                    x.Path,
+                    command.IsMain).Value
             ).ToList()
         );
 
