@@ -4,7 +4,7 @@ using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPet;
+namespace PetHouse.Application.PetManagement.Commands.UpdatePet;
 
 public class UpdatePetValidator : AbstractValidator<UpdatePetCommand>
 {

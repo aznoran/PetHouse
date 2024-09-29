@@ -25,7 +25,3 @@ public record AddPetDto(
     string PhoneNumber,
     IEnumerable<RequisiteDto> RequisiteDtos,
     PetStatus PetStatus);
-    
-public record PetIdentifierDto(
-    Guid SpeciesId,
-    Guid BreedId);

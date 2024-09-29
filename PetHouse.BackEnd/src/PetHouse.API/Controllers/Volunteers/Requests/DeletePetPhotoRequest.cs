@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+﻿using PetHouse.Application.PetManagement.Commands.DeletePetPhoto;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 

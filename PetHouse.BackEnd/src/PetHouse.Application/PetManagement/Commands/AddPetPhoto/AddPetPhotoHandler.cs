@@ -11,7 +11,7 @@ using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 using FileInfo = PetHouse.Application.Providers.FileInfo;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+namespace PetHouse.Application.PetManagement.Commands.AddPetPhoto;
 
 public class AddPetPhotoHandler : ICommandHandler<AddPetPhotoCommand, Guid>
 {
@@ -44,7 +44,7 @@ public class AddPetPhotoHandler : ICommandHandler<AddPetPhotoCommand, Guid>
 
         if (validationResult.IsValid == false)
         {
-            return validationResult.ToList();
+            return validationResult.ToErrorList();
         }
 
         var volunteer = await _repository.GetById(command.VolunteerId, cancellationToken);

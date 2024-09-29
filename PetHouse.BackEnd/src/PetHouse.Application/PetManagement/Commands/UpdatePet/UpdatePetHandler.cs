@@ -8,7 +8,7 @@ using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPet;
+namespace PetHouse.Application.PetManagement.Commands.UpdatePet;
 
 public class UpdatePetHandler : ICommandHandler<UpdatePetCommand>
 {
@@ -34,7 +34,7 @@ public class UpdatePetHandler : ICommandHandler<UpdatePetCommand>
 
         if (validationRes.IsValid == false)
         {
-            return validationRes.ToList();
+            return validationRes.ToErrorList();
         }
         
         var volunteer = await _repository.GetById(commandInput.VolunteerId, cancellationToken);

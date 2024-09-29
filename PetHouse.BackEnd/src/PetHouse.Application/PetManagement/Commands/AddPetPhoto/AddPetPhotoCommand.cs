@@ -1,7 +1,7 @@
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.Shared;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+namespace PetHouse.Application.PetManagement.Commands.AddPetPhoto;
 
 public record AddPetPhotoCommand(
     Guid VolunteerId,

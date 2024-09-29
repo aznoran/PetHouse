@@ -3,15 +3,13 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
-using PetHouse.Application.Messaging;
 using PetHouse.Application.Providers;
 using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using FileInfo = PetHouse.Application.Providers.FileInfo;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+namespace PetHouse.Application.PetManagement.Commands.DeletePetPhoto;
 
 public class DeletePetPhotoHandler : ICommandHandler<DeletePetPhotoCommand, Guid>
 {
@@ -41,7 +39,7 @@ public class DeletePetPhotoHandler : ICommandHandler<DeletePetPhotoCommand, Guid
 
         if (validationResult.IsValid == false)
         {
-            return validationResult.ToList();
+            return validationResult.ToErrorList();
         }
 
         var volunteer = await _repository.GetById(command.VolunteerId, cancellationToken);

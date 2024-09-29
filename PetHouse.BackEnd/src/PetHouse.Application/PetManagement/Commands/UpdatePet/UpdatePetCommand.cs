@@ -1,8 +1,8 @@
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Domain.PetManagment.Enums;
+using PetHouse.Application.PetManagement.Commands.AddPet;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPet;
+namespace PetHouse.Application.PetManagement.Commands.UpdatePet;
 
 public record UpdatePetCommand(
     Guid VolunteerId,
