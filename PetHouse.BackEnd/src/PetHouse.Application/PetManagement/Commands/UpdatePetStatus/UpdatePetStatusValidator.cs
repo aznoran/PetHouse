@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using PetHouse.Application.Validation;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Other;
-using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPet;
+namespace PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
 
 public class UpdatePetStatusValidator : AbstractValidator<UpdatePetStatusCommand>
 {

@@ -1,5 +1,5 @@
 ﻿using PetHouse.Application.Dtos.Shared;
-using PetHouse.Application.Volunteers.Commands.AddPet;
+using PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 

@@ -3,12 +3,11 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.Volunteers.Commands.AddPet;
+namespace PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
 
 public class UpdatePetStatusHandler : ICommandHandler<UpdatePetStatusCommand>
 {
@@ -34,7 +33,7 @@ public class UpdatePetStatusHandler : ICommandHandler<UpdatePetStatusCommand>
 
         if (validationRes.IsValid == false)
         {
-            return validationRes.ToList();
+            return validationRes.ToErrorList();
         }
         
         var volunteer = await _repository.GetById(commandInput.VolunteerId, cancellationToken);

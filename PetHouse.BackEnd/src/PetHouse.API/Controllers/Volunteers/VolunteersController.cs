@@ -13,6 +13,7 @@ using PetHouse.Application.PetManagement.Commands.Delete;
 using PetHouse.Application.PetManagement.Commands.DeletePetPhoto;
 using PetHouse.Application.PetManagement.Commands.UpdateMainInfo;
 using PetHouse.Application.PetManagement.Commands.UpdatePet;
+using PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
 using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
 using PetHouse.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetHouse.Application.PetManagement.Queries.GetAllWithPagination;
@@ -199,7 +200,7 @@ public class VolunteersController : ApplicationController
 
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
-    
+
     [HttpPatch("{volunteerId:guid}/pet-status/{petId:guid}")]
     public async Task<ActionResult> UpdatePetStatus(
         [FromServices] UpdatePetStatusHandler updatePetStatusHandler,
@@ -209,14 +210,15 @@ public class VolunteersController : ApplicationController
         CancellationToken cancellationToken = default)
     {
         var res = await updatePetStatusHandler.Handle(request.ToCommand(volunteerId, petId), cancellationToken);
-        
+
         if (res.IsFailure)
         {
             return res.Error.ToResponse();
         }
-        
+
         return new ObjectResult(res.IsSuccess) { StatusCode = 201 };
-        
+    }
+
     [HttpPost("{volunteerId:guid}/petphoto/{petId:guid}")]
     public async Task<ActionResult<Guid>> AddPetPhoto(
         [FromServices] AddPetPhotoHandler addPetPhotoHandler,
