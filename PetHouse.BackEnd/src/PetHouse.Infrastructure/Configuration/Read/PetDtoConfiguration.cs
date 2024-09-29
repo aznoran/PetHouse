@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Domain.PetManagment.ValueObjects;
-using PetHouse.Domain.Shared.ValueObjects;
 
 namespace PetHouse.Infrastructure.Configuration.Read;
 

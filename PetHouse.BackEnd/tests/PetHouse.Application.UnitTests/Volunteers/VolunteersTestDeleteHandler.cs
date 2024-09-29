@@ -4,10 +4,12 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.Commands.Delete;
+using PetHouse.Application.PetManagement;
+using PetHouse.Application.PetManagement.Commands.Delete;
 using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared;
+using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
@@ -63,7 +65,14 @@ public class VolunteersTestDeleteHandler
         // Arrange
         var command = new DeleteVolunteerCommand(Guid.NewGuid());
         var cancellationToken = CancellationToken.None;
-        var volunteer = new Volunteer();
+        var volunteer = Volunteer.Create(VolunteerId.NewId,
+            FullName.Create("OldName", "OldSurname").Value,
+            Email.Create("old.email@example.com").Value,
+            Description.Create("OldDescription").Value,
+            YearsOfExperience.Create(0).Value,
+            PhoneNumber.Create("89587654321").Value,
+            new[] { SocialNetwork.Create("test", "test").Value },
+            new[] { Requisite.Create("test", "test").Value });
 
         _validatorMock.Setup(v => v.ValidateAsync(It.IsAny<DeleteVolunteerCommand>(), cancellationToken))
             .ReturnsAsync(new ValidationResult());

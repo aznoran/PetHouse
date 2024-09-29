@@ -5,30 +5,32 @@ using PetHouse.API.Extensions;
 using PetHouse.API.Processors;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.Shared;
-using PetHouse.Application.Volunteers.Commands.AddPet;
-using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
-using PetHouse.Application.Volunteers.Commands.Create;
-using PetHouse.Application.Volunteers.Commands.Delete;
-using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
-using PetHouse.Application.Volunteers.Commands.UpdateRequisites;
-using PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
-using PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
-using PetHouse.Application.Volunteers.Queries.GetVolunteerById;
+using PetHouse.Application.PetManagement.Commands.AddPet;
+using PetHouse.Application.PetManagement.Commands.AddPetPhoto;
+using PetHouse.Application.PetManagement.Commands.AddPetPhotos;
+using PetHouse.Application.PetManagement.Commands.Create;
+using PetHouse.Application.PetManagement.Commands.Delete;
+using PetHouse.Application.PetManagement.Commands.DeletePetPhoto;
+using PetHouse.Application.PetManagement.Commands.UpdateMainInfo;
+using PetHouse.Application.PetManagement.Commands.UpdatePet;
+using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
+using PetHouse.Application.PetManagement.Commands.UpdateSocialNetworks;
+using PetHouse.Application.PetManagement.Queries.GetAllWithPagination;
+using PetHouse.Application.PetManagement.Queries.GetVolunteerById;
 using PetHouse.Domain.Shared.Other;
 
 namespace PetHouse.API.Controllers.Volunteers;
 
-[ApiController]
-[Route("[controller]")]
+
 public class VolunteersController : ApplicationController
 {
     [HttpGet]
-    public async Task<ActionResult<Guid>> GetAll(
-        [FromServices] GetAllWithPaginationHandler getAllWithPaginationHandler,
-        [FromQuery] GetAllWithPaginationQuery query,
+    public async Task<ActionResult> GetAll(
+        [FromServices] GetAllVolunteerWithPaginationHandler getAllVolunteerWithPaginationHandler,
+        [FromQuery] GetAllVolunteerWithPaginationQuery query,
         CancellationToken cancellationToken = default)
     {
-        var res = await getAllWithPaginationHandler.Handle(query, cancellationToken);
+        var res = await getAllVolunteerWithPaginationHandler.Handle(query, cancellationToken);
 
         return new ObjectResult(res) { StatusCode = 201 };
     }
@@ -141,7 +143,7 @@ public class VolunteersController : ApplicationController
     }
 
     [HttpPost("{id:guid}/pet")]
-    public async Task<ActionResult<Guid>> AddPet(
+    public async Task<ActionResult> AddPet(
         [FromServices] AddPetHandler addPetHandler,
         [FromRoute] Guid id,
         [FromBody] AddPetRequest addPetRequest,
@@ -155,6 +157,25 @@ public class VolunteersController : ApplicationController
         }
 
         return Ok();
+    }
+    
+    [HttpPut("{volunteerId:guid}/pet/{petId:guid}")]
+    public async Task<ActionResult> UpdateMainInfo(
+        [FromServices] UpdatePetHandler updatePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] UpdatePetRequest updatePetRequest,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await updatePetHandler
+            .Handle(updatePetRequest.ToCommand(volunteerId, petId), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.IsSuccess) { StatusCode = 204 };
     }
 
     [HttpPost("{volunteerId:guid}/petphotos/{petId:guid}")]
@@ -187,7 +208,47 @@ public class VolunteersController : ApplicationController
         [FromForm] UpdatePetStatusRequest request,
         CancellationToken cancellationToken = default)
     {
-        var res = await updatePetStatusHandler
+        var res = await updatePetStatusHandler.Handle(request.ToCommand(volunteerId, petId), cancellationToken);
+        
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+        
+        return new ObjectResult(res.IsSuccess) { StatusCode = 201 };
+        
+    [HttpPost("{volunteerId:guid}/petphoto/{petId:guid}")]
+    public async Task<ActionResult<Guid>> AddPetPhoto(
+        [FromServices] AddPetPhotoHandler addPetPhotoHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromForm] AddPetPhotoRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        await using var file = request.Photo.OpenReadStream();
+
+        var uploadFileDto = new UploadFileDto(file, request.Photo.FileName);
+        
+        var res = await addPetPhotoHandler
+            .Handle(request.ToCommand(volunteerId, petId, uploadFileDto), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpDelete("{volunteerId:guid}/petphoto/{petId:guid}")]
+    public async Task<ActionResult<Guid>> DeletePetPhoto(
+        [FromServices] DeletePetPhotoHandler deletePetPhotoHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] DeletePetPhotoRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await deletePetPhotoHandler
             .Handle(request.ToCommand(volunteerId, petId), cancellationToken);
 
         if (res.IsFailure)
@@ -195,6 +256,6 @@ public class VolunteersController : ApplicationController
             return res.Error.ToResponse();
         }
 
-        return new ObjectResult(res.IsSuccess) { StatusCode = 201 };
+        return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 }
