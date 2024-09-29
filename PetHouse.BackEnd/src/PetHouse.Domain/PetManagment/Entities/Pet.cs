@@ -64,6 +64,11 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
         _isDeleted = false;
     }
 
+    public void UpdatePetStatus(PetStatus petStatus)
+    {
+        PetStatus = petStatus;
+    }
+    
     public UnitResult<Error> Update(Name name,
         PetIdentifier petIdentifier,
         Description description,
@@ -84,6 +89,7 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
 
         return UnitResult.Success<Error>();
     }
+    
     public UnitResult<Error> AddPhotos(IReadOnlyList<PetPhoto> petPhotos)
     {
         var enumerable = petPhotos.ToList();

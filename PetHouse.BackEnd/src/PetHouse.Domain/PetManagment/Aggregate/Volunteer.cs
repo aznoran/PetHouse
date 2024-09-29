@@ -193,6 +193,33 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
         return UnitResult.Success<Error>();
     }
 
+    public UnitResult<Error> UpdatePetStatus(PetId petId, int petStatus)
+    {
+        PetStatus petStatusOriginal = (PetStatus)petStatus;
+
+        if (!Enum.IsDefined(typeof(PetStatus), petStatusOriginal))
+        {
+            return Errors.General.ValueIsInvalid("pet-status");
+        }
+        
+        //var petStatusRes = Enum.TryParse(petStatus.ToString(), out petStatusOriginal);
+
+        /*if (petStatusRes == false)
+        {
+            return Errors.General.ValueIsInvalid("pet-status");
+        }*/
+
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+        {
+            return Errors.General.NotFound();
+        }
+        
+        pet.UpdatePetStatus(petStatusOriginal);
+
+        return UnitResult.Success<Error>();
+    }
     public UnitResult<Error> MovePet(PetId petId, Position newPosition)
     {
         var pet = _pets.Find(p => p.Id == petId);
