@@ -42,7 +42,7 @@ public class DeleteVolunteerHandler : ICommandHandler<DeleteVolunteerCommand, Gu
         if (volunteer.IsFailure)
             return Errors.General.NotFound(command.Id).ToErrorList();
 
-        volunteer.Value.Delete();
+        volunteer.Value.DeleteSoft();
 
         await _unitOfWork.SaveChanges(cancellationToken);
 

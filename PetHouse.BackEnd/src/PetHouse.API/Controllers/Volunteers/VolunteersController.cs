@@ -10,7 +10,9 @@ using PetHouse.Application.PetManagement.Commands.AddPetPhoto;
 using PetHouse.Application.PetManagement.Commands.AddPetPhotos;
 using PetHouse.Application.PetManagement.Commands.Create;
 using PetHouse.Application.PetManagement.Commands.Delete;
+using PetHouse.Application.PetManagement.Commands.DeletePet;
 using PetHouse.Application.PetManagement.Commands.DeletePetPhoto;
+using PetHouse.Application.PetManagement.Commands.DeletePetSoft;
 using PetHouse.Application.PetManagement.Commands.UpdateMainInfo;
 using PetHouse.Application.PetManagement.Commands.UpdatePet;
 using PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
@@ -252,6 +254,44 @@ public class VolunteersController : ApplicationController
     {
         var res = await deletePetPhotoHandler
             .Handle(request.ToCommand(volunteerId, petId), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}")]
+    public async Task<ActionResult<Guid>> DeletePet(
+        [FromServices] DeletePetHandler deletePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeletePetCommand(volunteerId, petId);
+        
+        var res = await deletePetHandler.Handle(command, cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
+    }
+    
+    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/soft")]
+    public async Task<ActionResult<Guid>> DeletePetSoft(
+        [FromServices] DeletePetSoftHandler deletePetHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeletePetSoftCommand(volunteerId, petId);
+        
+        var res = await deletePetHandler.Handle(command, cancellationToken);
 
         if (res.IsFailure)
         {

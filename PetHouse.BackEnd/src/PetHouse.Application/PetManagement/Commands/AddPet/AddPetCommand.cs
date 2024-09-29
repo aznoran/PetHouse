@@ -24,4 +24,4 @@ public record AddPetDto(
     string Country,
     string PhoneNumber,
     IEnumerable<RequisiteDto> RequisiteDtos,
-    PetStatus PetStatus);
+    int PetStatus);

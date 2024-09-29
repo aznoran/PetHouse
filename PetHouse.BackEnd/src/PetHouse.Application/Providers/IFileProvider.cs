@@ -12,6 +12,11 @@ public interface IFileProvider
         IEnumerable<FileData> files, 
         CancellationToken ct);
 
+    Task<UnitResult<Error>> DeleteFiles(
+        string bucketName,
+        IEnumerable<string> files,
+        CancellationToken ct);
+    
     Task<UnitResult<Error>> Delete(
         string bucketName,
         string fileName,

@@ -55,8 +55,6 @@ public class AddPetHandler : ICommandHandler<AddPetCommand>
             .Create(request.PetIdentifierDto.SpeciesId,
                 request.PetIdentifierDto.BreedId).Value;
         
-        //Чтобы сэкономить производительность будем проверять только через таблицу breeds
-        // если у нас есть breed у которого есть такой specie по ID , то проверять таблицу species - не нужно
         var findSpeciesBreedsRes = await _dbContext.Breeds
             .FirstOrDefaultAsync(b => b.Id == request.PetIdentifierDto.BreedId &&
                                       b.SpecieId == request.PetIdentifierDto.SpeciesId,
@@ -86,7 +84,7 @@ public class AddPetHandler : ICommandHandler<AddPetCommand>
             .Select(r => Requisite
                 .Create(r.Name, r.Description).Value).ToList();
 
-        var petStatus = request.PetStatus;
+        var petStatus = PetStatusInfo.Create(request.PetStatus).Value;
 
         var creationDate = DateTime.UtcNow.AddHours(3);
 

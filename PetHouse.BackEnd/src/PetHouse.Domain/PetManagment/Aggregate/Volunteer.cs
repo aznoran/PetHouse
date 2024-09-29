@@ -44,22 +44,22 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 
     public int CountOfPetsFoundHome()
     {
-        return _pets.Count(p => p.PetStatus == PetStatus.FoundHome);
+        return _pets.Count(p => p.PetStatus.Value == PetStatus.FoundHome);
     }
 
     public int CountOfPetsLookingForHome()
     {
-        return _pets.Count(p => p.PetStatus == PetStatus.LookingForHome);
+        return _pets.Count(p => p.PetStatus.Value == PetStatus.LookingForHome);
     }
 
     public int CountOfPetsOnTreatment()
     {
-        return _pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
+        return _pets.Count(p => p.PetStatus.Value == PetStatus.OnTreatment);
     }
 
     public IReadOnlyList<SocialNetwork> SocialNetworks { get; private set; }
 
-    public IReadOnlyList<Requisite>? Requisites { get; private set; }
+    public IReadOnlyList<Requisite> Requisites { get; private set; }
 
     private List<Pet> _pets = [];
     public IReadOnlyList<Pet>? Pets => _pets;
@@ -88,12 +88,12 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
         return volunteer;
     }
 
-    public void Delete()
+    public void DeleteSoft()
     {
         _isDeleted = true;
         foreach (var pet in _pets)
         {
-            pet.Delete();
+            pet.DeleteSoft();
         }
     }
 
@@ -104,6 +104,46 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
         {
             pet.Restore();
         }
+    }
+    
+    public UnitResult<Error> DeletePetSoft(PetId petId)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+        {
+            return Errors.General.NotFound(petId.Value);
+        }
+        
+        pet.DeleteSoft();
+
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> DeletePetForce(Pet pet)
+    {
+        var removeRes = _pets.Remove(pet);
+
+        if (removeRes == false)
+        {
+            return Errors.General.ValueIsInvalid();
+        }
+
+        return UnitResult.Success<Error>();
+    }
+
+    public UnitResult<Error> RestorePet(PetId petId)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+        {
+            return Errors.General.NotFound(petId.Value);
+        }
+        
+        pet.Restore();
+
+        return UnitResult.Success<Error>();
     }
 
     public void UpdateMainInfo(
@@ -139,7 +179,7 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
         Address address,
         PhoneNumber phoneNumber,
         IReadOnlyList<Requisite> requisites,
-        PetStatus petStatus,
+        PetStatusInfo petStatus,
         DateTime creationDate)
     {
         var positionRes = Position.Create(_pets.Count+1);
@@ -195,19 +235,12 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 
     public UnitResult<Error> UpdatePetStatus(PetId petId, int petStatus)
     {
-        PetStatus petStatusOriginal = (PetStatus)petStatus;
+        var petStatusOriginal = PetStatusInfo.Create(petStatus);
 
-        if (!Enum.IsDefined(typeof(PetStatus), petStatusOriginal))
+        if (petStatusOriginal.IsFailure)
         {
-            return Errors.General.ValueIsInvalid("pet-status");
+            return petStatusOriginal.Error;
         }
-        
-        //var petStatusRes = Enum.TryParse(petStatus.ToString(), out petStatusOriginal);
-
-        /*if (petStatusRes == false)
-        {
-            return Errors.General.ValueIsInvalid("pet-status");
-        }*/
 
         var pet = _pets.FirstOrDefault(p => p.Id == petId);
 
@@ -216,7 +249,7 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
             return Errors.General.NotFound();
         }
         
-        pet.UpdatePetStatus(petStatusOriginal);
+        pet.UpdatePetStatus(petStatusOriginal.Value);
 
         return UnitResult.Success<Error>();
     }

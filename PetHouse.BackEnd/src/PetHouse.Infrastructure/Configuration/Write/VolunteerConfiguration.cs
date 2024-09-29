@@ -62,7 +62,7 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
         });
 
         builder.HasMany(v => v.Pets)
-            .WithOne()
+            .WithOne(p => p.Volunteer)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Property(v => v.SocialNetworks)

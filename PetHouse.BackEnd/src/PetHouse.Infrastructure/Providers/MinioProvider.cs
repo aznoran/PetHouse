@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.DataModel.Args;
@@ -78,6 +79,37 @@ public class MinioProvider : IFileProvider
         {
             _logger.LogError(ex, "Exception in MinioProvider.UploadFiles occured");
             return Errors.File.FailedToUpload();
+        }
+    }
+    
+    public async Task<UnitResult<Error>> DeleteFiles(string bucketName , IEnumerable<string> files, CancellationToken ct)
+    {
+        var semaphoreSlim = new SemaphoreSlim(MAX_DEGREE_OF_PARALLELISM);
+        var filesList = files.ToList();
+
+        try
+        {
+            if (await _minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(bucketName), ct) == false)
+            {
+                return Errors.File.BucketNotFound(bucketName);
+            }
+
+            var tasks = filesList.Select(async file =>
+                await RemoveObject(file, bucketName, semaphoreSlim, ct));
+            
+            var pathsResult = await Task.WhenAll(tasks);
+
+            if (pathsResult.Any(p => p.IsFailure))
+                return pathsResult.First().Error;
+
+            _logger.LogInformation("Deleted files successfuly");
+
+            return UnitResult.Success<Error>();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception in MinioProvider.DeleteFiles occured");
+            return Errors.File.FailedToDelete();
         }
     }
 
@@ -207,6 +239,40 @@ public class MinioProvider : IFileProvider
                 fileData.FileInfo.BucketName);
 
             return Errors.File.FailedToUpload(fileData.FileInfo.Path.Value);
+        }
+        finally
+        {
+            semaphoreSlim.Release();
+        }
+    }
+    
+    private async Task<UnitResult<Error>> RemoveObject(
+        string fileName,
+        string bucketName,
+        SemaphoreSlim semaphoreSlim,
+        CancellationToken cancellationToken)
+    {
+        await semaphoreSlim.WaitAsync(cancellationToken);
+
+        var removeObjectArgs = new RemoveObjectArgs()
+            .WithBucket(bucketName)
+            .WithObject(fileName);
+
+        try
+        {
+            await _minioClient
+                .RemoveObjectAsync(removeObjectArgs, cancellationToken);
+
+            return UnitResult.Success<Error>();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "Fail to delete file in minio with path {path} in bucket {bucket}",
+                fileName,
+                bucketName);
+
+            return Errors.File.FailedToDelete(fileName);
         }
         finally
         {

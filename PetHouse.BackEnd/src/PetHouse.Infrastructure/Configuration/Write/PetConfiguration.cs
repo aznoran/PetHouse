@@ -93,7 +93,11 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
                 output => Requisite.Create(output.Name, output.Description).Value)
             .HasColumnName("requisites");
 
-        builder.Property(p => p.PetStatus).HasColumnName("pet_status");
+        builder.ComplexProperty(p => p.PetStatus, pi =>
+        {
+            pi.Property(t => t.Value).HasColumnName("pet_status");
+        });
+        
         builder.Property(p => p.CreationDate).HasColumnName("creation_date");
         
         builder.Property<bool>("_isDeleted")
