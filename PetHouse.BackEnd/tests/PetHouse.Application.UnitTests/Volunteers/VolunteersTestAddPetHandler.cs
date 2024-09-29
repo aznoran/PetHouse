@@ -1,11 +1,16 @@
+using System.Linq.Expressions;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 using Moq;
+using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Application.Volunteers;
-using PetHouse.Application.Volunteers.Commands.AddPet;
+using PetHouse.Application.Dtos.SpeciesManagment;
+using PetHouse.Application.PetManagment;
+using PetHouse.Application.PetManagment.Commands.AddPet;
 using PetHouse.Domain.PetManagment.Aggregate;
 using PetHouse.Domain.PetManagment.Enums;
 using PetHouse.Domain.PetManagment.ValueObjects;
@@ -23,6 +28,7 @@ public class VolunteersTestAddPetHandler
     private readonly Mock<IValidator<AddPetCommand>> _validatorMock;
     private readonly Mock<ILogger<AddPetHandler>> _loggerMock;
     private readonly AddPetHandler _handler;
+    private readonly Mock<IReadDbContext> _dbcontext;
 
     public VolunteersTestAddPetHandler()
     {
@@ -30,12 +36,15 @@ public class VolunteersTestAddPetHandler
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _validatorMock = new Mock<IValidator<AddPetCommand>>();
         _loggerMock = new Mock<ILogger<AddPetHandler>>();
+        //TODO: добавтиь функционал этому моку
+        _dbcontext = new Mock<IReadDbContext>();
         
         _handler = new AddPetHandler(
             _repositoryMock.Object,
             _loggerMock.Object,
             _unitOfWorkMock.Object,
-            _validatorMock.Object);
+            _validatorMock.Object,
+            _dbcontext.Object);
     }
 
     [Fact]
@@ -115,7 +124,7 @@ public class VolunteersTestAddPetHandler
 
         _validatorMock.Setup(v => v.ValidateAsync(It.IsAny<AddPetCommand>(), cancellationToken))
             .ReturnsAsync(new ValidationResult());
-
+        
         FullName fullName = FullName.Create("test", "test").Value;
         Email email = Email.Create("test@gmail.com").Value;
         Description description = Description.Create("test").Value;

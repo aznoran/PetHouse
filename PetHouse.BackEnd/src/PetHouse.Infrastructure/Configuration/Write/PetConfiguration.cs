@@ -80,31 +80,6 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
         {
             pi.Property(pp => pp.Value).HasColumnName("phone_number");
         });
-
-        /*builder.OwnsOne(v => v.Requisites, r =>
-        {
-            r.ToJson("requisites");
-            r.OwnsMany(ri => ri.Requisites, rt =>
-            {
-                rt.Property(t => t.Description).HasMaxLength(DefaultConstraints.MAX_DESCRIPTION_LENGTH).HasJsonPropertyName("description");
-                rt.Property(t => t.Name).HasMaxLength(DefaultConstraints.MAX_NAME_LENGTH).HasJsonPropertyName("name");
-            });
-        });
-        
-        builder.OwnsOne(p => p.PetPhotosInfo, pp =>
-        {
-            pp.ToJson("pet_photos");
-            pp.OwnsMany(ppi => ppi.PetPhotos, pt =>
-            {
-                
-                pt.Property(petp => petp.Path)
-                    .HasConversion(
-                        p => p.Value,
-                        value => FilePath.Create(value).Value);
-                
-                pt.Property(petp => petp.IsMain);
-            });
-        });*/
         
         builder.Property(v => v.PetPhotos)
             .HasValueObjectsJsonConversion(

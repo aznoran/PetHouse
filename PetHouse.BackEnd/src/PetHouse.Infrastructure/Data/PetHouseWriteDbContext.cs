@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.Specie.Aggregate;
 using PetHouse.Domain.Specie.Entities;
 
 namespace PetHouse.Infrastructure.Data;
@@ -12,7 +13,7 @@ public class PetHouseWriteDbContext(IConfiguration configuration) : DbContext()
     
     public DbSet<Volunteer> Volunteers { get; set; }
 
-    public DbSet<Species> Species { get; set; }
+    public DbSet<Specie> Species { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

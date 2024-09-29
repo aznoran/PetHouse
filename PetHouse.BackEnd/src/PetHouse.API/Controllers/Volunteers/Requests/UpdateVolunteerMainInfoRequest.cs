@@ -1,5 +1,5 @@
 ﻿using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
+using PetHouse.Application.PetManagment.Commands.UpdateMainInfo;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 

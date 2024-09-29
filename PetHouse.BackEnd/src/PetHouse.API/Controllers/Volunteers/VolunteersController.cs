@@ -5,16 +5,14 @@ using PetHouse.API.Extensions;
 using PetHouse.API.Processors;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.Shared;
-using PetHouse.Application.Volunteers.Commands.AddPet;
-using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
-using PetHouse.Application.Volunteers.Commands.Create;
-using PetHouse.Application.Volunteers.Commands.Delete;
-using PetHouse.Application.Volunteers.Commands.UpdateMainInfo;
-using PetHouse.Application.Volunteers.Commands.UpdateRequisites;
-using PetHouse.Application.Volunteers.Commands.UpdateSocialNetworks;
-using PetHouse.Application.Volunteers.Queries.GetAllWithPagination;
-using PetHouse.Application.Volunteers.Queries.GetVolunteerById;
-using PetHouse.Domain.Shared.Other;
+using PetHouse.Application.PetManagment.Commands.AddPet;
+using PetHouse.Application.PetManagment.Commands.AddPetPhotos;
+using PetHouse.Application.PetManagment.Commands.Create;
+using PetHouse.Application.PetManagment.Commands.Delete;
+using PetHouse.Application.PetManagment.Commands.UpdateMainInfo;
+using PetHouse.Application.PetManagment.Commands.UpdateRequisites;
+using PetHouse.Application.PetManagment.Commands.UpdateSocialNetworks;
+using PetHouse.Application.PetManagment.Queries.GetAllWithPagination;
 
 namespace PetHouse.API.Controllers.Volunteers;
 
@@ -23,12 +21,12 @@ namespace PetHouse.API.Controllers.Volunteers;
 public class VolunteersController : ApplicationController
 {
     [HttpGet]
-    public async Task<ActionResult<Guid>> GetAll(
-        [FromServices] GetAllWithPaginationHandler getAllWithPaginationHandler,
-        [FromQuery] GetAllWithPaginationQuery query,
+    public async Task<ActionResult> GetAll(
+        [FromServices] GetAllVolunteerWithPaginationHandler getAllVolunteerWithPaginationHandler,
+        [FromQuery] GetAllVolunteerWithPaginationQuery query,
         CancellationToken cancellationToken = default)
     {
-        var res = await getAllWithPaginationHandler.Handle(query, cancellationToken);
+        var res = await getAllVolunteerWithPaginationHandler.Handle(query, cancellationToken);
 
         return new ObjectResult(res) { StatusCode = 201 };
     }

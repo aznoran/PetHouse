@@ -1,5 +1,5 @@
 ﻿using PetHouse.Application.Dtos.Shared;
-using PetHouse.Application.Volunteers.Commands.AddPetPhotos;
+using PetHouse.Application.PetManagment.Commands.AddPetPhotos;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 
