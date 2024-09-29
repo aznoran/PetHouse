@@ -3,9 +3,12 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
+using PetHouse.Application.Providers;
+using PetHouse.Domain.Shared.Constraints;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
+using FileInfo = PetHouse.Application.Providers.FileInfo;
 
 namespace PetHouse.Application.Volunteers.Commands.Delete;
 
@@ -15,20 +18,20 @@ public class DeletePetHandler : ICommandHandler<DeletePetCommand, Guid>
     private readonly ILogger<DeletePetHandler> _logger;
     private readonly IValidator<DeletePetCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IReadDbContext _dbContext;
+    private readonly IFileProvider _fileProvider;
 
     public DeletePetHandler(
         IVolunteersRepository repository,
         ILogger<DeletePetHandler> logger,
         IValidator<DeletePetCommand> validator,
         IUnitOfWork unitOfWork,
-        IReadDbContext dbContext)
+        IFileProvider fileProvider)
     {
         _repository = repository;
         _logger = logger;
         _validator = validator;
         _unitOfWork = unitOfWork;
-        _dbContext = dbContext;
+        _fileProvider = fileProvider;
     }
 
     public async Task<Result<Guid, ErrorList>> Handle(DeletePetCommand command,
@@ -58,6 +61,21 @@ public class DeletePetHandler : ICommandHandler<DeletePetCommand, Guid>
         if (deletePetForceRes.IsFailure)
         {
             return deletePetForceRes.Error.ToErrorList();
+        }
+
+        var fileNames = new List<string>();
+        
+        foreach (var petPhoto in pet!.PetPhotos ?? [])
+        {
+            fileNames.Add(petPhoto.Path.Value);
+        }
+
+        var deleteFilesRes = await _fileProvider
+            .DeleteFiles(DefaultConstraints.BUCKET_PHOTO_NAME, fileNames, cancellationToken);
+
+        if (deleteFilesRes.IsFailure)
+        {
+            return deleteFilesRes.Error.ToErrorList();
         }
         
         await _unitOfWork.SaveChanges(cancellationToken);

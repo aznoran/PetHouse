@@ -6,6 +6,7 @@ using PetHouse.Application.Extensions;
 using PetHouse.Application.Messaging;
 using PetHouse.Application.Providers;
 using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.Shared.Constraints;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
@@ -15,8 +16,6 @@ namespace PetHouse.Application.Volunteers.Commands.AddPetPhotos;
 
 public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
 {
-    private const string BUCKET_NAME = "photos";
-
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetPhotosHandler> _logger;
     private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
@@ -64,7 +63,7 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
             if (filePath.IsFailure)
                 return filePath.Error.ToErrorList();
 
-            var fileData = new FileData(file.Content, new FileInfo(filePath.Value, BUCKET_NAME));
+            var fileData = new FileData(file.Content, new FileInfo(filePath.Value, DefaultConstraints.BUCKET_PHOTO_NAME));
 
             data.Add(fileData);
         }
