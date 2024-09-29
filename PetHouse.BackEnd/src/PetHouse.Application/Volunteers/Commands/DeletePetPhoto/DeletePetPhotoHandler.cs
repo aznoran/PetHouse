@@ -19,7 +19,7 @@ public class DeletePetPhotoHandler : ICommandHandler<DeletePetPhotoCommand, Guid
 
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<DeletePetPhotoHandler> _logger;
-    private readonly IFileProvider _minio;
+    private readonly IFileProvider _fleprovider;
     private readonly IValidator<DeletePetPhotoCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -31,7 +31,7 @@ public class DeletePetPhotoHandler : ICommandHandler<DeletePetPhotoCommand, Guid
     {
         _repository = repository;
         _logger = logger;
-        _minio = minio;
+        _fleprovider = minio;
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
@@ -69,7 +69,7 @@ public class DeletePetPhotoHandler : ICommandHandler<DeletePetPhotoCommand, Guid
             return removePetPhotoRes.Error.ToErrorList();
         }
         
-        var deleteFileRes = await _minio.Delete(command.BucketName, command.FileName, cancellationToken);
+        var deleteFileRes = await _fleprovider.Delete(command.BucketName, command.FileName, cancellationToken);
 
         if (deleteFileRes.IsFailure)
         {

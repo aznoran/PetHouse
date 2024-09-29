@@ -15,6 +15,7 @@ public class AddPetPhotoValidator : AbstractValidator<AddPetPhotoCommand>
         RuleFor(v => v.VolunteerId).NotEmpty().WithError(Errors.General.ValueIsInvalid("id"));
         
         RuleFor(v => v.File)
+            .NotNull()
             .Must(f => f.Content.Length < MAX_PHOTO_BYTES && f.Content.Length > 0)
             .WithError(Errors.File.WrongSize());
     }

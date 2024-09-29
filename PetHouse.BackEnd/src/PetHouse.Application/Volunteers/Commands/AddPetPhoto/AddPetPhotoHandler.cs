@@ -20,7 +20,7 @@ public class AddPetPhotoHandler : ICommandHandler<AddPetPhotoCommand, Guid>
     private readonly IVolunteersRepository _repository;
     private readonly ILogger<AddPetPhotoHandler> _logger;
     private readonly IMessageQueue<IEnumerable<FileInfo>> _messageQueue;
-    private readonly IFileProvider _minio;
+    private readonly IFileProvider _fleprovider;
     private readonly IValidator<AddPetPhotoCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -34,7 +34,7 @@ public class AddPetPhotoHandler : ICommandHandler<AddPetPhotoCommand, Guid>
         _repository = repository;
         _logger = logger;
         _messageQueue = messageQueue;
-        _minio = minio;
+        _fleprovider = minio;
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
@@ -63,7 +63,7 @@ public class AddPetPhotoHandler : ICommandHandler<AddPetPhotoCommand, Guid>
 
         var fileData = new FileData(command.File.Content, new FileInfo(filePath.Value, BUCKET_NAME));
         
-        var uploadFileRes = await _minio.UploadFiles([fileData], cancellationToken);
+        var uploadFileRes = await _fleprovider.UploadFiles([fileData], cancellationToken);
 
         if (uploadFileRes.IsFailure)
         {

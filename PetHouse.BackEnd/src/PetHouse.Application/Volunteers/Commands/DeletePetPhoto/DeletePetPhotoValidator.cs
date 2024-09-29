@@ -14,6 +14,9 @@ public class DeletePetPhotoValidator : AbstractValidator<DeletePetPhotoCommand>
         
         RuleFor(v => v.VolunteerId).NotEmpty().WithError(Errors.General.ValueIsInvalid("id"));
         
-        RuleFor(v => v.FileName).NotEmpty().WithError(Errors.General.ValueIsInvalid("FileName"));
+        RuleFor(v => v.FileName)
+            .NotNull()
+            .NotEmpty()
+            .WithError(Errors.General.ValueIsInvalid("FileName"));
     }
 }
