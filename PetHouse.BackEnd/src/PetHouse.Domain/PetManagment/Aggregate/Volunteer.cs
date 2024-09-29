@@ -12,9 +12,8 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 {
     private bool _isDeleted = false;
 
-    public Volunteer()
-    {
-    }
+    //EF CORE
+    private Volunteer() { }
 
     private Volunteer(VolunteerId volunteerId,
         FullName fullName,
@@ -204,7 +203,56 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 
         return UnitResult.Success<Error>();
     }
+    
+    public UnitResult<Error> UpdatePet(PetId petId,
+        Name name,
+        PetIdentifier petIdentifier,
+        Description description,
+        PetInfo petInfo,
+        Address address,
+        PhoneNumber phoneNumber,
+        IReadOnlyList<Requisite> requisites,
+        DateTime creationDate)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
 
+        if (pet is null)
+        {
+            return Errors.General.NotFound();
+        }
+
+        var updateRes = pet.Update(name,
+            petIdentifier,
+            description,
+            petInfo,
+            address,
+            phoneNumber,
+            requisites,
+            creationDate);
+
+        return UnitResult.Success<Error>();
+    }
+
+    public UnitResult<Error> UpdatePetStatus(PetId petId, int petStatus)
+    {
+        var petStatusOriginal = PetStatusInfo.Create(petStatus);
+
+        if (petStatusOriginal.IsFailure)
+        {
+            return petStatusOriginal.Error;
+        }
+
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+        {
+            return Errors.General.NotFound();
+        }
+        
+        pet.UpdatePetStatus(petStatusOriginal.Value);
+
+        return UnitResult.Success<Error>();
+    }
     public UnitResult<Error> MovePet(PetId petId, Position newPosition)
     {
         var pet = _pets.Find(p => p.Id == petId);
@@ -278,6 +326,42 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
             return Errors.General.NotFound(petId.Value);
 
         var addPhotosRes = pet.AddPhotos(petPhotos);
+
+        if (addPhotosRes.IsFailure)
+            return addPhotosRes.Error;
+
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> AddPetPhoto(PetId petId, PetPhoto petPhoto)
+    {
+        if (Pets is null)
+            return Errors.General.NotFound();
+
+        var pet = Pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+            return Errors.General.NotFound(petId.Value);
+
+        var addPhotoRes = pet.AddPhoto(petPhoto);
+
+        if (addPhotoRes.IsFailure)
+            return addPhotoRes.Error;
+
+        return UnitResult.Success<Error>();
+    }
+    
+    public UnitResult<Error> RemovePetPhoto(PetId petId, PetPhoto petPhoto)
+    {
+        if (Pets is null)
+            return Errors.General.NotFound();
+
+        var pet = Pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+            return Errors.General.NotFound(petId.Value);
+
+        var addPhotosRes = pet.RemovePhoto(petPhoto);
 
         if (addPhotosRes.IsFailure)
             return addPhotosRes.Error;
