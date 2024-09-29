@@ -12,9 +12,8 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 {
     private bool _isDeleted = false;
 
-    public Volunteer()
-    {
-    }
+    //EF CORE
+    private Volunteer() { }
 
     private Volunteer(VolunteerId volunteerId,
         FullName fullName,

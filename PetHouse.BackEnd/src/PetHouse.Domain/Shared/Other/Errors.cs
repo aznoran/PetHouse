@@ -80,4 +80,28 @@ public static class Errors
             return Error.Validation("email.is.invalid", $"Email {label} is invalid.");
         }
     }
+    
+    public static class Specie
+    {
+        public static Error AlreadyExists(string? label = null, string? fieldName = null)
+        {
+            var labelT = label == null ? "[label?]" : $"'{label}'";
+            var fieldNameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
+            return Error.Failure("already.exists", $"Specie with {fieldNameT} {labelT} already exists.");
+        }
+        
+        public static Error BreedAlreadyExists(string? label = null, string? fieldName = null)
+        {
+            var labelT = label == null ? "[label?]" : $"'{label}'";
+            var fieldNameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
+            return Error.Failure("breed.already.exists", $"Breed with {fieldNameT} {labelT} already exists.");
+        }
+        
+        public static Error SomePetHasThisSpecieOrBreed(Guid? id = null, string? fieldName = null)
+        {
+            var idT = id == null ? "[label?]" : $"'{id}'";
+            var fieldnameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
+            return Error.Failure("already.has", $"Pet with {id} already has {fieldnameT} specie or breed.");
+        }
+    }
 }
