@@ -14,8 +14,6 @@ using PetHouse.Domain.Shared.Id;
 
 namespace PetHouse.API.Controllers.SpeciesManagment;
 
-[ApiController]
-[Route("[controller]")]
 public class SpeciesController : ApplicationController
 {
     [HttpGet]

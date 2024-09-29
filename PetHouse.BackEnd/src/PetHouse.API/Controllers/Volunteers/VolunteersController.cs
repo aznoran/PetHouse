@@ -5,19 +5,20 @@ using PetHouse.API.Extensions;
 using PetHouse.API.Processors;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.Shared;
-using PetHouse.Application.PetManagment.Commands.AddPet;
-using PetHouse.Application.PetManagment.Commands.AddPetPhotos;
-using PetHouse.Application.PetManagment.Commands.Create;
-using PetHouse.Application.PetManagment.Commands.Delete;
-using PetHouse.Application.PetManagment.Commands.UpdateMainInfo;
-using PetHouse.Application.PetManagment.Commands.UpdateRequisites;
-using PetHouse.Application.PetManagment.Commands.UpdateSocialNetworks;
-using PetHouse.Application.PetManagment.Queries.GetAllWithPagination;
+using PetHouse.Application.PetManagement.Commands.AddPet;
+using PetHouse.Application.PetManagement.Commands.AddPetPhotos;
+using PetHouse.Application.PetManagement.Commands.Create;
+using PetHouse.Application.PetManagement.Commands.Delete;
+using PetHouse.Application.PetManagement.Commands.UpdateMainInfo;
+using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
+using PetHouse.Application.PetManagement.Commands.UpdateSocialNetworks;
+using PetHouse.Application.PetManagement.Queries.GetAllWithPagination;
+using PetHouse.Application.PetManagement.Queries.GetVolunteerById;
+using PetHouse.Domain.Shared.Other;
 
 namespace PetHouse.API.Controllers.Volunteers;
 
-[ApiController]
-[Route("[controller]")]
+
 public class VolunteersController : ApplicationController
 {
     [HttpGet]

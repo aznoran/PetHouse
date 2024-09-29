@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="PetManagment\Commands\" />
+      <Folder Include="PetManagement\Commands\" />
     </ItemGroup>
 
 </Project>

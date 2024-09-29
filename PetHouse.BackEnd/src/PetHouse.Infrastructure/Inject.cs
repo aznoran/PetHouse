@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Messaging;
-using PetHouse.Application.PetManagment;
+using PetHouse.Application.PetManagement;
 using PetHouse.Application.Providers;
 using PetHouse.Application.SpecieManagment;
 using PetHouse.Domain.Shared.Other;
