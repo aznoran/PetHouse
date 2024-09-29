@@ -3,7 +3,7 @@ using PetHouse.Application.PetManagment.Commands.AddPetPhotos;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 
-public record AddPetPhotoRequest(
+public record AddPetPhotosRequest(
     IFormFileCollection Photos,
     bool IsMain = false)
 {
