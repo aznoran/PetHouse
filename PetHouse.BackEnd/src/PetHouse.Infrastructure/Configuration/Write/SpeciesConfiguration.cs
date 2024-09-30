@@ -26,6 +26,7 @@ public partial class SpeciesConfiguration : IEntityTypeConfiguration<Specie>
         
         builder.HasMany(v => v.Breeds)
             .WithOne(b => b.Specie)
+            .HasForeignKey("specie_id")
             .OnDelete(DeleteBehavior.ClientCascade);
         
         /*builder.OwnsMany(s => s.Breeds, sp =>
