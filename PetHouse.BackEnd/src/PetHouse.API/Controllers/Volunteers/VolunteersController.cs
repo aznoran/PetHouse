@@ -56,6 +56,21 @@ public class VolunteersController : ApplicationController
         
         return new ObjectResult(res) { StatusCode = 201 };
     }
+    
+    [HttpGet("{volunteerId:guid}/pets/{petId:guid}")]
+    public async Task<ActionResult<Guid>> GetPet(
+        [FromServices] GetPetByIdHandler getAllWithPaginationHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromQuery] GetPetByIdQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await getAllWithPaginationHandler.Handle(
+            query.GetQueryWithId(volunteerId, petId), cancellationToken);
+        
+        return new ObjectResult(res) { StatusCode = 201 };
+    }
+    
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler createVolunteerHandler,

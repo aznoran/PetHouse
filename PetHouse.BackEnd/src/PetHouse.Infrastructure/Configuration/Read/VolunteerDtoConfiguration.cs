@@ -38,7 +38,7 @@ public partial class VolunteerDtoConfiguration : IEntityTypeConfiguration<Volunt
 
         builder.HasMany(v => v.Pets)
             .WithOne()
-            .HasForeignKey("volunteer_id");
+            .HasForeignKey(p => p.VolunteerId);
         
     }
 }
