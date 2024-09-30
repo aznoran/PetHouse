@@ -1,12 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetHouse.Application.SpecieManagment;
-using PetHouse.Domain.PetManagment.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Aggregate;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.SpecieManagement.Aggregate;
 using PetHouse.Infrastructure.Data;
 
 namespace PetHouse.Infrastructure.Repositories;

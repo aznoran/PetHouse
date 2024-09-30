@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PetHouse.Domain.PetManagment.Aggregate;
-using PetHouse.Domain.PetManagment.Entities;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.Aggregate;
+using PetHouse.Domain.PetManagement.Entities;
+using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
 // ReSharper disable InconsistentNaming

@@ -6,7 +6,7 @@ using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.SpecieManagement.Entities;
 
 namespace PetHouse.Application.SpecieManagment.Commands.AddBreed;
 
