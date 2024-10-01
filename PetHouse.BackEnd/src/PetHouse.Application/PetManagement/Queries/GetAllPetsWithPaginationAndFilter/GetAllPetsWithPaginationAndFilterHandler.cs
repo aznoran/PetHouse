@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Extensions;
@@ -143,7 +144,24 @@ public class GetAllPetsWithPaginationAndFilterHandler : IQueryHandler<GetAllPets
             }
         }
         
-        return await queryPet.ToPagedList(query.Page, query.PageSize, cancellationToken);
+        var pagedList = await queryPet.ToPagedList(query.Page, query.PageSize, cancellationToken);
+
+        var newItems = new List<PetDto>();
+
+        foreach (var pet in pagedList.Items)
+        {
+            if (pet.PetPhotos != null)
+                pet.PetPhotos = pet.PetPhotos.OrderByDescending(photo => photo.IsPhotoMain).ToList();
+            newItems.Add(pet);
+        }
+
+        return new PagedList<PetDto>
+        {
+            Items = newItems,
+            Page = pagedList.Page,
+            PageSize = pagedList.PageSize,
+            TotalCount = pagedList.TotalCount
+        };
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Collections.Immutable;
+using CSharpFunctionalExtensions;
 using PetHouse.Domain.PetManagement.Aggregate;
 using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared.Id;
@@ -97,23 +98,46 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
     
     public UnitResult<Error> AddPhotos(IReadOnlyList<PetPhoto> petPhotos)
     {
-        var enumerable = petPhotos.ToList();
-        
-        if (enumerable.Count(p => p.IsMain) > 1)
+        if (petPhotos.Count(p => p.IsMain) > 1)
         {
             return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
         }
         
-        _petPhotos = enumerable;
+        _petPhotos = petPhotos.ToList();
         
         return UnitResult.Success<Error>();
     }
     
+    public UnitResult<Error> ChangeMainPhoto(FilePath filePath)
+    {
+        var newPetPhotos = new List<PetPhoto>();
+        
+        foreach (var petPhoto in _petPhotos)
+        {
+            PetPhoto petPhotoTemp;
+            if (petPhoto.Path == filePath)
+            {
+                petPhotoTemp = PetPhoto.Create(petPhoto.Path, true).Value;
+                newPetPhotos.Add(petPhotoTemp);
+            }
+            else
+            {
+                petPhotoTemp = PetPhoto.Create(petPhoto.Path, false).Value;
+                newPetPhotos.Add(petPhotoTemp);
+            }
+        }
+
+        _petPhotos = newPetPhotos.ToList();
+        
+        return UnitResult.Success<Error>();
+    }
     public UnitResult<Error> AddPhoto(PetPhoto petPhoto)
     {
+        List<PetPhoto> newPetPhotos = new List<PetPhoto>();
+        
         if (_petPhotos is null)
         {
-            _petPhotos = new List<PetPhoto>() { petPhoto };
+            newPetPhotos.Add(petPhoto);
         }
         else
         {
@@ -121,9 +145,16 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
             {
                 return Errors.General.ValueIsInvalid("isMain in petPhoto can't be more than 1");
             }
+
+            foreach (var petPhotoTemp in _petPhotos)
+            {
+                newPetPhotos.Add(PetPhoto.Create(petPhotoTemp.Path, petPhotoTemp.IsMain).Value);
+            }
             
-            _petPhotos.Add(petPhoto);
+            newPetPhotos.Add(petPhoto);
         }
+
+        _petPhotos = newPetPhotos.ToList();
         
         return UnitResult.Success<Error>();
     }
@@ -135,12 +166,17 @@ public sealed class Pet : Shared.ValueObjects.Entity<PetId>, ISoftDeletable
             return Errors.General.NotFound();
         }
         
-        var removeRes = _petPhotos.Remove(petPhoto);
+        List<PetPhoto> newPetPhotos = new List<PetPhoto>();
 
-        if (removeRes == false)
+        foreach (var petPhotoTemp in _petPhotos)
         {
-            return Errors.General.NotFound();
+            if (petPhotoTemp.Path != petPhoto.Path)
+            {
+                newPetPhotos.Add(petPhotoTemp);
+            }
         }
+        
+        _petPhotos = newPetPhotos.ToList();
         
         return UnitResult.Success<Error>();
     }

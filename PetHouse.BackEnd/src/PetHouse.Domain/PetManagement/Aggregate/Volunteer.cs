@@ -254,6 +254,20 @@ public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDe
 
         return UnitResult.Success<Error>();
     }
+    
+    public UnitResult<Error> ChangePetMainPhoto(PetId petId, FilePath filePath)
+    {
+        var pet = _pets.FirstOrDefault(p => p.Id == petId);
+
+        if (pet is null)
+        {
+            return Errors.General.NotFound(petId.Value);
+        }
+        
+        pet.ChangeMainPhoto(filePath);
+
+        return UnitResult.Success<Error>();
+    }
     public UnitResult<Error> MovePet(PetId petId, Position newPosition)
     {
         var pet = _pets.Find(p => p.Id == petId);

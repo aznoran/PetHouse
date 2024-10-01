@@ -4,7 +4,7 @@ using PetHouse.Application.Dtos.PetManagment;
 
 namespace PetHouse.Application.PetManagement.Queries.GetPetById;
 
-public class GetPetByIdHandler : IQueryHandler<GetPetByIdQuery, PetDto>
+public class GetPetByIdHandler : IQueryHandler<GetPetByIdQuery, PetDto?>
 {
     private readonly IReadDbContext _readDbContext;
 
@@ -13,11 +13,18 @@ public class GetPetByIdHandler : IQueryHandler<GetPetByIdQuery, PetDto>
         _readDbContext = readDbContext;
     }
 
-    public async Task<PetDto> Handle(GetPetByIdQuery query,
+    public async Task<PetDto?> Handle(GetPetByIdQuery query,
         CancellationToken cancellationToken = default)
     {
-        return (await _readDbContext.Pets.SingleOrDefaultAsync(p =>
-            p.Id == query.PetId && p.VolunteerId == query.VolunteerId
-            , cancellationToken))!;
+        var pet = await _readDbContext.Pets
+            .Where(p => p.VolunteerId == query.VolunteerId && p.Id == query.PetId)
+            .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+
+        if (pet is { PetPhotos: not null })
+        {
+            pet.PetPhotos = pet.PetPhotos.OrderByDescending(photo => photo.IsPhotoMain).ToList();
+        }
+
+        return pet;
     }
 }
