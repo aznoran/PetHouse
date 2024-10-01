@@ -8,7 +8,7 @@ using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 using PetHouse.Domain.SpecieManagement.Aggregate;
 
-namespace PetHouse.Application.SpecieManagment.Commands.Create;
+namespace PetHouse.Application.SpecieManagement.Commands.Create;
 
 public class CreateSpecieHandler : ICommandHandler<CreateSpecieCommand, Guid>
 {

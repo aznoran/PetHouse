@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.SpecieManagment.Commands.Delete;
+﻿using PetHouse.Application.SpecieManagement.Commands.Delete;
 
 namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 

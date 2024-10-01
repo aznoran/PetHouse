@@ -3,7 +3,7 @@ using PetHouse.Application.Dtos.SpeciesManagment;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.SpecieManagment.Queries.GetBreedById;
+namespace PetHouse.Application.SpecieManagement.Queries.GetBreedById;
 
 public class GetBreedByIdHandler: IQueryHandler<GetBreedByIdQuery, PagedList<BreedDto>>
 {

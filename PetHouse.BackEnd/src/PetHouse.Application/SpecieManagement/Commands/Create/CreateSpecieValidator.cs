@@ -2,11 +2,11 @@
 using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.SpecieManagment.Commands.AddBreed;
+namespace PetHouse.Application.SpecieManagement.Commands.Create;
 
-public class AddBreedValidator : AbstractValidator<AddBreedCommand>
+public class CreateSpecieValidator : AbstractValidator<CreateSpecieCommand>
 {
-    public AddBreedValidator()
+    public CreateSpecieValidator()
     {
         RuleFor(c => c.Name)
             .MustBeValueObject(Name.Create);

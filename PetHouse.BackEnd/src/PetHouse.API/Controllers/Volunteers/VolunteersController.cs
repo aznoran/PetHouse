@@ -20,6 +20,7 @@ using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
 using PetHouse.Application.PetManagement.Commands.UpdateSocialNetworks;
 using PetHouse.Application.PetManagement.Queries.GetAllPetsWithPaginationAndFilter;
 using PetHouse.Application.PetManagement.Queries.GetAllWithPagination;
+using PetHouse.Application.PetManagement.Queries.GetPetById;
 using PetHouse.Application.PetManagement.Queries.GetVolunteerById;
 using PetHouse.Domain.Shared.Other;
 

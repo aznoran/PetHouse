@@ -2,7 +2,7 @@
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 
-namespace PetHouse.Application.PetManagement.Queries.GetVolunteerById;
+namespace PetHouse.Application.PetManagement.Queries.GetPetById;
 
 public class GetPetByIdHandler : IQueryHandler<GetPetByIdQuery, PetDto>
 {

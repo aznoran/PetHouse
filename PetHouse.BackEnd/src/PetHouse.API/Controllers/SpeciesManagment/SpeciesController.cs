@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.API.Controllers.Shared;
 using PetHouse.API.Controllers.SpeciesManagment.Requests;
-using PetHouse.API.Controllers.Volunteers.Requests;
 using PetHouse.API.Extensions;
-using PetHouse.Application.SpecieManagment.Commands;
-using PetHouse.Application.SpecieManagment.Commands.AddBreed;
-using PetHouse.Application.SpecieManagment.Commands.Create;
-using PetHouse.Application.SpecieManagment.Commands.Delete;
-using PetHouse.Application.SpecieManagment.Commands.DeleteBreed;
-using PetHouse.Application.SpecieManagment.Queries.GetAllWithPagination;
-using PetHouse.Application.SpecieManagment.Queries.GetBreedById;
-using PetHouse.Domain.Shared.Id;
+using PetHouse.Application.SpecieManagement.Commands.AddBreed;
+using PetHouse.Application.SpecieManagement.Commands.Create;
+using PetHouse.Application.SpecieManagement.Commands.Delete;
+using PetHouse.Application.SpecieManagement.Commands.DeleteBreed;
+using PetHouse.Application.SpecieManagement.Queries.GetAllWithPagination;
+using PetHouse.Application.SpecieManagement.Queries.GetBreedById;
 
 namespace PetHouse.API.Controllers.SpeciesManagment;
 

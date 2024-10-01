@@ -8,7 +8,7 @@ using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 using PetHouse.Domain.SpecieManagement.Entities;
 
-namespace PetHouse.Application.SpecieManagment.Commands.AddBreed;
+namespace PetHouse.Application.SpecieManagement.Commands.AddBreed;
 
 public class AddBreedHandler : ICommandHandler<AddBreedCommand, Guid>
 {

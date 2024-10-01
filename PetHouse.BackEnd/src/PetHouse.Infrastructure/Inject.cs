@@ -5,7 +5,7 @@ using PetHouse.Application.Abstraction;
 using PetHouse.Application.Messaging;
 using PetHouse.Application.PetManagement;
 using PetHouse.Application.Providers;
-using PetHouse.Application.SpecieManagment;
+using PetHouse.Application.SpecieManagement;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Infrastructure.BackgroundServices;
 using PetHouse.Infrastructure.Data;

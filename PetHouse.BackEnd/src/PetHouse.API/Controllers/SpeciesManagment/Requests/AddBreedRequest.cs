@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.SpecieManagment.Commands.AddBreed;
+﻿using PetHouse.Application.SpecieManagement.Commands.AddBreed;
 
 namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 

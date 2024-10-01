@@ -8,7 +8,7 @@ using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.SpecieManagment.Commands.Delete;
+namespace PetHouse.Application.SpecieManagement.Commands.Delete;
 
 public class DeleteSpecieHandler : ICommandHandler<DeleteSpecieCommand, Guid>
 {

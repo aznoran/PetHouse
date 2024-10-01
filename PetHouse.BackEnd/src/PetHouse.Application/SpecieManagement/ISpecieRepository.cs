@@ -3,7 +3,7 @@ using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
 using PetHouse.Domain.SpecieManagement.Aggregate;
 
-namespace PetHouse.Application.SpecieManagment;
+namespace PetHouse.Application.SpecieManagement;
 
 public interface ISpecieRepository
 {

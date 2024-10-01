@@ -2,7 +2,7 @@
 using PetHouse.Application.Validation;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.SpecieManagment.Commands.DeleteBreed;
+namespace PetHouse.Application.SpecieManagement.Commands.DeleteBreed;
 
 public class DeleteBreedValidator : AbstractValidator<DeleteBreedCommand>
 {

@@ -3,7 +3,7 @@ using PetHouse.Application.Dtos.SpeciesManagment;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.SpecieManagment.Queries.GetAllWithPagination;
+namespace PetHouse.Application.SpecieManagement.Queries.GetAllWithPagination;
 
 public class GetAllSpeciesWithPaginationHandler : IQueryHandler<GetAllSpeciesWithPaginationQuery, PagedList<SpecieDto>>
 {

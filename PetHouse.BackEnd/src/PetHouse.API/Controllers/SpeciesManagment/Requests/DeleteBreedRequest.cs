@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.SpecieManagment.Commands.DeleteBreed;
+﻿using PetHouse.Application.SpecieManagement.Commands.DeleteBreed;
 
 namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 

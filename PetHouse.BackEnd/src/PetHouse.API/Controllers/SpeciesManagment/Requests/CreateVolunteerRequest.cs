@@ -1,4 +1,4 @@
-﻿using PetHouse.Application.SpecieManagment.Commands.Create;
+﻿using PetHouse.Application.SpecieManagement.Commands.Create;
 
 namespace PetHouse.API.Controllers.SpeciesManagment.Requests;
 

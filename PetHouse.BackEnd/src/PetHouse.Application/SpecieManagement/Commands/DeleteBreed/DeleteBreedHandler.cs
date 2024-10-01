@@ -8,7 +8,7 @@ using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Application.SpecieManagment.Commands.DeleteBreed;
+namespace PetHouse.Application.SpecieManagement.Commands.DeleteBreed;
 
 public class DeleteBreedHandler : ICommandHandler<DeleteBreedCommand, Guid>
 {
