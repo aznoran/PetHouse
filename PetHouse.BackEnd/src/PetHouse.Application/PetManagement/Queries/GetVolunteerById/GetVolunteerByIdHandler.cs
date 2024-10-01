@@ -4,7 +4,7 @@ using PetHouse.Application.Dtos.PetManagment;
 
 namespace PetHouse.Application.PetManagement.Queries.GetVolunteerById;
 
-public class GetVolunteerByIdHandler : IQueryHandler<GetVolunteerByIdQuery, VolunteerDto>
+public class GetVolunteerByIdHandler : IQueryHandler<GetVolunteerByIdQuery, VolunteerDto?>
 {
     private readonly IReadDbContext _readDbContext;
 
@@ -13,9 +13,9 @@ public class GetVolunteerByIdHandler : IQueryHandler<GetVolunteerByIdQuery, Volu
         _readDbContext = readDbContext;
     }
 
-    public async Task<VolunteerDto> Handle(GetVolunteerByIdQuery query,
+    public async Task<VolunteerDto?> Handle(GetVolunteerByIdQuery query,
         CancellationToken cancellationToken = default)
     {
-        return (await _readDbContext.Volunteers.SingleOrDefaultAsync(v => v.Id==query.Id, cancellationToken))!;
+        return await _readDbContext.Volunteers.SingleOrDefaultAsync(v => v.Id==query.Id, cancellationToken);
     }
 }

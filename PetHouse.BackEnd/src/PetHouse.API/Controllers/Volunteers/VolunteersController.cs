@@ -8,6 +8,7 @@ using PetHouse.Application.Dtos.Shared;
 using PetHouse.Application.PetManagement.Commands.AddPet;
 using PetHouse.Application.PetManagement.Commands.AddPetPhoto;
 using PetHouse.Application.PetManagement.Commands.AddPetPhotos;
+using PetHouse.Application.PetManagement.Commands.ChangePetMainPhoto;
 using PetHouse.Application.PetManagement.Commands.Create;
 using PetHouse.Application.PetManagement.Commands.Delete;
 using PetHouse.Application.PetManagement.Commands.DeletePet;
@@ -219,6 +220,25 @@ public class VolunteersController : ApplicationController
         }
 
         return new ObjectResult(res.Value) { StatusCode = 204 };
+    }
+    
+    [HttpPatch("{volunteerId:guid}/petphoto/{petId:guid}/main")]
+    public async Task<ActionResult<Guid>> ChangeMainPhoto(
+        [FromServices] ChangePetMainPhotoHandler addPetPhotoHandler,
+        [FromRoute] Guid volunteerId,
+        [FromRoute] Guid petId,
+        [FromBody] ChangePetMainPhotoRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await addPetPhotoHandler
+            .Handle(request.ToCommand(volunteerId, petId), cancellationToken);
+
+        if (res.IsFailure)
+        {
+            return res.Error.ToResponse();
+        }
+
+        return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
     [HttpPatch("{id:guid}/social-networks")]

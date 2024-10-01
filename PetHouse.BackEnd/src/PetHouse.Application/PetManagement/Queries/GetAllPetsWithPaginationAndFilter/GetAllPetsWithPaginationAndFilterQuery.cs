@@ -1,4 +1,5 @@
-﻿using PetHouse.Application.Abstraction;
+﻿using System.ComponentModel.DataAnnotations;
+using PetHouse.Application.Abstraction;
 
 namespace PetHouse.Application.PetManagement.Queries.GetAllPetsWithPaginationAndFilter;
 
