@@ -24,4 +24,5 @@ public class PetDto
     public IEnumerable<RequisiteDto> Requisites { get; init; }
     public IEnumerable<PetPhotoDto>? PetPhotos { get; init; }
     public PetStatus PetStatus { get; init; }
+    public Guid VolunteerId { get; init; }
 }
