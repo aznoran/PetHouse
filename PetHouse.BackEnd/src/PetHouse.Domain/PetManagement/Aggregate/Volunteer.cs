@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.PetManagment.Entities;
-using PetHouse.Domain.PetManagment.Enums;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.Entities;
+using PetHouse.Domain.PetManagement.Enums;
+using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.PetManagment.Aggregate;
+namespace PetHouse.Domain.PetManagement.Aggregate;
 
 public sealed class Volunteer : Shared.ValueObjects.Entity<VolunteerId>, ISoftDeletable
 {

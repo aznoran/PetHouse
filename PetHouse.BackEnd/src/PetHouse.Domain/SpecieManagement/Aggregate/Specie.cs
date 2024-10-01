@@ -2,9 +2,9 @@
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.SpecieManagement.Entities;
 
-namespace PetHouse.Domain.Specie.Aggregate;
+namespace PetHouse.Domain.SpecieManagement.Aggregate;
 
 public sealed class Specie : Shared.ValueObjects.Entity<SpeciesId>
 {

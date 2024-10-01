@@ -1,6 +1,5 @@
 ﻿using PetHouse.Application.PetManagement.Commands.AddPet;
-using PetHouse.Domain.PetManagment.Enums;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.Enums;
 
 namespace PetHouse.Application.Dtos.PetManagment;
 

@@ -2,7 +2,7 @@
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.PetManagment.ValueObjects;
+namespace PetHouse.Domain.PetManagement.ValueObjects;
 
 public record PetIdentifier
 {

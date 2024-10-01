@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PetHouse.Domain.PetManagment.Aggregate;
-using PetHouse.Domain.Specie.Aggregate;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.PetManagement.Aggregate;
+using PetHouse.Domain.SpecieManagement.Aggregate;
 
 namespace PetHouse.Infrastructure.Data;
 

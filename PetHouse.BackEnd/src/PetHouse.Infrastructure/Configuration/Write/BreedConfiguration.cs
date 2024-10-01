@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Domain.Shared.Id;
-using PetHouse.Domain.Specie.Entities;
+using PetHouse.Domain.SpecieManagement.Entities;
 
 namespace PetHouse.Infrastructure.Configuration.Write;
 

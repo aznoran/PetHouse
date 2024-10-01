@@ -5,7 +5,7 @@ using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
 using PetHouse.Application.Messaging;
 using PetHouse.Application.Providers;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared.Constraints;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;

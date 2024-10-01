@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using PetHouse.Domain.PetManagment.Enums;
+using PetHouse.Domain.PetManagement.Enums;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.PetManagment.ValueObjects;
+namespace PetHouse.Domain.PetManagement.ValueObjects;
 
 public record PetStatusInfo
 {

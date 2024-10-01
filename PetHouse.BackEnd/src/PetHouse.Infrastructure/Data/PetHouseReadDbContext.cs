@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Dtos.SpeciesManagment;
-using PetHouse.Domain.PetManagment.Entities;
 
 namespace PetHouse.Infrastructure.Data;
 

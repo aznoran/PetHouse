@@ -1,6 +1,5 @@
 ﻿using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.PetManagement.Commands.AddPet;
-using PetHouse.Domain.PetManagment.Enums;
 
 namespace PetHouse.API.Controllers.Volunteers.Requests;
 

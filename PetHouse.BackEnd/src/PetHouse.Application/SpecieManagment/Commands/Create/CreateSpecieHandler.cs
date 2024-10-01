@@ -6,7 +6,7 @@ using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Aggregate;
+using PetHouse.Domain.SpecieManagement.Aggregate;
 
 namespace PetHouse.Application.SpecieManagment.Commands.Create;
 
