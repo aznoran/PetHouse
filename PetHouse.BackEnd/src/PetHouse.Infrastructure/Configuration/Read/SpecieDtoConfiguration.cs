@@ -14,6 +14,6 @@ public class SpecieDtoConfiguration : IEntityTypeConfiguration<SpecieDto>
 
         builder.HasMany(s => s.Breeds)
             .WithOne()
-            .HasForeignKey("specie_id");
+            .HasForeignKey(b => b.SpecieId);
     }
 }

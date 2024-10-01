@@ -1,8 +1,8 @@
 using CSharpFunctionalExtensions;
 using FluentAssertions;
-using PetHouse.Domain.PetManagment.Aggregate;
-using PetHouse.Domain.PetManagment.Enums;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.Aggregate;
+using PetHouse.Domain.PetManagement.Enums;
+using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.Other;

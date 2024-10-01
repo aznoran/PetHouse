@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetHouse.Application.Abstraction;
 using PetHouse.Application.Extensions;
-using PetHouse.Domain.PetManagment.ValueObjects;
+using PetHouse.Domain.PetManagement.ValueObjects;
 using PetHouse.Domain.Shared.Other;
 using PetHouse.Domain.Shared.ValueObjects;
 

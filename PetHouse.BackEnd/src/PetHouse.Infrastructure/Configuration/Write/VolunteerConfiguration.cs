@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Domain.PetManagment.Aggregate;
+using PetHouse.Domain.PetManagement.Aggregate;
 using PetHouse.Domain.Shared.Constraints;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;

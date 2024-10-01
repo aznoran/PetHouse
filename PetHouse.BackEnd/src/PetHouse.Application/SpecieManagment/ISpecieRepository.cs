@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
-using PetHouse.Domain.Specie.Aggregate;
+using PetHouse.Domain.SpecieManagement.Aggregate;
 
 namespace PetHouse.Application.SpecieManagment;
 

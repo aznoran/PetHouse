@@ -9,6 +9,7 @@ public record GetVolunteerByIdQuery() : IQuery
     {
         Id = id;
     }
+
     internal Guid Id { get; init; }
 
     public GetVolunteerByIdQuery GetQueryWithId(Guid id)

@@ -1,7 +1,7 @@
 ﻿using PetHouse.Domain.Shared.Id;
 using PetHouse.Domain.Shared.ValueObjects;
 
-namespace PetHouse.Domain.Specie.Entities;
+namespace PetHouse.Domain.SpecieManagement.Entities;
 
 public class Breed : Entity<BreedId>
 {
