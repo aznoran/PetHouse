@@ -4,21 +4,21 @@ using PetHouse.Application.Dtos.PetManagment;
 using PetHouse.Application.Extensions;
 using PetHouse.Domain.Shared.Other;
 
-namespace PetHouse.Application.PetManagement.Queries.GetAllPetWithPaginationAndFilter;
+namespace PetHouse.Application.PetManagement.Queries.GetAllPetsWithPaginationAndFilter;
 
-public class GetAllPetWithPaginationAndFilterHandler : IQueryHandler<GetAllPetWithPaginationAndFilterQuery, PagedList<PetDto>>
+public class GetAllPetsWithPaginationAndFilterHandler : IQueryHandler<GetAllPetsWithPaginationAndFilterQuery, PagedList<PetDto>>
 {
     // ReSharper disable once InconsistentNaming
     private const int MAXIMUM_AGE_DIFFERENCE = 5;
     
     private readonly IReadDbContext _readDbContext;
 
-    public GetAllPetWithPaginationAndFilterHandler(IReadDbContext readDbContext)
+    public GetAllPetsWithPaginationAndFilterHandler(IReadDbContext readDbContext)
     {
         _readDbContext = readDbContext;
     }
 
-    public async Task<PagedList<PetDto>> Handle(GetAllPetWithPaginationAndFilterQuery query,
+    public async Task<PagedList<PetDto>> Handle(GetAllPetsWithPaginationAndFilterQuery query,
         CancellationToken cancellationToken = default)
     {
         var queryPet = _readDbContext.Pets.AsQueryable();

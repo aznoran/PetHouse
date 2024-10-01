@@ -1,8 +1,8 @@
 ﻿using PetHouse.Application.Abstraction;
 
-namespace PetHouse.Application.PetManagement.Queries.GetAllPetWithPaginationAndFilter;
+namespace PetHouse.Application.PetManagement.Queries.GetAllPetsWithPaginationAndFilter;
 
-public record GetAllPetWithPaginationAndFilterQuery(
+public record GetAllPetsWithPaginationAndFilterQuery(
     int Page,
     int PageSize,
     string? SortBy,
@@ -21,7 +21,7 @@ public record GetAllPetWithPaginationAndFilterQuery(
     string? Country,
     int? PetStatus) : IQuery
 {
-    private GetAllPetWithPaginationAndFilterQuery(Guid id,
+    private GetAllPetsWithPaginationAndFilterQuery(Guid id,
         int Page,
         int PageSize,
         string? SortBy,
@@ -61,8 +61,8 @@ public record GetAllPetWithPaginationAndFilterQuery(
     }
     internal Guid Id { get; init; }
 
-    public GetAllPetWithPaginationAndFilterQuery GetQueryWithId(Guid id, 
-        GetAllPetWithPaginationAndFilterQuery query)
+    public GetAllPetsWithPaginationAndFilterQuery GetQueryWithId(Guid id, 
+        GetAllPetsWithPaginationAndFilterQuery query)
     {
         return new(id,
         query.Page,

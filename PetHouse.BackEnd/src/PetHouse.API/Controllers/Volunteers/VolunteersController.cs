@@ -18,7 +18,7 @@ using PetHouse.Application.PetManagement.Commands.UpdatePet;
 using PetHouse.Application.PetManagement.Commands.UpdatePetStatus;
 using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
 using PetHouse.Application.PetManagement.Commands.UpdateSocialNetworks;
-using PetHouse.Application.PetManagement.Queries.GetAllPetWithPaginationAndFilter;
+using PetHouse.Application.PetManagement.Queries.GetAllPetsWithPaginationAndFilter;
 using PetHouse.Application.PetManagement.Queries.GetAllWithPagination;
 using PetHouse.Application.PetManagement.Queries.GetVolunteerById;
 using PetHouse.Domain.Shared.Other;
@@ -60,9 +60,9 @@ public class VolunteersController : ApplicationController
     
     [HttpGet("{id:guid}/pets")]
     public async Task<ActionResult<Guid>> GetVolunteer(
-        [FromServices] GetAllPetWithPaginationAndFilterHandler getAllWithPaginationHandler,
+        [FromServices] GetAllPetsWithPaginationAndFilterHandler getAllWithPaginationHandler,
         [FromRoute] Guid id,
-        [FromQuery] GetAllPetWithPaginationAndFilterQuery query,
+        [FromQuery] GetAllPetsWithPaginationAndFilterQuery query,
         CancellationToken cancellationToken = default)
     {
         //чтобы нельзя было передать в квери айди через браузер, но при этом сохранить сигнатуру IQueryHandler 
