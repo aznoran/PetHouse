@@ -17,7 +17,7 @@ public class GetPetByIdHandler : IQueryHandler<GetPetByIdQuery, PetDto?>
         CancellationToken cancellationToken = default)
     {
         var pet = await _readDbContext.Pets
-            .Where(p => p.VolunteerId == query.VolunteerId && p.Id == query.PetId)
+            .Where(p => p.Id == query.PetId)
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (pet is { PetPhotos: not null })

@@ -60,35 +60,6 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
     
-    [HttpGet("{id:guid}/pets")]
-    public async Task<ActionResult<Guid>> GetVolunteer(
-        [FromServices] GetAllPetsWithPaginationAndFilterHandler getAllWithPaginationHandler,
-        [FromRoute] Guid id,
-        [FromQuery] GetAllPetsWithPaginationAndFilterQuery query,
-        CancellationToken cancellationToken = default)
-    {
-        //чтобы нельзя было передать в квери айди через браузер, но при этом сохранить сигнатуру IQueryHandler 
-        //добавим internal поле Id у GetVolunteerByIdQuery
-        var res = await getAllWithPaginationHandler.Handle(query.GetQueryWithId(id, query), cancellationToken);
-        
-        return new ObjectResult(res) { StatusCode = 201 };
-    }
-    
-
-    [HttpGet("{volunteerId:guid}/pets/{petId:guid}")]
-    public async Task<ActionResult<Guid>> GetPet(
-        [FromServices] GetPetByIdHandler getAllWithPaginationHandler,
-        [FromRoute] Guid volunteerId,
-        [FromRoute] Guid petId,
-        [FromQuery] GetPetByIdQuery query,
-        CancellationToken cancellationToken = default)
-    {
-        var res = await getAllWithPaginationHandler.Handle(
-            query.GetQueryWithId(volunteerId, petId), cancellationToken);
-        
-        return new ObjectResult(res) { StatusCode = 201 };
-    }
-    
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler createVolunteerHandler,
@@ -101,7 +72,7 @@ public class VolunteersController : ApplicationController
         {
             return res.Error.ToResponse();
         }
-
+        
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
