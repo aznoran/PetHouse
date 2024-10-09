@@ -1,12 +1,10 @@
-using CSharpFunctionalExtensions;
 using FluentAssertions;
-using PetHouse.Domain.PetManagement.Aggregate;
-using PetHouse.Domain.PetManagement.Enums;
-using PetHouse.Domain.PetManagement.ValueObjects;
-using PetHouse.Domain.Shared;
-using PetHouse.Domain.Shared.Id;
-using PetHouse.Domain.Shared.Other;
-using PetHouse.Domain.Shared.ValueObjects;
+using PetHouse.PetManagement.Domain.Aggregate;
+using PetHouse.PetManagement.Domain.Enums;
+using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Id;
+using PetHouse.SharedKernel.Other;
+using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Domain.UnitTests;
 

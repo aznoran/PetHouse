@@ -1,23 +1,18 @@
-using System.Linq.Expressions;
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Abstraction;
-using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Application.Dtos.SpeciesManagment;
-using PetHouse.Application.PetManagement;
-using PetHouse.Application.PetManagement.Commands.AddPet;
-using PetHouse.Domain.PetManagement.Aggregate;
-using PetHouse.Domain.PetManagement.Enums;
-using PetHouse.Domain.PetManagement.ValueObjects;
-using PetHouse.Domain.Shared;
-using PetHouse.Domain.Shared.Id;
-using PetHouse.Domain.Shared.Other;
-using PetHouse.Domain.Shared.ValueObjects;
+using PetHouse.Core.Dtos.PetManagment;
+using PetHouse.PetManagement.Application;
+using PetHouse.PetManagement.Application.Commands.AddPet;
+using PetHouse.PetManagement.Domain.Aggregate;
+using PetHouse.PetManagement.Domain.Enums;
+using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Id;
+using PetHouse.SharedKernel.Other;
+using PetHouse.SharedKernel.ValueObjects;
+using PetHouse.SpecieManagement._Contracts;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 
@@ -29,6 +24,7 @@ public class VolunteersTestAddPetHandler
     private readonly Mock<ILogger<AddPetHandler>> _loggerMock;
     private readonly AddPetHandler _handler;
     private readonly Mock<IReadDbContext> _dbcontext;
+    private readonly Mock<ISpecieManagementContract> _contract;
 
     public VolunteersTestAddPetHandler()
     {
@@ -38,13 +34,15 @@ public class VolunteersTestAddPetHandler
         _loggerMock = new Mock<ILogger<AddPetHandler>>();
         //TODO: добавтиь функционал этому моку
         _dbcontext = new Mock<IReadDbContext>();
+        _contract = new Mock<ISpecieManagementContract>();
         
         _handler = new AddPetHandler(
             _repositoryMock.Object,
             _loggerMock.Object,
             _unitOfWorkMock.Object,
             _validatorMock.Object,
-            _dbcontext.Object);
+            _dbcontext.Object,
+            _contract.Object);
     }
 
     [Fact]
@@ -115,7 +113,7 @@ public class VolunteersTestAddPetHandler
             {
                 new RequisiteDto("Requisite 1", "Desc 1")
             },
-            PetStatus.LookingForHome);
+            2);
 
 
         var command = new AddPetCommand(Guid.NewGuid(), addPetDto);
@@ -179,7 +177,7 @@ public class VolunteersTestAddPetHandler
             {
                 new RequisiteDto("Requisite 1", "Desc 1")
             },
-            PetStatus.LookingForHome);
+            2);
 
 
         var command = new AddPetCommand(Guid.NewGuid(), addPetDto);

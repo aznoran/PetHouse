@@ -1,17 +1,15 @@
-﻿using CSharpFunctionalExtensions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PetHouse.Application.Dtos.PetManagment;
-using PetHouse.Application.PetManagement;
-using PetHouse.Application.PetManagement.Commands.UpdateRequisites;
-using PetHouse.Domain.PetManagement.Aggregate;
-using PetHouse.Domain.PetManagement.ValueObjects;
-using PetHouse.Domain.Shared.Id;
-using PetHouse.Domain.Shared.Other;
-using PetHouse.Domain.Shared.ValueObjects;
+using PetHouse.Core.Dtos.PetManagment;
+using PetHouse.PetManagement.Application;
+using PetHouse.PetManagement.Application.Commands.UpdateRequisites;
+using PetHouse.PetManagement.Domain.Aggregate;
+using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Id;
+using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Application.UnitTests.Volunteers;
 
