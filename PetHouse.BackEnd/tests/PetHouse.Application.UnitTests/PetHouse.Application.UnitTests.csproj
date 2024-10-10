@@ -23,7 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\PetHouse.Application\PetHouse.Application.csproj" />
+      <ProjectReference Include="..\..\src\PetManagement\PetHouse.PetManagement.Application\PetHouse.PetManagement.Application.csproj" />
+      <ProjectReference Include="..\..\src\Shared\PetHouse.Core\PetHouse.Core.csproj" />
     </ItemGroup>
 
 </Project>
