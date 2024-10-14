@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PetHouse.Core.Dtos.PetManagment;
 using PetHouse.Core.Dtos.Shared;
 using PetHouse.Core.Extensions;
@@ -56,6 +57,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateVolunteerHandler createVolunteerHandler,

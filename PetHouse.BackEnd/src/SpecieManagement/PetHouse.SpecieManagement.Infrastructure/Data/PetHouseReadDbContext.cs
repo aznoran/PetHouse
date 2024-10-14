@@ -18,18 +18,17 @@ public class PetHouseReadDbContext(IConfiguration configuration) : DbContext(), 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PetHouseReadDbContext).Assembly, type =>
-                type.FullName?.Contains("Configuration.Read") ?? false);
+            type.FullName?.Contains("Configuration.Read") ?? false);
 
-            modelBuilder.Entity<VolunteerDto>().HasQueryFilter(v => !v.IsDeleted);
-            
-            modelBuilder.Entity<PetDto>().HasQueryFilter(v => !v.IsDeleted);
+        modelBuilder.HasDefaultSchema("species");
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLoggerFactory(_loggerFactory).EnableSensitiveDataLogging().LogTo(Console.WriteLine);
 
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DefaultConstraints.DATABASE));
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DefaultConstraints.DATABASE),
+            x => x.MigrationsHistoryTable("__MyMigrationsHistory", "public"));
 
         optionsBuilder.UseSnakeCaseNamingConvention();
     }
