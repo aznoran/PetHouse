@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\PetHouse.Core\PetHouse.Core.csproj" />
+      <ProjectReference Include="..\PetHouse.Accounts.Domain\PetHouse.Accounts.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
+      <PackageReference Include="Scrutor" Version="5.0.1" />
+    </ItemGroup>
+
+</Project>
