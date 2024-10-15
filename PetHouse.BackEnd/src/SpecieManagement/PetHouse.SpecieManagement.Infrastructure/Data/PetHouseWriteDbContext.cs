@@ -15,13 +15,16 @@ public class PetHouseWriteDbContext(IConfiguration configuration) : DbContext()
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PetHouseWriteDbContext).Assembly, type =>
             type.FullName?.Contains("Configuration.Write") ?? false);
+        
+        modelBuilder.HasDefaultSchema("species");
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseLoggerFactory(_loggerFactory).EnableSensitiveDataLogging().LogTo(Console.WriteLine);
             
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DefaultConstraints.DATABASE));
+        optionsBuilder.UseNpgsql(configuration.GetConnectionString(DefaultConstraints.DATABASE),
+            x => x.MigrationsHistoryTable("__MyMigrationsHistory", "public"));
 
         optionsBuilder.UseSnakeCaseNamingConvention();
     }

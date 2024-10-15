@@ -104,4 +104,12 @@ public static class Errors
             return Error.Failure("already.has", $"Pet with {id} already has {fieldnameT} specie or breed.");
         }
     }
+    
+    public static class Accounts
+    {
+        public static Error InvalidCredentials()
+        {
+            return Error.Failure("invalid.credentials", $"Invalid credentials.");
+        }
+    }
 }
