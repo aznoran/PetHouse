@@ -13,8 +13,6 @@ public static class Inject
     public static IServiceCollection AddAccountsInfrastructure(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
-        var c = configuration.GetSection(JwtOptions.JWT);
-     
         serviceCollection.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         serviceCollection.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
