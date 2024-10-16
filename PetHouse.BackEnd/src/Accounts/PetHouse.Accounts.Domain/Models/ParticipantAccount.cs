@@ -1,4 +1,4 @@
-﻿using PetHouse.PetManagement.Domain.ValueObjects;
+﻿using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Accounts.Domain.Models;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.Accounts.Application.Commands.Login;
 using PetHouse.Accounts.Application.Commands.Register;
-using PetHouse.Accounts.Presentation.Requests;
+using PetHouse.Accounts.Contracts.Requests;
 using PetHouse.Core.Extensions;
 using PetHouse.Framework;
 
