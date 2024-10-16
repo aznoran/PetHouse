@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.Core.Extensions;
 using PetHouse.Framework;
+using PetHouse.Framework.Authorization;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SpecieManagement._Contracts.Species.Requests;
 using PetHouse.SpecieManagement.Application.SpecieManagement.Commands.AddBreed;
 using PetHouse.SpecieManagement.Application.SpecieManagement.Commands.Create;
@@ -13,6 +15,7 @@ namespace PetHouse.SpecieManagement.Presentation;
 
 public class SpeciesController : ApplicationController
 {
+    [Permission(Policies.SpeciesManagement.GetAll)]
     [HttpGet]
     public async Task<ActionResult> GetAll(
         [FromServices] GetAllSpeciesWithPaginationHandler getAllWithPaginationHandler,
@@ -24,6 +27,7 @@ public class SpeciesController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
 
+    [Permission(Policies.SpeciesManagement.GetBreed)]
     [HttpGet("{specieId:guid}/breed")]
     public async Task<ActionResult> GetBreedById(
         [FromServices] GetBreedByIdHandler getBreedByIdHandler,
@@ -37,6 +41,7 @@ public class SpeciesController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
 
+    [Permission(Policies.SpeciesManagement.Create)]
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
         [FromServices] CreateSpecieHandler createSpecieHandler,
@@ -55,6 +60,7 @@ public class SpeciesController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
     
+    [Permission(Policies.SpeciesManagement.CreateBreed)]
     [HttpPost("{id:guid}/breed")]
     public async Task<ActionResult<Guid>> AddBreed(
         [FromServices] AddBreedHandler addBreedHandler,
@@ -74,6 +80,7 @@ public class SpeciesController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
     
+    [Permission(Policies.SpeciesManagement.Delete)]
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> Delete(
         [FromServices] DeleteSpecieHandler deleteSpecieHandler,
@@ -94,6 +101,7 @@ public class SpeciesController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
     
+    [Permission(Policies.SpeciesManagement.DeleteBreed)]
     [HttpDelete("{specieId:guid}/breed/{breedId:guid}")]
     public async Task<ActionResult<Guid>> DeleteBreed(
         [FromServices] DeleteBreedHandler deleteBreedHandler,

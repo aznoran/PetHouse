@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace PetHouse.PetManagement.Infrastructure.Extensions;
+namespace PetHouse.Core.Extensions;
 
 public static class EfCoreFluentApiExtensions
 {

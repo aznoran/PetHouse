@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetHouse.Core.Dtos.PetManagment;
+using PetHouse.Core.Extensions;
 using PetHouse.PetManagement.Domain.Aggregate;
-using PetHouse.PetManagement.Infrastructure.Extensions;
 using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.ValueObjects;

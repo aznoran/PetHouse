@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Data;
+using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Accounts.Infrastructure.Options;
+using PetHouse.Accounts.Infrastructure.Seeding;
 
 namespace PetHouse.Accounts.Infrastructure;
 
@@ -16,6 +18,7 @@ public static class Inject
         serviceCollection.AddTransient<ITokenProvider, JwtTokenProvider>();
         
         serviceCollection.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
+        serviceCollection.Configure<AdminOptions>(configuration.GetSection( AdminOptions.ADMIN));
         
         serviceCollection.AddScoped<AccountsDbContext>();
 
@@ -31,6 +34,14 @@ public static class Inject
             .AddDefaultTokenProviders();
 
         serviceCollection.AddScoped<UserManager<User>>();
+        
+        serviceCollection.AddScoped<PermissionManager>();
+        serviceCollection.AddScoped<RolePermissionManager>();
+        serviceCollection.AddScoped<RoleManager>();
+        
+        serviceCollection.AddSingleton<AdminAccountsSeeder>();
+        
+        serviceCollection.AddScoped<AdminAccountsSeederService>();
         
         return serviceCollection;
     }

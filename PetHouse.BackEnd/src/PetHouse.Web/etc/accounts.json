@@ -1,0 +1,80 @@
+{
+  "Roles": {
+    "Admin": [
+      "pet-management.volunteers.read",
+      "pet-management.volunteers.pets.read",
+      "pet-management.volunteers.create",
+      "pet-management.volunteers.delete",
+      "pet-management.volunteers.pets.pet-photo.create",
+      "pet-management.volunteers.pets.pet-photo.delete",
+      "pet-management.volunteers.pets.pet-photos.create",
+      "pet-management.volunteers.pets.pet-photos.update.main-photo",
+      "pet-management.volunteers.pets.update.pet-status",
+      "pet-management.volunteers.pets.create",
+      "pet-management.volunteers.main-info.update",
+      "pet-management.volunteers.requisites.update",
+      "pet-management.volunteers.social-networks.update",
+      "pet-management.volunteers.pets.update",
+      "pet-management.volunteers.pets.delete-force",
+      "pet-management.volunteers.pets.delete-soft",
+      "species-management.species.read",
+      "species-management.species.create",
+      "species-management.species.delete",
+      "species-management.breed.read",
+      "species-management.breed.create",
+      "species-management.breed.delete"
+    ],
+    "Volunteer": [
+      "pet-management.volunteers.read",
+      "pet-management.volunteers.pets.read",
+      "pet-management.volunteers.create",
+      "pet-management.volunteers.delete",
+      "pet-management.volunteers.pets.pet-photo.create",
+      "pet-management.volunteers.pets.pet-photo.delete",
+      "pet-management.volunteers.pets.pet-photos.create",
+      "pet-management.volunteers.pets.pet-photos.update.main-photo",
+      "pet-management.volunteers.pets.update.pet-status",
+      "pet-management.volunteers.pets.create",
+      "pet-management.volunteers.main-info.update",
+      "pet-management.volunteers.requisites.update",
+      "pet-management.volunteers.social-networks.update",
+      "pet-management.volunteers.pets.update",
+      "pet-management.volunteers.pets.delete-force",
+      "pet-management.volunteers.pets.delete-soft",
+      "species-management.species.read",
+      "species-management.breed.read"
+    ],
+    "Participant": [
+      "pet-management.volunteers.read",
+      "pet-management.volunteers.pets.read"
+    ]
+  },
+  "Permissions": {
+    "PetManagement": [
+      "pet-management.volunteers.read",
+      "pet-management.volunteers.pets.read",
+      "pet-management.volunteers.create",
+      "pet-management.volunteers.delete",
+      "pet-management.volunteers.pets.pet-photo.create",
+      "pet-management.volunteers.pets.pet-photo.delete",
+      "pet-management.volunteers.pets.pet-photos.create",
+      "pet-management.volunteers.pets.pet-photos.update.main-photo",
+      "pet-management.volunteers.pets.update.pet-status",
+      "pet-management.volunteers.pets.create",
+      "pet-management.volunteers.main-info.update",
+      "pet-management.volunteers.requisites.update",
+      "pet-management.volunteers.social-networks.update",
+      "pet-management.volunteers.pets.update",
+      "pet-management.volunteers.pets.delete-force",
+      "pet-management.volunteers.pets.delete-soft"
+    ],
+    "SpeciesManagement": [
+      "species-management.species.read",
+      "species-management.species.create",
+      "species-management.species.delete",
+      "species-management.breed.read",
+      "species-management.breed.create",
+      "species-management.breed.delete"
+    ]
+  }
+}

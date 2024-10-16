@@ -9,7 +9,7 @@ namespace PetHouse.Accounts.Presentation;
 
 public class AccountsController : ApplicationController
 {
-    [HttpPost("registration")]
+    /*[HttpPost("registration")]
     public async Task<IActionResult> Register(
         [FromServices] RegisterHandler handler,
         [FromBody] RegisterRequest request,
@@ -25,7 +25,7 @@ public class AccountsController : ApplicationController
         }
         
         return Ok();
-    }
+    }*/
     
     [HttpPost("authorization")]
     public async Task<IActionResult> Login(
