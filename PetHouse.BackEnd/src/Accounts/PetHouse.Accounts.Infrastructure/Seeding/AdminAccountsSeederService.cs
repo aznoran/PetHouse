@@ -13,14 +13,14 @@ public class AdminAccountsSeederService
 {
     private readonly AdminOptions _adminOptions;
     private readonly PermissionManager _permissionManager;
-    private readonly RoleManager _roleManager;
+    private readonly RoleManager<Role> _roleManager;
     private readonly RolePermissionManager _rolePermissionManager;
     private readonly ILogger<AdminAccountsSeederService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
 
     public AdminAccountsSeederService(PermissionManager permissionManager,
-        RoleManager roleManager,
+        RoleManager<Role> roleManager,
         RolePermissionManager rolePermissionManager,
         ILogger<AdminAccountsSeederService> logger,
         IUnitOfWork unitOfWork,
@@ -73,7 +73,10 @@ public class AdminAccountsSeederService
         _logger.LogInformation("started roles seeding...");
         foreach (var role in options.Roles.Keys)
         {
-            await _roleManager.AddRoleIfNotExists(role);
+            var res = await _roleManager.FindByNameAsync(role);
+
+            if (res is null)
+                await _roleManager.CreateAsync(new Role(){Name = role});
         }
 
         _logger.LogInformation("roles seeding completed");

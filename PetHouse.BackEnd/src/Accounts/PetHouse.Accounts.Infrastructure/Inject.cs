@@ -34,10 +34,10 @@ public static class Inject
             .AddDefaultTokenProviders();
 
         serviceCollection.AddScoped<UserManager<User>>();
+        serviceCollection.AddScoped<RoleManager<Role>>();
         
         serviceCollection.AddScoped<PermissionManager>();
         serviceCollection.AddScoped<RolePermissionManager>();
-        serviceCollection.AddScoped<RoleManager>();
         
         serviceCollection.AddSingleton<AdminAccountsSeeder>();
         
