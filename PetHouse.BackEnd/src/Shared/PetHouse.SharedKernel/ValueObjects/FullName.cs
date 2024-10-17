@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Other;
-using PetHouse.SharedKernel.ValueObjects;
 
-namespace PetHouse.PetManagement.Domain.ValueObjects;
+namespace PetHouse.SharedKernel.ValueObjects;
 
 public record FullName
 {

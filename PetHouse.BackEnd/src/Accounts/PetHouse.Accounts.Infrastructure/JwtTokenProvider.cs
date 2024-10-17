@@ -4,9 +4,11 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PetHouse.Accounts.Application;
+using PetHouse.Accounts.Domain;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Options;
 using PetHouse.Core.Models;
+using PetHouse.SharedKernel.Constraints;
 
 namespace PetHouse.Accounts.Infrastructure;
 

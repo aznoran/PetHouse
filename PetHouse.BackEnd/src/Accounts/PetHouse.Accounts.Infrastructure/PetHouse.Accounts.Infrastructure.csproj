@@ -7,19 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\PetHouse.PetManagement.Application\PetHouse.PetManagement.Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.8" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Minio" Version="6.0.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.8" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions\" />
+      <ProjectReference Include="..\PetHouse.Accounts.Application\PetHouse.Accounts.Application.csproj" />
     </ItemGroup>
 
 </Project>

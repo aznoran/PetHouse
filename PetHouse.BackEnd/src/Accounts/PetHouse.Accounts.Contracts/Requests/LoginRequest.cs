@@ -1,3 +1,3 @@
-﻿namespace PetHouse.Accounts.Presentation.Requests;
+﻿namespace PetHouse.Accounts.Contracts.Requests;
 
 public record LoginRequest(string Email, string Password);

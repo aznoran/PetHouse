@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+﻿/*using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -58,4 +58,4 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
 
         return user.Id;
     }
-}
+}*/

@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PetHouse.Accounts.Infrastructure.Options;
+using PetHouse.Framework.Authorization;
 using Serilog;
 
 namespace PetHouse.Web;
@@ -12,6 +14,9 @@ public static class Inject
     public static IServiceCollection AddApiServices(this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
+        serviceCollection.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
+        serviceCollection.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        
         serviceCollection.AddEndpointsApiExplorer();
         serviceCollection.AddSwaggerGen(c =>
         {

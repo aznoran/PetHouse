@@ -1,4 +1,4 @@
-namespace PetHouse.Core.Models;
+namespace PetHouse.SharedKernel.Constraints;
 
 public static class CustomClaims
 {
