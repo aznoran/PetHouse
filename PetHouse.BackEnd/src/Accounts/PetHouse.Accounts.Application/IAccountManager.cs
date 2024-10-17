@@ -2,7 +2,8 @@
 
 namespace PetHouse.Accounts.Infrastructure.Managers;
 
-public interface IParticipantAccountManager
+public interface IAccountManager
 {
+    Task AddAdminAccount(AdminAccount adminAccount);
     Task AddParticipantAccount(ParticipantAccount participantAccount);
 }

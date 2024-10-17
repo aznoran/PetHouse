@@ -19,7 +19,7 @@ public class AdminAccountsSeederService
     private readonly ILogger<AdminAccountsSeederService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
-    private readonly AdminAccountManager _adminAccountManager;
+    private readonly AccountManager _accountManager;
 
     public AdminAccountsSeederService(PermissionManager permissionManager,
         RoleManager<Role> roleManager,
@@ -28,7 +28,7 @@ public class AdminAccountsSeederService
         IUnitOfWork unitOfWork,
         IOptions<AdminOptions> adminOptions,
         UserManager<User> userManager,
-        AdminAccountManager adminAccountManager)
+        AccountManager accountManager)
     {
         _permissionManager = permissionManager;
         _roleManager = roleManager;
@@ -36,7 +36,7 @@ public class AdminAccountsSeederService
         _logger = logger;
         _unitOfWork = unitOfWork;
         _userManager = userManager;
-        _adminAccountManager = adminAccountManager;
+        _accountManager = accountManager;
         _adminOptions = adminOptions.Value;
     }
 
@@ -114,7 +114,7 @@ public class AdminAccountsSeederService
         var adminAccount = new AdminAccount()
             { FullName = fullName, User = user, Id = Guid.NewGuid(), UserId = user.Id };
 
-        await _adminAccountManager.AddAdminAccount(adminAccount);
+        await _accountManager.AddAdminAccount(adminAccount);
 
         _logger.LogInformation("admin seeding completed");
         await _unitOfWork.SaveChanges();

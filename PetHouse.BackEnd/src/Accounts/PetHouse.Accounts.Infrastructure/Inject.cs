@@ -38,8 +38,7 @@ public static class Inject
         
         serviceCollection.AddScoped<PermissionManager>();
         serviceCollection.AddScoped<RolePermissionManager>();
-        serviceCollection.AddScoped<AdminAccountManager>();
-        serviceCollection.AddScoped<IParticipantAccountManager, ParticipantAccountManager>();
+        serviceCollection.AddScoped<IAccountManager, AccountManager>();
         
         serviceCollection.AddSingleton<AdminAccountsSeeder>();
         

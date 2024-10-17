@@ -19,14 +19,14 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
     private readonly ILogger<LoginHandler> _logger;
     private readonly IValidator<RegisterCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IParticipantAccountManager _participantAccountManager;
+    private readonly IAccountManager _participantAccountManager;
     private readonly RoleManager<Role> _roleManager;
 
     public RegisterHandler(UserManager<User> userManager,
         ILogger<LoginHandler> logger,
         IValidator<RegisterCommand> validator,
         IUnitOfWork unitOfWork,
-        IParticipantAccountManager participantAccountManager,
+        IAccountManager participantAccountManager,
         RoleManager<Role> roleManager)
     {
         _userManager = userManager;

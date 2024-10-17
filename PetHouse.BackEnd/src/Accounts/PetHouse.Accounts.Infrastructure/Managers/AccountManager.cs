@@ -4,11 +4,11 @@ using PetHouse.Accounts.Infrastructure.Data;
 
 namespace PetHouse.Accounts.Infrastructure.Managers;
 
-public class AdminAccountManager
+public class AccountManager : IAccountManager
 {
     private readonly AccountsDbContext _dbContext;
 
-    public AdminAccountManager(AccountsDbContext dbContext)
+    public AccountManager(AccountsDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -20,5 +20,10 @@ public class AdminAccountManager
             return;
         
         await _dbContext.AdminAccounts.AddAsync(adminAccount);
+    }
+    
+    public async Task AddParticipantAccount(ParticipantAccount participantAccount)
+    {
+        await _dbContext.ParticipantAccounts.AddAsync(participantAccount);
     }
 }
