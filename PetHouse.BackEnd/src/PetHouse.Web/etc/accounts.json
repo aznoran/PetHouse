@@ -2,13 +2,13 @@
   "Roles": {
     "Admin": [
       "pet-management.volunteers.read",
-      "pet-management.volunteers.pets.read",
+      "pet-management.pets.read",
       "pet-management.volunteers.create",
-      "pet-management.volunteers.pets.create",
+      "pet-management.pets.create",
       "pet-management.volunteers.update",
-      "pet-management.volunteers.pets.update",
+      "pet-management.pets.update",
       "pet-management.volunteers.delete",
-      "pet-management.volunteers.pets.delete",
+      "pet-management.pets.delete",
       "species-management.species.read",
       "species-management.species.create",
       "species-management.species.delete",
@@ -18,31 +18,31 @@
     ],
     "Volunteer": [
       "pet-management.volunteers.read",
-      "pet-management.volunteers.pets.read",
+      "pet-management.pets.read",
       "pet-management.volunteers.create",
-      "pet-management.volunteers.pets.create",
+      "pet-management.pets.create",
       "pet-management.volunteers.update",
-      "pet-management.volunteers.pets.update",
+      "pet-management.pets.update",
       "pet-management.volunteers.delete",
-      "pet-management.volunteers.pets.delete",
+      "pet-management.pets.delete",
       "species-management.species.read",
       "species-management.breed.read"
     ],
     "Participant": [
       "pet-management.volunteers.read",
-      "pet-management.volunteers.pets.read"
+      "pet-management.pets.read"
     ]
   },
   "Permissions": {
     "PetManagement": [
       "pet-management.volunteers.read",
-      "pet-management.volunteers.pets.read",
+      "pet-management.pets.read",
       "pet-management.volunteers.create",
-      "pet-management.volunteers.pets.create",
+      "pet-management.pets.create",
       "pet-management.volunteers.update",
-      "pet-management.volunteers.pets.update",
+      "pet-management.pets.update",
       "pet-management.volunteers.delete",
-      "pet-management.volunteers.pets.delete"
+      "pet-management.pets.delete"
     ],
     "SpeciesManagement": [
       "species-management.species.read",

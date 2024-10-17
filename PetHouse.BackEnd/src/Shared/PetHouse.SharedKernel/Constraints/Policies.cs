@@ -18,9 +18,9 @@ public static class Policies
         public const string Create = "pet-management.volunteers.create";
         public const string Update = "pet-management.volunteers.update";
         public const string Delete = "pet-management.volunteers.delete";
-        public const string GetPet = "pet-management.volunteers.pets.read";
-        public const string CreatePet = "pet-management.volunteers.pets.create";
-        public const string UpdatePet = "pet-management.volunteers.pets.update";        
-        public const string DeletePet = "pet-management.volunteers.pets.delete";
+        public const string GetPet = "pet-management.pets.read";
+        public const string CreatePet = "pet-management.pets.create";
+        public const string UpdatePet = "pet-management.pets.update";        
+        public const string DeletePet = "pet-management.pets.delete";
     } 
 }
