@@ -9,7 +9,7 @@ namespace PetHouse.PetManagement.Presentation.Pets;
 
 public class PetsController : ApplicationController
 {
-    [Permission(Policies.PetManagement.GetPets)]
+    [Permission(Policies.PetManagement.GetPet)]
     [HttpGet]
     public async Task<ActionResult<Guid>> GetAllPets(
         [FromServices] GetAllPetsWithPaginationAndFilterHandler getAllWithPaginationHandler,
@@ -21,7 +21,7 @@ public class PetsController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
     
-    [Permission(Policies.PetManagement.GetPetById)]
+    [Permission(Policies.PetManagement.GetPet)]
     [HttpGet("{petId:guid}")]
     public async Task<ActionResult<Guid>> GetPet(
         [FromServices] GetPetByIdHandler getPetByIdHandler,

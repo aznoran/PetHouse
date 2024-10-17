@@ -15,7 +15,7 @@ namespace PetHouse.SpecieManagement.Presentation;
 
 public class SpeciesController : ApplicationController
 {
-    [Permission(Policies.SpeciesManagement.GetAll)]
+    [Permission(Policies.SpeciesManagement.Get)]
     [HttpGet]
     public async Task<ActionResult> GetAll(
         [FromServices] GetAllSpeciesWithPaginationHandler getAllWithPaginationHandler,

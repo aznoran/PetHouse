@@ -29,7 +29,7 @@ namespace PetHouse.PetManagement.Presentation.Volunteers;
 
 public class VolunteersController : ApplicationController
 {
-    [Permission(Policies.PetManagement.GetAll)]
+    [Permission(Policies.PetManagement.Get)]
     [HttpGet]
     public async Task<ActionResult> GetAll(
         [FromServices] GetAllVolunteerWithPaginationHandler getAllVolunteerWithPaginationHandler,
@@ -41,7 +41,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.GetById)]
+    [Permission(Policies.PetManagement.Get)]
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<Guid>> GetVolunteer(
         [FromServices] GetVolunteerByIdHandler getAllWithPaginationHandler,
@@ -87,7 +87,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.AddPetPhoto)]
+    [Permission(Policies.PetManagement.UpdatePet)]
     [HttpPost("{volunteerId:guid}/petphoto/{petId:guid}")]
     public async Task<ActionResult<Guid>> AddPetPhoto(
         [FromServices] AddPetPhotoHandler addPetPhotoHandler,
@@ -155,7 +155,7 @@ public class VolunteersController : ApplicationController
         return Ok();
     }
 
-    [Permission(Policies.PetManagement.AddPetPhotos)]
+    [Permission(Policies.PetManagement.UpdatePet)]
     [HttpPost("{volunteerId:guid}/petphotos/{petId:guid}")]
     public async Task<ActionResult<Guid>> AddPetPhotos(
         [FromServices] AddPetPhotosHandler addPetPhotosHandler,
@@ -184,7 +184,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.UpdateMainInfo)]
+    [Permission(Policies.PetManagement.Update)]
     [HttpPut("{id:guid}/main-info")]
     public async Task<ActionResult<Guid>> UpdateMainInfo(
         [FromServices] UpdateVolunteerMainInfoHandler updateVolunteerMainInfoHandler,
@@ -250,7 +250,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.IsSuccess) { StatusCode = 204 };
     }
 
-    [Permission(Policies.PetManagement.UpdateRequisites)]
+    [Permission(Policies.PetManagement.Update)]
     [HttpPatch("{id:guid}/requisites")]
     public async Task<ActionResult<Guid>> UpdateRequisites(
         [FromServices] UpdateVolunteerRequisitesHandler updateVolunteerRequisitesHandler,
@@ -270,7 +270,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 204 };
     }
 
-    [Permission(Policies.PetManagement.UpdateMainPetPhoto)]
+    [Permission(Policies.PetManagement.UpdatePet)]
     [HttpPatch("{volunteerId:guid}/petphoto/{petId:guid}/main")]
     public async Task<ActionResult<Guid>> ChangeMainPhoto(
         [FromServices] ChangePetMainPhotoHandler addPetPhotoHandler,
@@ -295,7 +295,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.UpdateSocialNetworks)]
+    [Permission(Policies.PetManagement.Update)]
     [HttpPatch("{id:guid}/social-networks")]
     public async Task<ActionResult<Guid>> UpdateSocialNetworks(
         [FromServices] UpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
@@ -315,7 +315,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 204 };
     }
 
-    [Permission(Policies.PetManagement.UpdatePetStatus)]
+    [Permission(Policies.PetManagement.UpdatePet)]
     [HttpPatch("{volunteerId:guid}/pet-status/{petId:guid}")]
     public async Task<ActionResult> UpdatePetStatus(
         [FromServices] UpdatePetStatusHandler updatePetStatusHandler,
@@ -339,7 +339,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.IsSuccess) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.DeletePetPhoto)]
+    [Permission(Policies.PetManagement.UpdatePet)]
     [HttpDelete("{volunteerId:guid}/petphoto/{petId:guid}")]
     public async Task<ActionResult<Guid>> DeletePetPhoto(
         [FromServices] DeletePetPhotoHandler deletePetPhotoHandler,
@@ -365,7 +365,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.DeletePetForce)]
+    [Permission(Policies.PetManagement.DeletePet)]
     [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/force")]
     public async Task<ActionResult<Guid>> DeletePetForce(
         [FromServices] DeletePetHandler deletePetHandler,
@@ -404,7 +404,7 @@ public class VolunteersController : ApplicationController
         return new ObjectResult(res.Value) { StatusCode = 201 };
     }
 
-    [Permission(Policies.PetManagement.DeletePetSoft)]
+    [Permission(Policies.PetManagement.DeletePet)]
     [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/soft")]
     public async Task<ActionResult<Guid>> DeletePetSoft(
         [FromServices] DeletePetSoftHandler deletePetHandler,
