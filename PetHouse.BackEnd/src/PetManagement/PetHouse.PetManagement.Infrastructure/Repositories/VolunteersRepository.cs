@@ -12,9 +12,9 @@ namespace PetHouse.PetManagement.Infrastructure.Repositories;
 
 public class VolunteersRepository : IVolunteersRepository
 {
-    private readonly PetHouseWriteDbContext _writeDbContext;
+    private readonly WriteDbContext _writeDbContext;
 
-    public VolunteersRepository(PetHouseWriteDbContext writeDbContext)
+    public VolunteersRepository(WriteDbContext writeDbContext)
     {
         _writeDbContext = writeDbContext;
     }

@@ -19,13 +19,26 @@ public class User : IdentityUser<Guid>
 
     private List<SocialNetwork> _socialNetworks = [];
     public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
+    
     private List<Role> _roles = [];
     public IReadOnlyList<Role> Roles => _roles;
 
-    public static User Create(string userName,
+    public static User CreateAdmin(string userName,
         string email,
         Role role)
     {
         return new(userName, email, [role]);
+    }
+    
+    public static User CreateParticipant(string userName,
+        string email,
+        Role role)
+    {
+        return new(userName, email, [role]);
+    }
+    
+    public void UpdateSocialNetworks(IEnumerable<SocialNetwork> socialNetworks)
+    {
+        _socialNetworks = socialNetworks.ToList();
     }
 }

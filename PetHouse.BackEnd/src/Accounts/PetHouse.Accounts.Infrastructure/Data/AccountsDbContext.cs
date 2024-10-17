@@ -20,6 +20,8 @@ public class AccountsDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Role> Roles { get; set; }
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<AdminAccount> AdminAccounts { get; set; }
+    public DbSet<ParticipantAccount> ParticipantAccounts { get; set; }
 
     public AccountsDbContext([FromServices]IConfiguration configuration)
     {
@@ -86,20 +88,20 @@ public class AccountsDbContext : IdentityDbContext<User, Role, Guid>
 
         modelBuilder.Entity<ParticipantAccount>().ComplexProperty(a => a.FullName, ab =>
         {
-            ab.Property(abt => abt.Name);
-            ab.Property(abt => abt.Surname);
+            ab.Property(abt => abt.Name).HasColumnName("name");
+            ab.Property(abt => abt.Surname).HasColumnName("surname");
         });
         
         modelBuilder.Entity<VolunteerAccount>().ComplexProperty(a => a.FullName, ab =>
         {
-            ab.Property(abt => abt.Name);
-            ab.Property(abt => abt.Surname);
+            ab.Property(abt => abt.Name).HasColumnName("name");
+            ab.Property(abt => abt.Surname).HasColumnName("surname");
         });
         
-        modelBuilder.Entity<AdminAccount>().ComplexProperty(a => a.FullName, ab =>
+        modelBuilder.Entity<AdminAccount>().ComplexProperty(ac => ac.FullName, acb =>
         {
-            ab.Property(abt => abt.Name);
-            ab.Property(abt => abt.Surname);
+            acb.Property(fn => fn.Name).HasColumnName("name");
+            acb.Property(fn => fn.Surname).HasColumnName("surname");
         });
 
         modelBuilder.Entity<User>()

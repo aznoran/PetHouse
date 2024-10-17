@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Infrastructure.Data;
@@ -21,8 +23,9 @@ public class UnitOfWork : IUnitOfWork
         return transaction.GetDbTransaction();
     }
 
-    public async Task SaveChanges(CancellationToken cancellationToken = default)
+    public async Task SaveChanges(CancellationToken cancellationToken = default, DbTransaction? dbTransaction = null)
     {
+        await _writeDbContext.Database.UseTransactionAsync(dbTransaction, cancellationToken);
         await _writeDbContext.SaveChangesAsync(cancellationToken);
     }
 }
