@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Accounts.Domain.Models;
@@ -23,18 +25,24 @@ public class User : IdentityUser<Guid>
     private List<Role> _roles = [];
     public IReadOnlyList<Role> Roles => _roles;
 
-    public static User CreateAdmin(string userName,
+    public static Result<User, Error> CreateAdmin(string userName,
         string email,
         Role role)
     {
-        return new(userName, email, [role]);
+        if (role.Name != AdminAccount.ADMIN)
+            return Errors.Accounts.InvalidRole();
+        
+        return Result.Success<User, Error>(new(userName, email, [role]));
     }
     
-    public static User CreateParticipant(string userName,
+    public static Result<User, Error> CreateParticipant(string userName,
         string email,
         Role role)
     {
-        return new(userName, email, [role]);
+        if (role.Name != ParticipantAccount.PARTICIPANT)
+            return Errors.Accounts.InvalidRole();
+        
+        return Result.Success<User, Error>(new(userName, email, [role]));
     }
     
     public void UpdateSocialNetworks(IEnumerable<SocialNetwork> socialNetworks)

@@ -19,7 +19,7 @@ public class AdminAccountsSeederService
     private readonly ILogger<AdminAccountsSeederService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
-    private readonly AccountManager _accountManager;
+    private readonly IAccountManager _accountManager;
 
     public AdminAccountsSeederService(PermissionManager permissionManager,
         RoleManager<Role> roleManager,
@@ -28,7 +28,7 @@ public class AdminAccountsSeederService
         IUnitOfWork unitOfWork,
         IOptions<AdminOptions> adminOptions,
         UserManager<User> userManager,
-        AccountManager accountManager)
+        IAccountManager accountManager)
     {
         _permissionManager = permissionManager;
         _roleManager = roleManager;
@@ -107,12 +107,17 @@ public class AdminAccountsSeederService
         
         var user = User.CreateAdmin(_adminOptions.Username, _adminOptions.Email, adminRole);
 
-        await _userManager.CreateAsync(user, _adminOptions.Password);
+        if (user.IsFailure)
+        {
+            throw new ArgumentException(user.Error.Message);
+        }
+
+        await _userManager.CreateAsync(user.Value, _adminOptions.Password);
 
         var fullName = FullName.Create(_adminOptions.Username, _adminOptions.Username).Value;
 
         var adminAccount = new AdminAccount()
-            { FullName = fullName, User = user, Id = Guid.NewGuid(), UserId = user.Id };
+            { FullName = fullName, User = user.Value, Id = Guid.NewGuid(), UserId = user.Value.Id };
 
         await _accountManager.AddAdminAccount(adminAccount);
 

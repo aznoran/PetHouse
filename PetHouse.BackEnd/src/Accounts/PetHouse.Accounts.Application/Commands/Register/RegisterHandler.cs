@@ -46,7 +46,7 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
             return validationResult.ToErrorList();
         }
 
-        var role = await _roleManager.FindByNameAsync(ParticipantAccount.PARTICIPANT_ACCOUNTS);
+        var role = await _roleManager.FindByNameAsync(ParticipantAccount.PARTICIPANT);
 
         if (role is null)
         {
@@ -55,11 +55,16 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
 
         var user = User.CreateParticipant(command.Email, command.Email, role);
 
+        if (user.IsFailure)
+        {
+            return user.Error.ToErrorList();
+        }
+        
         using IDbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
 
         try
         {
-            var creatingResult = await _userManager.CreateAsync(user, command.Password);
+            var creatingResult = await _userManager.CreateAsync(user.Value, command.Password);
 
             if (!creatingResult.Succeeded)
             {
@@ -74,22 +79,23 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
             }
 
             var participantAccount = new ParticipantAccount()
-                { Id = Guid.NewGuid(), User = user, UserId = user.Id, FullName = fullName.Value };
+                { Id = Guid.NewGuid(), User = user.Value, UserId = user.Value.Id, FullName = fullName.Value };
 
             await _participantAccountManager.AddParticipantAccount(participantAccount);
 
-            _logger.LogInformation("Created account with id {Id}", user.Id);
+            _logger.LogInformation("Created account with id {Id}", user.Value.Id);
 
             await _unitOfWork.SaveChanges(cancellationToken);
 
             transaction.Commit();
 
-            return user.Id;
+            return user.Value.Id;
         }
         catch
         {
+            _logger.LogError("Error while creating account with id {Id}", user.Value.Id);
             transaction.Rollback();
-            throw;
+            return Errors.Database.TransactionFailed().ToErrorList();
         }
     }
 }
