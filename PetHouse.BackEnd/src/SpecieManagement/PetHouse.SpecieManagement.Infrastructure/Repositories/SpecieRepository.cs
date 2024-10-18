@@ -11,9 +11,9 @@ namespace PetHouse.SpecieManagement.Infrastructure.Repositories;
 
 public class SpecieRepository : ISpecieRepository
 {
-    private readonly PetHouseWriteDbContext _writeDbContext;
+    private readonly WriteDbContext _writeDbContext;
 
-    public SpecieRepository(PetHouseWriteDbContext writeDbContext)
+    public SpecieRepository(WriteDbContext writeDbContext)
     {
         _writeDbContext = writeDbContext;
     }

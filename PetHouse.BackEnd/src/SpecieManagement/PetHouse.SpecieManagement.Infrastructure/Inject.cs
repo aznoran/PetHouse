@@ -32,8 +32,8 @@ public static class Inject
 
     private static IServiceCollection AddDataBaseLogic(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<PetHouseWriteDbContext>();
-        serviceCollection.AddScoped<IReadDbContext, PetHouseReadDbContext>();
+        serviceCollection.AddScoped<WriteDbContext>();
+        serviceCollection.AddScoped<IReadDbContext, ReadDbContext>();
         serviceCollection.AddScoped<ISpecieRepository, SpecieRepository>();
         
         return serviceCollection;

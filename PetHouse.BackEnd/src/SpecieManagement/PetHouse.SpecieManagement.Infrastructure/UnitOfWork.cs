@@ -7,9 +7,9 @@ namespace PetHouse.SpecieManagement.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly PetHouseWriteDbContext _writeDbContext;
+    private readonly WriteDbContext _writeDbContext;
 
-    public UnitOfWork(PetHouseWriteDbContext writeDbContext)
+    public UnitOfWork(WriteDbContext writeDbContext)
     {
         _writeDbContext = writeDbContext;
     }

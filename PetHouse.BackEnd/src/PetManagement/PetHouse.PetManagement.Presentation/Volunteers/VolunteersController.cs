@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.Core.Dtos.PetManagment;
 using PetHouse.Core.Dtos.Shared;
 using PetHouse.Core.Extensions;
@@ -49,14 +48,7 @@ public class VolunteersController : ApplicationController
         [FromQuery] GetVolunteerByIdQuery query,
         CancellationToken cancellationToken = default)
     {
-        //чтобы нельзя было передать в квери айди через браузер, но при этом сохранить сигнатуру IQueryHandler 
-        //добавим internal поле Id у GetVolunteerByIdQuery
-        VolunteerDto res = await getAllWithPaginationHandler.Handle(query.GetQueryWithId(id), cancellationToken);
-
-        /*if (res is null)
-        {
-            return Errors.General.NotFound(id).ToResponse();
-        }*/
+        var res = await getAllWithPaginationHandler.Handle(query.GetQueryWithId(id), cancellationToken);
 
         return new ObjectResult(res) { StatusCode = 201 };
     }

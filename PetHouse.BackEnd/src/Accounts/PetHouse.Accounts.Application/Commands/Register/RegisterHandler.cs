@@ -1,9 +1,11 @@
-﻿/*using CSharpFunctionalExtensions;
+﻿using System.Data;
+using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PetHouse.Accounts.Application.Commands.Login;
 using PetHouse.Accounts.Domain.Models;
+using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
 using PetHouse.SharedKernel.Other;
@@ -17,16 +19,22 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
     private readonly ILogger<LoginHandler> _logger;
     private readonly IValidator<RegisterCommand> _validator;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccountManager _participantAccountManager;
+    private readonly RoleManager<Role> _roleManager;
 
     public RegisterHandler(UserManager<User> userManager,
         ILogger<LoginHandler> logger,
         IValidator<RegisterCommand> validator,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IAccountManager participantAccountManager,
+        RoleManager<Role> roleManager)
     {
         _userManager = userManager;
         _logger = logger;
         _validator = validator;
         _unitOfWork = unitOfWork;
+        _participantAccountManager = participantAccountManager;
+        _roleManager = roleManager;
     }  
     
     public async Task<Result<Guid, ErrorList>> Handle(RegisterCommand command, CancellationToken cancellationToken)
@@ -38,24 +46,56 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
             return validationResult.ToErrorList();
         }
 
-        User user = new User()
-        {
-            Id = Guid.NewGuid(),
-            UserName = command.Email,
-            Email = command.Email
-        };
+        var role = await _roleManager.FindByNameAsync(ParticipantAccount.PARTICIPANT);
 
-        var creatingResult = await _userManager.CreateAsync(user, command.Password);
-
-        if (!creatingResult.Succeeded)
+        if (role is null)
         {
-            return creatingResult.ToErrorList();
+            return Errors.General.NotFound().ToErrorList();
+        }
+
+        var user = User.CreateParticipant(command.Email, command.Email, role);
+
+        if (user.IsFailure)
+        {
+            return user.Error.ToErrorList();
         }
         
-        _logger.LogInformation("Created account with id {Id}", user.Id);
+        using IDbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
 
-        await _unitOfWork.SaveChanges(cancellationToken);
+        try
+        {
+            var creatingResult = await _userManager.CreateAsync(user.Value, command.Password);
 
-        return user.Id;
+            if (!creatingResult.Succeeded)
+            {
+                return creatingResult.ToErrorList();
+            }
+
+            var fullName = FullName.Create(command.Email, command.Email);
+
+            if (fullName.IsFailure)
+            {
+                return fullName.Error.ToErrorList();
+            }
+
+            var participantAccount = new ParticipantAccount()
+                { Id = Guid.NewGuid(), User = user.Value, UserId = user.Value.Id, FullName = fullName.Value };
+
+            await _participantAccountManager.AddParticipantAccount(participantAccount);
+
+            _logger.LogInformation("Created account with id {Id}", user.Value.Id);
+
+            await _unitOfWork.SaveChanges(cancellationToken);
+
+            transaction.Commit();
+
+            return user.Value.Id;
+        }
+        catch
+        {
+            _logger.LogError("Error while creating account with id {Id}", user.Value.Id);
+            transaction.Rollback();
+            return Errors.Database.TransactionFailed().ToErrorList();
+        }
     }
-}*/
+}

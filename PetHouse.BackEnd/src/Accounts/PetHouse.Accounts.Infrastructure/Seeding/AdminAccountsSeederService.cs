@@ -6,6 +6,7 @@ using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Accounts.Infrastructure.Options;
+using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Accounts.Infrastructure.Seeding;
 
@@ -18,6 +19,7 @@ public class AdminAccountsSeederService
     private readonly ILogger<AdminAccountsSeederService> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
+    private readonly IAccountManager _accountManager;
 
     public AdminAccountsSeederService(PermissionManager permissionManager,
         RoleManager<Role> roleManager,
@@ -25,7 +27,8 @@ public class AdminAccountsSeederService
         ILogger<AdminAccountsSeederService> logger,
         IUnitOfWork unitOfWork,
         IOptions<AdminOptions> adminOptions,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IAccountManager accountManager)
     {
         _permissionManager = permissionManager;
         _roleManager = roleManager;
@@ -33,6 +36,7 @@ public class AdminAccountsSeederService
         _logger = logger;
         _unitOfWork = unitOfWork;
         _userManager = userManager;
+        _accountManager = accountManager;
         _adminOptions = adminOptions.Value;
     }
 
@@ -101,9 +105,21 @@ public class AdminAccountsSeederService
         var adminRole = await _roleManager.FindByNameAsync(AdminAccount.ADMIN)
                         ?? throw new ApplicationException("Could not find admin role.");
         
-        var user = User.Create(_adminOptions.Username, _adminOptions.Email, adminRole);
+        var user = User.CreateAdmin(_adminOptions.Username, _adminOptions.Email, adminRole);
 
-        var res = await _userManager.CreateAsync(user, _adminOptions.Password);
+        if (user.IsFailure)
+        {
+            throw new ArgumentException(user.Error.Message);
+        }
+
+        await _userManager.CreateAsync(user.Value, _adminOptions.Password);
+
+        var fullName = FullName.Create(_adminOptions.Username, _adminOptions.Username).Value;
+
+        var adminAccount = new AdminAccount()
+            { FullName = fullName, User = user.Value, Id = Guid.NewGuid(), UserId = user.Value.Id };
+
+        await _accountManager.AddAdminAccount(adminAccount);
 
         _logger.LogInformation("admin seeding completed");
         await _unitOfWork.SaveChanges();
