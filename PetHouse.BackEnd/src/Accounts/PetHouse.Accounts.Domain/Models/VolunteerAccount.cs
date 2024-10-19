@@ -13,4 +13,9 @@ public class VolunteerAccount
     private List<string> _certificates = [];
     public IReadOnlyList<string> Certificates => _certificates;
     public FullName FullName { get; set; }
+
+    public void UpdateRequisites(IEnumerable<Requisite> requisites)
+    {
+        _requisites = requisites.ToList();
+    }
 }

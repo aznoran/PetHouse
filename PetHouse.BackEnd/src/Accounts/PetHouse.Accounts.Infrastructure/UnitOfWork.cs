@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Infrastructure.Data;
