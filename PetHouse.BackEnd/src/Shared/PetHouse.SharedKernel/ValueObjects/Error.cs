@@ -6,7 +6,7 @@ namespace PetHouse.SharedKernel.ValueObjects;
 public record Error
 {
     private const string SEPARATOR = "|";
-
+    
     private Error(
         string code,
         string message,
