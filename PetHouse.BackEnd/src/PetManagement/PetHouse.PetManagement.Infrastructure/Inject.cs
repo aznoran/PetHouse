@@ -11,6 +11,7 @@ using PetHouse.PetManagement.Infrastructure.Messaging;
 using PetHouse.PetManagement.Infrastructure.Options;
 using PetHouse.PetManagement.Infrastructure.Providers;
 using PetHouse.PetManagement.Infrastructure.Repositories;
+using PetHouse.PetManagement.Infrastructure.Services;
 using FileInfo = PetHouse.Core.Providers.FileInfo;
 using IFileProvider = PetHouse.Core.Providers.IFileProvider;
 
@@ -61,6 +62,8 @@ public static class Inject
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         serviceCollection.AddScoped<IFilesCleanerService, FilesCleanerService>();
+        serviceCollection
+            .AddScoped<ISoftDeletableEntitiesCleanerService, SoftDeletablePetManagementEntitiesCleanerService>();
         
         return serviceCollection;
     }

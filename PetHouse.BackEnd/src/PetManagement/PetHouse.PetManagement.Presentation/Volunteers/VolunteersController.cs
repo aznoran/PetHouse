@@ -12,7 +12,6 @@ using PetHouse.PetManagement.Application.Commands.Create;
 using PetHouse.PetManagement.Application.Commands.Delete;
 using PetHouse.PetManagement.Application.Commands.DeletePet;
 using PetHouse.PetManagement.Application.Commands.DeletePetPhoto;
-using PetHouse.PetManagement.Application.Commands.DeletePetSoft;
 using PetHouse.PetManagement.Application.Commands.UpdateMainInfo;
 using PetHouse.PetManagement.Application.Commands.UpdatePet;
 using PetHouse.PetManagement.Application.Commands.UpdatePetStatus;
@@ -358,7 +357,7 @@ public class VolunteersController : ApplicationController
     }
 
     [Permission(Policies.PetManagement.DeletePet)]
-    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/force")]
+    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}")]
     public async Task<ActionResult<Guid>> DeletePetForce(
         [FromServices] DeletePetHandler deletePetHandler,
         [FromRoute] Guid volunteerId,
@@ -387,26 +386,6 @@ public class VolunteersController : ApplicationController
         var command = new DeleteVolunteerCommand(id);
 
         var res = await deleteVolunteerHandler.Handle(command, cancellationToken);
-
-        if (res.IsFailure)
-        {
-            return res.Error.ToResponse();
-        }
-
-        return new ObjectResult(res.Value) { StatusCode = 201 };
-    }
-
-    [Permission(Policies.PetManagement.DeletePet)]
-    [HttpDelete("{volunteerId:guid}/pet/{petId:guid}/soft")]
-    public async Task<ActionResult<Guid>> DeletePetSoft(
-        [FromServices] DeletePetSoftHandler deletePetHandler,
-        [FromRoute] Guid volunteerId,
-        [FromRoute] Guid petId,
-        CancellationToken cancellationToken = default)
-    {
-        var command = new DeletePetSoftCommand(volunteerId, petId);
-
-        var res = await deletePetHandler.Handle(command, cancellationToken);
 
         if (res.IsFailure)
         {
