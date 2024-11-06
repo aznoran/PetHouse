@@ -75,6 +75,7 @@ public static class Inject
                     ValidateLifetime = true,
                     // валидация ключа безопасности
                     ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.Key))
                 };
             });

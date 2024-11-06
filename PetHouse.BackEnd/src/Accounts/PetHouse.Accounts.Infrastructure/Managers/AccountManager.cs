@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Data;
 
