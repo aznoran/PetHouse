@@ -117,7 +117,7 @@ public class AdminAccountsSeederService
         var fullName = FullName.Create(_adminOptions.Username, _adminOptions.Username).Value;
 
         var adminAccount = new AdminAccount()
-            { FullName = fullName, User = user.Value, Id = Guid.NewGuid(), UserId = user.Value.Id };
+            { FullName = fullName, User = user.Value, Id = Guid.NewGuid() };
 
         await _accountManager.AddAdminAccount(adminAccount);
 

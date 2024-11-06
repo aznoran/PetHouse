@@ -22,7 +22,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
-        IReadOnlyList<SocialNetwork>? socialNetworks,
         IReadOnlyList<Requisite>? requisites) : base(volunteerId)
     {
         FullName = fullName;
@@ -30,7 +29,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         Description = description;
         YearsOfExperience = yearsOfExperience;
         PhoneNumber = phoneNumber;
-        SocialNetworks = socialNetworks;
         Requisites = requisites;
     }
 
@@ -58,8 +56,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         return _pets.Count(p => p.PetStatus == PetStatus.OnTreatment);
     }
 
-    public IReadOnlyList<SocialNetwork> SocialNetworks { get; private set; }
-
     public IReadOnlyList<Requisite> Requisites { get; private set; }
 
     private List<Pet> _pets = [];
@@ -73,7 +69,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         Description description,
         YearsOfExperience yearsOfExperience,
         PhoneNumber phoneNumber,
-        IReadOnlyList<SocialNetwork> socialNetworks,
         IReadOnlyList<Requisite> requisites)
     {
         var volunteer = new Volunteer(
@@ -83,7 +78,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites);
 
         return volunteer;
@@ -165,12 +159,6 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         IReadOnlyList<Requisite> requisites)
     {
         Requisites = requisites;
-    }
-
-    public void UpdateSocialNetworks(
-        IReadOnlyList<SocialNetwork> socialNetworks)
-    {
-        SocialNetworks = socialNetworks;
     }
 
     public UnitResult<Error> AddPet(Name name,

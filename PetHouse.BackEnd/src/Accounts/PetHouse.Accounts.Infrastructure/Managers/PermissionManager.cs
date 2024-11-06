@@ -6,9 +6,9 @@ namespace PetHouse.Accounts.Infrastructure.Managers;
 
 public class PermissionManager
 {
-    private readonly AccountsDbContext _dbContext;
+    private readonly AccountsWriteDbContext _dbContext;
 
-    public PermissionManager(AccountsDbContext dbContext)
+    public PermissionManager(AccountsWriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

@@ -20,7 +20,8 @@ public static class Inject
         serviceCollection.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JWT));
         serviceCollection.Configure<AdminOptions>(configuration.GetSection( AdminOptions.ADMIN));
         
-        serviceCollection.AddScoped<AccountsDbContext>();
+        serviceCollection.AddScoped<AccountsWriteDbContext>();
+        serviceCollection.AddScoped<IReadDbContext, AccountsReadDbContext>();
 
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -30,7 +31,7 @@ public static class Inject
                 options.Password.RequireUppercase = true;
                 options.Password.RequireDigit = true;
             })
-            .AddEntityFrameworkStores<AccountsDbContext>()
+            .AddEntityFrameworkStores<AccountsWriteDbContext>()
             .AddDefaultTokenProviders();
 
         serviceCollection.AddScoped<UserManager<User>>();

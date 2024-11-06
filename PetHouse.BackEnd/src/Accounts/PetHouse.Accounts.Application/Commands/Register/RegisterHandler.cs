@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PetHouse.Accounts.Application.Commands.Login;
 using PetHouse.Accounts.Domain.Models;
-using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
 using PetHouse.SharedKernel.Other;
@@ -79,7 +78,7 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
             }
 
             var participantAccount = new ParticipantAccount()
-                { Id = Guid.NewGuid(), User = user.Value, UserId = user.Value.Id, FullName = fullName.Value };
+                { Id = Guid.NewGuid(), User = user.Value, FullName = fullName.Value };
 
             await _participantAccountManager.AddParticipantAccount(participantAccount);
 

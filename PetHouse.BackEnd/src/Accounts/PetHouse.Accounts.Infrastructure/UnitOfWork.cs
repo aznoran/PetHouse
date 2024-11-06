@@ -9,9 +9,9 @@ namespace PetHouse.Accounts.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly AccountsDbContext _writeDbContext;
+    private readonly AccountsWriteDbContext _writeDbContext;
 
-    public UnitOfWork(AccountsDbContext writeDbContext)
+    public UnitOfWork(AccountsWriteDbContext writeDbContext)
     {
         _writeDbContext = writeDbContext;
     }

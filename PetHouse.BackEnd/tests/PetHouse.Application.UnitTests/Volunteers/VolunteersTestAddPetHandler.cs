@@ -139,7 +139,6 @@ public class VolunteersTestAddPetHandler
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites).Value;
         
         _repositoryMock.Setup(r => r.GetById(command.VolunteerId, cancellationToken))
@@ -202,7 +201,6 @@ public class VolunteersTestAddPetHandler
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites).Value;
         
         _repositoryMock.Setup(r => r.GetById(command.VolunteerId, cancellationToken))

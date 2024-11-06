@@ -19,8 +19,6 @@ public class VolunteerTest
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
         PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
-        var socialNetworks = new[]
-            { SocialNetwork.Create("test", "test").Value };
         var requisites = new[]
             { Requisite.Create("test", "test").Value };
 
@@ -30,7 +28,6 @@ public class VolunteerTest
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites);
 
         Name name = Name.Create("test").Value;
@@ -125,8 +122,6 @@ public class VolunteerTest
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
         PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
-        var socialNetworks = new[]
-            { SocialNetwork.Create("test", "test").Value };
         var requisites = new[]
             { Requisite.Create("test", "test").Value };
 
@@ -136,7 +131,6 @@ public class VolunteerTest
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites);
 
         Name name = Name.Create("test").Value;
@@ -229,8 +223,6 @@ public class VolunteerTest
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
         PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
-        var socialNetworks = new[]
-            { SocialNetwork.Create("test", "test").Value };
         var requisites = new[]
             { Requisite.Create("test", "test").Value };
 
@@ -240,7 +232,6 @@ public class VolunteerTest
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites);
 
         Name name = Name.Create("test").Value;
@@ -333,8 +324,6 @@ public class VolunteerTest
         Description description = Description.Create("test").Value;
         YearsOfExperience yearsOfExperience = YearsOfExperience.Create(12).Value;
         PhoneNumber phoneNumber = PhoneNumber.Create("89251111111").Value;
-        var socialNetworks = new[]
-            { SocialNetwork.Create("test", "test").Value };
         var requisites = new[]
             { Requisite.Create("test", "test").Value };
 
@@ -344,7 +333,6 @@ public class VolunteerTest
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites);
 
         Name name = Name.Create("test").Value;

@@ -63,10 +63,6 @@ public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Gu
         {
             return Errors.Volunteer.AlreadyExists(phoneNumber.Value, nameof(phoneNumber)).ToErrorList();
         }
-       
-        var socialNetworks =command.SocialNetworksDto
-            .Select(sn => SocialNetwork.Create(sn.Link, sn.Name))
-            .ToList().Select(sn => sn.Value).ToList();
 
         var requisites = command.RequisiteDto.Select(
                 r => Requisite.Create(
@@ -81,7 +77,6 @@ public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Gu
             description,
             yearsOfExperience,
             phoneNumber,
-            socialNetworks,
             requisites).Value;
 
         _logger.LogInformation("Created Volunteer {FullName} with id {VolunteerId}", fullName, volunteer.Id);
