@@ -22,6 +22,7 @@ public class AccountsDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<AdminAccount> AdminAccounts { get; set; }
     public DbSet<ParticipantAccount> ParticipantAccounts { get; set; }
+    public DbSet<RefreshSession> RefreshSessions { get; set; }
 
     public AccountsDbContext([FromServices]IConfiguration configuration)
     {
@@ -75,6 +76,9 @@ public class AccountsDbContext : IdentityDbContext<User, Role, Guid>
         modelBuilder.Entity<IdentityUserRole<Guid>>()
             .ToTable("user_roles");
 
+        modelBuilder.Entity<RefreshSession>()
+            .ToTable("refresh_sessions");
+        
         modelBuilder.Entity<Permission>().HasMany(p => p.Roles)
             .WithMany()
             .UsingEntity<RolePermission>();

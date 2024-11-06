@@ -116,6 +116,14 @@ public static class Errors
             return Error.Failure("invalid.role", $"Invalid role.");
         }
     }
+    
+    public static class Tokens
+    {
+        public static Error RefreshTokenExpired()
+        {
+            return Error.Failure("refresh.token.expired", $"Refresh token is expired");
+        }
+    }
     public static class Database
     {
         public static Error TransactionFailed()

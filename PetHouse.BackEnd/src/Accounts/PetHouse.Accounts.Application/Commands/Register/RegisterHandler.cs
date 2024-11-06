@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using PetHouse.Accounts.Application.Commands.Login;
 using PetHouse.Accounts.Domain.Models;
-using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
 using PetHouse.SharedKernel.Other;

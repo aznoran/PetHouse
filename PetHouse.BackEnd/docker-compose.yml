@@ -1,6 +1,6 @@
 ﻿services:
   postgres:
-    container_name: PetHouseDockerContainer
+    container_name: PetHouseDockerContainer_petHouse
     image: postgres
     environment:
       POSTGRES_DB: PetHouseDb
@@ -10,12 +10,10 @@
       - postgres:/var/lib/postgresql/data
     ports:
       - "5434:5432"
-    networks:
-      - postgres
     restart: always
 
   pgadmin:
-    container_name: pgadmin_container
+    container_name: pgadmin_container_petHouse
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
@@ -30,12 +28,10 @@
       - pgadmin:/var/lib/pgadmin
     ports:
       - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - postgres
     restart: unless-stopped
 
   seq:
-    container_name: PetHouseLogs
+    container_name: PetHouseLogs_petHouse
     image: datalust/seq:latest
     environment:
       - ACCEPT_EULA=Y
@@ -45,7 +41,7 @@
     restart: always
 
   minio:
-    container_name: minio
+    container_name: minio_petHouse
     image: minio/minio
     ports:
       - "9000:9000"
@@ -54,10 +50,6 @@
       - minio_data:/data
     command: server --console-address ":9001" /data
     restart: always
-
-networks:
-  postgres:
-    driver: bridge
 
 volumes:
   postgres:
