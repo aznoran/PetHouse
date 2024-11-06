@@ -1,11 +1,14 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Accounts.Infrastructure.Options;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Accounts.Infrastructure.Seeding;
@@ -25,7 +28,7 @@ public class AdminAccountsSeederService
         RoleManager<Role> roleManager,
         RolePermissionManager rolePermissionManager,
         ILogger<AdminAccountsSeederService> logger,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.Accounts)]IUnitOfWork unitOfWork,
         IOptions<AdminOptions> adminOptions,
         UserManager<User> userManager,
         IAccountManager accountManager)

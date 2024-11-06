@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using PetHouse.Accounts.Application;
 using PetHouse.Accounts.Infrastructure.Data;
+using PetHouse.Core.Providers;
 
 namespace PetHouse.Accounts.Infrastructure;
 

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace PetHouse.SpecieManagement.Application;
+namespace PetHouse.Core.Providers;
 
 public interface IUnitOfWork
 {

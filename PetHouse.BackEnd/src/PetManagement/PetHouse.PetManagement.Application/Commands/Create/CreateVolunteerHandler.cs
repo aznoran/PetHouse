@@ -1,10 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Domain.Aggregate;
 using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
@@ -21,7 +24,7 @@ public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Gu
     public CreateVolunteerHandler(IVolunteersRepository repository,
         ILogger<CreateVolunteerHandler> logger,
         IValidator<CreateVolunteerCommand> validator,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;

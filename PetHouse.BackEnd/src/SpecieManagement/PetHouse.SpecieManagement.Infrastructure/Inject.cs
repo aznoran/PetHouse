@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PetHouse.Core.Messaging;
 using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SpecieManagement.Application;
 using PetHouse.SpecieManagement.Application.SpecieManagement;
 using PetHouse.SpecieManagement.Infrastructure.Data;
@@ -25,7 +26,7 @@ public static class Inject
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddKeyedScoped<IUnitOfWork, UnitOfWork>(ModuleNames.SpecieManagement);
         
         return serviceCollection;
     }

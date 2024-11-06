@@ -7,6 +7,8 @@ using PetHouse.Accounts.Infrastructure.Data;
 using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Accounts.Infrastructure.Options;
 using PetHouse.Accounts.Infrastructure.Seeding;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 
 namespace PetHouse.Accounts.Infrastructure;
 
@@ -22,7 +24,7 @@ public static class Inject
         
         serviceCollection.AddScoped<AccountsDbContext>();
 
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddKeyedScoped<IUnitOfWork, UnitOfWork>(ModuleNames.Accounts);
 
         serviceCollection.AddIdentity<User, Role>(options =>
             {

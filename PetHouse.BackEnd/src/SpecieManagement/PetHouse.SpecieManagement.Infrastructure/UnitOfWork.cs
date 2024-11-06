@@ -1,11 +1,12 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
+using PetHouse.Core.Providers;
 using PetHouse.SpecieManagement.Application;
 using PetHouse.SpecieManagement.Infrastructure.Data;
 
 namespace PetHouse.SpecieManagement.Infrastructure;
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly WriteDbContext _writeDbContext;
 

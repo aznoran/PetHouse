@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
@@ -23,7 +24,7 @@ public class DeletePetHandler : ICommandHandler<DeletePetCommand, Guid>
         IVolunteersRepository repository,
         ILogger<DeletePetHandler> logger,
         IValidator<DeletePetCommand> validator,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork,
         IFileProvider fileProvider)
     {
         _repository = repository;

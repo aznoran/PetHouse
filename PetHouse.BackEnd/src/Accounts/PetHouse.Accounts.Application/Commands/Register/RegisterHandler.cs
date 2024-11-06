@@ -2,12 +2,15 @@
 using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Accounts.Application.Commands.Login;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Accounts.Infrastructure.Managers;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
 
@@ -25,7 +28,7 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
     public RegisterHandler(UserManager<User> userManager,
         ILogger<LoginHandler> logger,
         IValidator<RegisterCommand> validator,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.Accounts)]IUnitOfWork unitOfWork,
         IAccountManager participantAccountManager,
         RoleManager<Role> roleManager)
     {

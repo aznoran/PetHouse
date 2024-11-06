@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
@@ -19,7 +22,7 @@ public class UpdatePetHandler : ICommandHandler<UpdatePetCommand>
 
     public UpdatePetHandler(IVolunteersRepository repository,
         ILogger<UpdatePetHandler> logger, 
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork,
         IValidator<UpdatePetCommand> validator)
     {
         _repository = repository;
