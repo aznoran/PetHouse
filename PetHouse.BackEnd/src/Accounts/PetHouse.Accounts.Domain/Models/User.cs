@@ -25,9 +25,9 @@ public class User : IdentityUser<Guid>
     private List<Role> _roles = [];
     public IReadOnlyList<Role> Roles => _roles;
     
-    public AdminAccount AdminAccount { get; init; }
-    public VolunteerAccount VolunteerAccount { get; init; }
-    public ParticipantAccount ParticipantAccount { get; init; }
+    public AdminAccount? AdminAccount { get; init; }
+    public VolunteerAccount? VolunteerAccount { get; init; }
+    public ParticipantAccount? ParticipantAccount { get; init; }
 
     public static Result<User, Error> CreateAdmin(string userName,
         string email,
