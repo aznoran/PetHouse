@@ -1,10 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Accounts.Domain.Models;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
 
@@ -23,7 +26,7 @@ public class RefreshHandler : ICommandHandler<RefreshCommand, JwtTokenResult>
         ILogger<RefreshHandler> logger,
         IValidator<RefreshCommand> validator, 
         ITokenProvider tokenProvider,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.Accounts)]IUnitOfWork unitOfWork,
         UserManager<User> userManager)
     {
         _refreshSessionManager = refreshSessionManager;

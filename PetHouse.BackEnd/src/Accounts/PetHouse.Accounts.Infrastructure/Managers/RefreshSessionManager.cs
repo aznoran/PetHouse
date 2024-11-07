@@ -10,9 +10,9 @@ namespace PetHouse.Accounts.Infrastructure.Managers;
 
 public class RefreshSessionManager : IRefreshSessionManager
 {
-     private readonly AccountsDbContext _dbContext;
+     private readonly AccountsWriteDbContext _dbContext;
 
-     public RefreshSessionManager(AccountsDbContext dbContext)
+     public RefreshSessionManager(AccountsWriteDbContext dbContext)
      {
           _dbContext = dbContext;
      }

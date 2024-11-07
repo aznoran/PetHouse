@@ -7,7 +7,7 @@ using PetHouse.PetManagement.Infrastructure.Data;
 
 namespace PetHouse.PetManagement.Infrastructure;
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly WriteDbContext _writeDbContext;
 

@@ -13,11 +13,11 @@ namespace PetHouse.Accounts.Infrastructure;
 
 public class JwtTokenProvider : ITokenProvider
 {
-    private readonly AccountsDbContext _dbContext;
+    private readonly AccountsWriteDbContext _dbContext;
     private readonly JwtOptions _jwtOptions;
 
     public JwtTokenProvider(IOptions<JwtOptions> jwtOptions,
-        AccountsDbContext dbContext)
+        AccountsWriteDbContext dbContext)
     {
         _dbContext = dbContext;
         _jwtOptions = jwtOptions.Value;

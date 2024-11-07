@@ -8,7 +8,7 @@ using PetHouse.Core.Providers;
 
 namespace PetHouse.Accounts.Infrastructure;
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly AccountsWriteDbContext _writeDbContext;
 
