@@ -14,6 +14,8 @@
       <ProjectReference Include="..\PetManagement\PetHouse.PetManagement.Presentation\PetHouse.PetManagement.Presentation.csproj" />
       <ProjectReference Include="..\SpecieManagement\PetHouse.SpecieManagement.Infrastructure\PetHouse.SpecieManagement.Infrastructure.csproj" />
       <ProjectReference Include="..\SpecieManagement\PetHouse.SpecieManagement.Presentation\PetHouse.SpecieManagement.Presentation.csproj" />
+      <ProjectReference Include="..\VolunteerRequest\PetHouse.VolunteerRequest.Infrastructure\PetHouse.VolunteerRequest.Infrastructure.csproj" />
+      <ProjectReference Include="..\VolunteerRequest\PetHouse.VolunteerRequest.Presentation\PetHouse.VolunteerRequest.Presentation.csproj" />
     </ItemGroup>
 
     <ItemGroup>
