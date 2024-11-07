@@ -80,7 +80,7 @@ public partial class PetConfiguration : IEntityTypeConfiguration<Pet>
             pi.Property(pp => pp.Value).HasColumnName("phone_number");
         });
         
-        builder.Property(v => v.PetPhotos)
+        builder.Property(v => v.PetPhotos)!
             .HasValueObjectsJsonConversion(
                 input => new PetPhotoDto() { Path = input.Path.Value, IsPhotoMain = input.IsMain},
                 output => PetPhoto.Create(FilePath.Create(output.Path).Value, output.IsPhotoMain).Value)

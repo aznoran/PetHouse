@@ -10,25 +10,28 @@ using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.Accounts.Application.Commands.Login;
 
-public class LoginHandler : ICommandHandler<LoginCommand, string>
+public class LoginHandler : ICommandHandler<LoginCommand, JwtTokenResult>
 {
     private readonly UserManager<User> _userManager;
     private readonly ILogger<LoginHandler> _logger;
     private readonly IValidator<LoginCommand> _validator;
     private readonly ITokenProvider _tokenProvider;
+    private readonly IRefreshSessionManager _refreshSessionManager;
 
     public LoginHandler(UserManager<User> userManager,
         ILogger<LoginHandler> logger,
         IValidator<LoginCommand> validator, 
-        ITokenProvider tokenProvider)
+        ITokenProvider tokenProvider,
+        IRefreshSessionManager refreshSessionManager)
     {
         _userManager = userManager;
         _logger = logger;
         _validator = validator;
         _tokenProvider = tokenProvider;
+        _refreshSessionManager = refreshSessionManager;
     }  
     
-    public async Task<Result<string, ErrorList>> Handle(LoginCommand command, CancellationToken cancellationToken)
+    public async Task<Result<JwtTokenResult, ErrorList>> Handle(LoginCommand command, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
 
@@ -49,10 +52,20 @@ public class LoginHandler : ICommandHandler<LoginCommand, string>
             return Errors.Accounts.InvalidCredentials().ToErrorList();
         }
 
-        var jwtToken = _tokenProvider.GenerateAccessToken(user, cancellationToken);
+        var accessToken = _tokenProvider.GenerateAccessToken(user, cancellationToken);
+        
+        var refreshSession = await _refreshSessionManager
+            .GetRefreshSesssionByUserId(user.Id, cancellationToken);
+
+        if (refreshSession.IsSuccess)
+        {
+            _refreshSessionManager.DeleteRefreshSession(refreshSession.Value, cancellationToken);
+        }
+        
+        var refreshToken = await _tokenProvider.GenerateRefreshToken(user, cancellationToken);
         
         _logger.LogInformation("Logged successful with id {Id}", user.Id);
 
-        return jwtToken;
+        return new JwtTokenResult(accessToken, refreshToken);
     }
 }

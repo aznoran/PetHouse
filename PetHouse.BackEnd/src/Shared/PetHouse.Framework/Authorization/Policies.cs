@@ -1,4 +1,4 @@
-﻿namespace PetHouse.SharedKernel.Constraints;
+﻿namespace PetHouse.Framework.Authorization;
 
 public static class Policies
 {

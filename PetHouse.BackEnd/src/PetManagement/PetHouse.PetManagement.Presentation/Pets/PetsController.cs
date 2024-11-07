@@ -3,7 +3,6 @@ using PetHouse.Framework;
 using PetHouse.Framework.Authorization;
 using PetHouse.PetManagement.Application.Queries.GetAllPetsWithPaginationAndFilter;
 using PetHouse.PetManagement.Application.Queries.GetPetById;
-using PetHouse.SharedKernel.Constraints;
 
 namespace PetHouse.PetManagement.Presentation.Pets;
 

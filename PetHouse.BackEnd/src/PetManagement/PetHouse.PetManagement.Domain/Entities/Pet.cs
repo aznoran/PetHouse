@@ -8,10 +8,8 @@ using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.PetManagement.Domain.Entities;
 
-public sealed class Pet : SharedKernel.ValueObjects.Entity<PetId>, ISoftDeletable
+public sealed class Pet : SoftDeletableEntity<PetId>
 {
-    private bool _isDeleted = false;
-    
     //EF CORE NAVIGATION PROPERTY
     public Volunteer Volunteer { get; init; }
     
@@ -60,14 +58,14 @@ public sealed class Pet : SharedKernel.ValueObjects.Entity<PetId>, ISoftDeletabl
     public PetStatus PetStatus { get; private set; }
     public DateTime CreationDate { get; private set; }
 
-    public void DeleteSoft()
+    public override void Delete()
     {
-        _isDeleted = true;
+        base.Delete();
     }
 
-    public void Restore()
+    public override void Restore()
     {
-        _isDeleted = false;
+        base.Restore();
     }
 
     public void UpdatePetStatus(PetStatus petStatus)
