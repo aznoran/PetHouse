@@ -24,11 +24,5 @@ public class CreateVolunteerValidator : AbstractValidator<CreateVolunteerCommand
                 Requisite.Create(
                     x.Name,
                     x.Description));
-
-        RuleForEach(v => v.SocialNetworksDto)
-            .MustBeValueObject(x =>
-                SocialNetwork.Create(
-                    x.Link,
-                    x.Name));
     }
 }

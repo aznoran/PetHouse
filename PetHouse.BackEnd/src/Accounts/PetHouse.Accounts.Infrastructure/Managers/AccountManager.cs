@@ -7,9 +7,9 @@ namespace PetHouse.Accounts.Infrastructure.Managers;
 
 public class AccountManager : IAccountManager
 {
-    private readonly AccountsDbContext _dbContext;
+    private readonly AccountsWriteDbContext _dbContext;
 
-    public AccountManager(AccountsDbContext dbContext)
+    public AccountManager(AccountsWriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

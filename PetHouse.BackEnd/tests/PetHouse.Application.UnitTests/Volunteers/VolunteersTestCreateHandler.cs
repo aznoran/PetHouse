@@ -47,10 +47,6 @@ public class VolunteersTestCreateHandler
             "test@gmail.com",
             3,
             "82345678906",
-            new List<SocialNetworksDto>
-            {
-                new SocialNetworksDto("test", "test")
-            },
             new List<RequisiteDto>
             {
                 new RequisiteDto("test", "test")
@@ -91,10 +87,6 @@ public class VolunteersTestCreateHandler
             "test@gmail.com",
             3,
             "82345678950",
-            new List<SocialNetworksDto>
-            {
-                new SocialNetworksDto("test", "test")
-            },
             new List<RequisiteDto>
             {
                 new RequisiteDto("test", "test")

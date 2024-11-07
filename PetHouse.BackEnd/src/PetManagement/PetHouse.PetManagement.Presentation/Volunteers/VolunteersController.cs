@@ -16,7 +16,6 @@ using PetHouse.PetManagement.Application.Commands.UpdateMainInfo;
 using PetHouse.PetManagement.Application.Commands.UpdatePet;
 using PetHouse.PetManagement.Application.Commands.UpdatePetStatus;
 using PetHouse.PetManagement.Application.Commands.UpdateRequisites;
-using PetHouse.PetManagement.Application.Commands.UpdateSocialNetworks;
 using PetHouse.PetManagement.Application.Queries.GetAllWithPagination;
 using PetHouse.PetManagement.Application.Queries.GetVolunteerById;
 using PetHouse.PetManagement.Contracts.Volunteers.Requests;
@@ -65,7 +64,6 @@ public class VolunteersController : ApplicationController
             request.Email,
             request.YearsOfExperience,
             request.PhoneNumber,
-            request.SocialNetworksDto,
             request.RequisiteDto);
 
         var res = await createVolunteerHandler.Handle(command, cancellationToken);
@@ -284,26 +282,6 @@ public class VolunteersController : ApplicationController
         }
 
         return new ObjectResult(res.Value) { StatusCode = 201 };
-    }
-
-    [Permission(Policies.PetManagement.Update)]
-    [HttpPatch("{id:guid}/social-networks")]
-    public async Task<ActionResult<Guid>> UpdateSocialNetworks(
-        [FromServices] UpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
-        [FromRoute] Guid id,
-        [FromBody] IEnumerable<SocialNetworksDto> updateVolunteerSocialNetworksDto,
-        CancellationToken cancellationToken = default)
-    {
-        var command = new UpdateVolunteerSocialNetworksCommand(id, updateVolunteerSocialNetworksDto);
-
-        var res = await updateVolunteerSocialNetworksHandler.Handle(command, cancellationToken);
-
-        if (res.IsFailure)
-        {
-            return res.Error.ToResponse();
-        }
-
-        return new ObjectResult(res.Value) { StatusCode = 204 };
     }
 
     [Permission(Policies.PetManagement.UpdatePet)]

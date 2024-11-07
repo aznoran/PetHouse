@@ -70,7 +70,6 @@ public class VolunteersTestDeleteHandler
             Description.Create("OldDescription").Value,
             YearsOfExperience.Create(0).Value,
             PhoneNumber.Create("89587654321").Value,
-            new[] { SocialNetwork.Create("test", "test").Value },
             new[] { Requisite.Create("test", "test").Value });
 
         _validatorMock.Setup(v => v.ValidateAsync(It.IsAny<DeleteVolunteerCommand>(), cancellationToken))

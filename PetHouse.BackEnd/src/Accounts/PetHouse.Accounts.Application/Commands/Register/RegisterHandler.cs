@@ -78,7 +78,7 @@ public class RegisterHandler : ICommandHandler<RegisterCommand, Guid>
             }
 
             var participantAccount = new ParticipantAccount()
-                { Id = Guid.NewGuid(), User = user.Value, UserId = user.Value.Id, FullName = fullName.Value };
+                { Id = Guid.NewGuid(), User = user.Value, FullName = fullName.Value };
 
             await _participantAccountManager.AddParticipantAccount(participantAccount);
 

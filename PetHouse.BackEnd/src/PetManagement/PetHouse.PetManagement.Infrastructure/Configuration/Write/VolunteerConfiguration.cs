@@ -64,11 +64,11 @@ public partial class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer
             .WithOne(p => p.Volunteer)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Property(v => v.SocialNetworks)
+        /*builder.Property(v => v.SocialNetworks)
             .HasValueObjectsJsonConversion(
                 input => new SocialNetworksDto(input.Link, input.Name),
                 output => SocialNetwork.Create(output.Link, output.Name).Value)
-            .HasColumnName("social_networks");
+            .HasColumnName("social_networks");*/
 
         builder.Property(v => v.Requisites)
             .HasValueObjectsJsonConversion(

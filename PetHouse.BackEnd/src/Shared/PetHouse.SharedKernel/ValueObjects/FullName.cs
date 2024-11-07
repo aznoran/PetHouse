@@ -6,6 +6,8 @@ namespace PetHouse.SharedKernel.ValueObjects;
 
 public record FullName
 {
+    //EF CORE
+    private FullName() { }
     private FullName(string name, string surname)
     {
         Name = name;
