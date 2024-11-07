@@ -12,6 +12,7 @@ using PetHouse.PetManagement.Infrastructure.Options;
 using PetHouse.PetManagement.Infrastructure.Providers;
 using PetHouse.PetManagement.Infrastructure.Repositories;
 using PetHouse.PetManagement.Infrastructure.Services;
+using PetHouse.SharedKernel.Constraints;
 using FileInfo = PetHouse.Core.Providers.FileInfo;
 using IFileProvider = PetHouse.Core.Providers.IFileProvider;
 
@@ -60,7 +61,7 @@ public static class Inject
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddKeyedScoped<IUnitOfWork, UnitOfWork>(ModuleNames.PetManagement);
         serviceCollection.AddScoped<IFilesCleanerService, FilesCleanerService>();
         serviceCollection
             .AddScoped<ISoftDeletableEntitiesCleanerService, SoftDeletablePetManagementEntitiesCleanerService>();

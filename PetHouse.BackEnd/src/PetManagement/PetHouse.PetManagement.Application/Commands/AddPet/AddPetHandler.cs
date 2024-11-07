@@ -1,10 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Domain.Enums;
 using PetHouse.PetManagement.Domain.ValueObjects;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
 using PetHouse.SpecieManagement._Contracts;
@@ -22,7 +25,7 @@ public class AddPetHandler : ICommandHandler<AddPetCommand>
 
     public AddPetHandler(IVolunteersRepository repository,
         ILogger<AddPetHandler> logger, 
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork,
         IValidator<AddPetCommand> validator,
         IReadDbContext dbContext,
         ISpecieManagementContract contract)

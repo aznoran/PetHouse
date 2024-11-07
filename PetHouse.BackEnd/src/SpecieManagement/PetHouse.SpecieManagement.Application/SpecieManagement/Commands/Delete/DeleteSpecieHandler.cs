@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Contracts;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
@@ -21,7 +24,7 @@ public class DeleteSpecieHandler : ICommandHandler<DeleteSpecieCommand, Guid>
     public DeleteSpecieHandler(ISpecieRepository repository,
         ILogger<DeleteSpecieHandler> logger,
         IValidator<DeleteSpecieCommand> validator,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.SpecieManagement)]IUnitOfWork unitOfWork,
         IPetManagementContract contract)
     {
         _repository = repository;

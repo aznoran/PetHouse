@@ -1,6 +1,6 @@
 ﻿namespace PetHouse.SharedKernel.Constraints;
 
-public class DefaultConstraints
+public static class DefaultConstraints
 {
     public const int MAX_DESCRIPTION_LENGTH = 1000;
 

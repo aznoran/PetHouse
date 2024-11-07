@@ -1,8 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.ValueObjects;
 using PetHouse.SpecieManagement.Domain.Aggregate;
@@ -19,7 +22,7 @@ public class CreateSpecieHandler : ICommandHandler<CreateSpecieCommand, Guid>
     public CreateSpecieHandler(ISpecieRepository repository,
         ILogger<CreateSpecieHandler> logger,
         IValidator<CreateSpecieCommand> validator,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(ModuleNames.SpecieManagement)]IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;

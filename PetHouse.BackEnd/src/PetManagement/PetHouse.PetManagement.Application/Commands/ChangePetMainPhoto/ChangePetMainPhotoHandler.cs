@@ -1,8 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.Other;
 using PetHouse.SharedKernel.ValueObjects;
@@ -19,7 +22,7 @@ public class ChangePetMainPhotoHandler : ICommandHandler<ChangePetMainPhotoComma
     public ChangePetMainPhotoHandler(IVolunteersRepository repository,
         ILogger<ChangePetMainPhotoHandler> logger,
         IValidator<ChangePetMainPhotoCommand> validator,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;

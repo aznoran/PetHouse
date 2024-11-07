@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore.Storage;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Application;
 using PetHouse.PetManagement.Domain.Entities;
 using PetHouse.PetManagement.Infrastructure.Data;

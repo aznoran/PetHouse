@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
+using PetHouse.Core.Providers;
 using PetHouse.PetManagement.Contracts;
+using PetHouse.SharedKernel.Constraints;
 using PetHouse.SharedKernel.Id;
 using PetHouse.SharedKernel.ValueObjects;
 
@@ -20,7 +23,7 @@ public class DeleteBreedHandler : ICommandHandler<DeleteBreedCommand, Guid>
     public DeleteBreedHandler(ISpecieRepository repository,
         ILogger<DeleteBreedHandler> logger,
         IValidator<DeleteBreedCommand> validator,
-        IUnitOfWork unitOfWork,
+        [FromKeyedServices(ModuleNames.SpecieManagement)]IUnitOfWork unitOfWork,
         IPetManagementContract contract)
     {
         _repository = repository;
