@@ -37,6 +37,7 @@ public static class Inject
 
         serviceCollection.AddScoped<UserManager<User>>();
         serviceCollection.AddScoped<RoleManager<Role>>();
+        serviceCollection.AddScoped<IRefreshSessionManager,RefreshSessionManager>();
         
         serviceCollection.AddScoped<PermissionManager>();
         serviceCollection.AddScoped<RolePermissionManager>();

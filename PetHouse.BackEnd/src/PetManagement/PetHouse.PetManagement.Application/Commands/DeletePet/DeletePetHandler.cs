@@ -56,11 +56,11 @@ public class DeletePetHandler : ICommandHandler<DeletePetCommand, Guid>
         
         var pet = volunteer.Value.Pets.FirstOrDefault(p => p.Id == PetId.Create(command.PetId));
 
-        var deletePetForceRes = volunteer.Value.DeletePetForce(pet!);
+        var deletePetRes = volunteer.Value.DeletePet(pet!.Id);
 
-        if (deletePetForceRes.IsFailure)
+        if (deletePetRes.IsFailure)
         {
-            return deletePetForceRes.Error.ToErrorList();
+            return deletePetRes.Error.ToErrorList();
         }
 
         var fileNames = new List<string>();

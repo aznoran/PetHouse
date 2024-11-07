@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetHouse.Accounts.Application.Commands.Login;
+using PetHouse.Accounts.Application.Commands.Refresh;
 using PetHouse.Accounts.Application.Commands.Register;
 using PetHouse.Accounts.Contracts.Requests;
 using PetHouse.Core.Extensions;
@@ -9,6 +10,8 @@ namespace PetHouse.Accounts.Presentation;
 
 public class AccountsController : ApplicationController
 {
+    private const string REFRESH_TOKEN = "refresh_token";
+    
     [HttpPost("registration")]
     public async Task<IActionResult> Register(
         [FromServices] RegisterHandler handler,
@@ -41,6 +44,32 @@ public class AccountsController : ApplicationController
         {
             return result.Error.ToResponse();
         }
+        
+        HttpContext.Response.Cookies.Append(REFRESH_TOKEN, result.Value.RefreshToken.ToString());
+        
+        return Ok(result.Value);
+    }
+    
+    [HttpPost("session_refreshment")]
+    public async Task<IActionResult> Refresh(
+        [FromServices] RefreshHandler handler,
+        CancellationToken cancellationToken = default)
+    {
+        if (!HttpContext.Request.Cookies.TryGetValue(REFRESH_TOKEN, out var refreshToken))
+        {
+            return Unauthorized();
+        }
+
+        var command = new RefreshCommand(Guid.Parse(refreshToken));
+        
+        var result = await handler.Handle(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return result.Error.ToResponse();
+        }
+        
+        HttpContext.Response.Cookies.Append(REFRESH_TOKEN, result.Value.RefreshToken.ToString());
         
         return Ok(result.Value);
     }

@@ -8,10 +8,8 @@ using PetHouse.SharedKernel.ValueObjects;
 
 namespace PetHouse.PetManagement.Domain.Aggregate;
 
-public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, ISoftDeletable
+public sealed class Volunteer : SoftDeletableEntity<VolunteerId>
 {
-    private bool _isDeleted = false;
-
     //EF CORE
     // ReSharper disable once UnusedMember.Local
     private Volunteer(VolunteerId id) : base(id){ }
@@ -89,25 +87,25 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
         return volunteer;
     }
 
-    public void DeleteSoft()
+    public override void Delete()
     {
-        _isDeleted = true;
+        base.Delete();
         foreach (var pet in _pets)
         {
-            pet.DeleteSoft();
+            pet.Delete();
         }
     }
 
-    public void Restore()
+    public override void Restore()
     {
-        _isDeleted = false;
+        base.Restore();
         foreach (var pet in _pets)
         {
             pet.Restore();
         }
     }
     
-    public UnitResult<Error> DeletePetSoft(PetId petId)
+    public UnitResult<Error> DeletePet(PetId petId)
     {
         var pet = _pets.FirstOrDefault(p => p.Id == petId);
 
@@ -116,19 +114,7 @@ public sealed class Volunteer : SharedKernel.ValueObjects.Entity<VolunteerId>, I
             return Errors.General.NotFound(petId.Value);
         }
         
-        pet.DeleteSoft();
-
-        return UnitResult.Success<Error>();
-    }
-    
-    public UnitResult<Error> DeletePetForce(Pet pet)
-    {
-        var removeRes = _pets.Remove(pet);
-
-        if (removeRes == false)
-        {
-            return Errors.General.ValueIsInvalid();
-        }
+        pet.Delete();
 
         return UnitResult.Success<Error>();
     }

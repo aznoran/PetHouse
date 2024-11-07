@@ -1,6 +1,6 @@
 ﻿using PetHouse.Accounts.Domain.Models;
 
-namespace PetHouse.Accounts.Infrastructure.Managers;
+namespace PetHouse.Accounts.Application;
 
 public interface IAccountManager
 {
