@@ -6,7 +6,7 @@ using PetHouse.VolunteerRequest.Domain.Enums;
 
 namespace PetHouse.VolunteerRequest.Domain.Aggregate;
 
-public class VolunteerRequest : SharedKernel.ValueObjects.Entity<VolunteerRequestId>
+public sealed class VolunteerRequest : SharedKernel.ValueObjects.Entity<VolunteerRequestId>
 {
     private VolunteerRequest(VolunteerRequestId id,
         Guid discussionId,

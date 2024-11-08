@@ -65,7 +65,8 @@ public static class Errors
         {
             var labelT = label == null ? "[label?]" : $"'{label}'";
             var fieldNameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
-            return Error.Validation("already.exists", $"Volunteer with {fieldNameT} {labelT} already exists.");
+            return Error.Validation("already.exists",
+                $"Volunteer with {fieldNameT} {labelT} already exists.");
         }
 
         public static Error WrongPhoneNumber(string? phoneNumber = null)
@@ -78,6 +79,20 @@ public static class Errors
         {
             var label = email == null ? " " : $" '{email}' ";
             return Error.Validation("email.is.invalid", $"Email {label} is invalid.");
+        }
+    }
+    
+    public static class Discussion
+    {
+        public static Error LessThanTwoUsers()
+        {
+            return Error.Validation("invalid.users.count", 
+                $"Discussion must be created between two users at least");
+        }
+        public static Error NotAllowedToDiscussion()
+        {
+            return Error.Validation("comment.not.allowed", 
+                $"User is not a participant of the discussion");
         }
     }
     
@@ -94,14 +109,16 @@ public static class Errors
         {
             var labelT = label == null ? "[label?]" : $"'{label}'";
             var fieldNameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
-            return Error.Failure("breed.already.exists", $"Breed with {fieldNameT} {labelT} already exists.");
+            return Error.Failure("breed.already.exists", 
+                $"Breed with {fieldNameT} {labelT} already exists.");
         }
         
         public static Error SomePetHasThisSpecieOrBreed(Guid? id = null, string? fieldName = null)
         {
             var idT = id == null ? "[label?]" : $"'{id}'";
             var fieldnameT = fieldName == null ? "[fieldName?]" : $"'{fieldName}'";
-            return Error.Failure("already.has", $"Pet with {id} already has {fieldnameT} specie or breed.");
+            return Error.Failure("already.has", 
+                $"Pet with {id} already has {fieldnameT} specie or breed.");
         }
     }
     

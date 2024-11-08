@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PetHouse.Core.Abstraction;
 using PetHouse.Core.Extensions;
@@ -28,7 +29,7 @@ public class AddPetPhotosHandler : ICommandHandler<AddPetPhotosCommand, Guid>
         IMessageQueue<IEnumerable<FileInfo>> messageQueue,
         IFileProvider minio,
         IValidator<AddPetPhotosCommand> validator,
-        IUnitOfWork unitOfWork)
+        [FromKeyedServices(ModuleNames.PetManagement)]IUnitOfWork unitOfWork)
     {
         _repository = repository;
         _logger = logger;
